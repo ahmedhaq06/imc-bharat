@@ -124,7 +124,9 @@
     }
 
     html {
-      font-size: clamp(13px, 1.15vw, 16px)
+      font-size: clamp(13px, 1.15vw, 16px);
+      background: var(--teal);
+      height: 100%;
     }
 
     html,
@@ -133,18 +135,20 @@
       min-width: 0;
       margin: 0;
       padding: 0;
-      background: var(--teal)
+      background: var(--teal);
     }
 
     body {
       font-family: var(--font-ui);
       color: var(--text-primary);
       min-height: 100vh;
-      overflow-x: hidden
+      min-height: 100dvh;
+      overflow-x: hidden;
+      background: var(--teal);
     }
 
     #portalApp {
-      background: var(--off-white)
+      background: var(--teal);
     }
 
     /* ── LOGIN ── */
@@ -515,7 +519,10 @@
       display: none;
       flex-direction: column;
       width: 100%;
-      min-height: 100vh
+      min-height: 100vh;
+      min-height: 100dvh;
+      flex: 1;
+      background: var(--teal);
     }
 
     .topbar {
@@ -15333,10 +15340,19 @@
     (function () {
       var lastHeight = 0;
       function reportHeight() {
-        var h = Math.max(
-          document.documentElement.scrollHeight,
-          document.body ? document.body.scrollHeight : 0
-        );
+        var loginScreen = document.getElementById('loginScreen');
+        var isLoginVisible = loginScreen && getComputedStyle(loginScreen).display !== 'none';
+        var h;
+        if (isLoginVisible) {
+          h = Math.max(window.innerHeight || 0, loginScreen.scrollHeight || 0, document.documentElement.clientHeight || 0);
+        } else {
+          var portalApp = document.getElementById('portalApp');
+          h = Math.max(
+            document.documentElement.scrollHeight || 0,
+            document.body ? document.body.scrollHeight : 0,
+            portalApp ? portalApp.scrollHeight : 0
+          );
+        }
         if (h && h !== lastHeight) {
           lastHeight = h;
           try { window.parent.postMessage({ type: 'imc-portal-resize', height: h }, '*'); } catch (e) { }
