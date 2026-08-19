@@ -125,8 +125,7 @@
 
     html {
       font-size: clamp(13px, 1.15vw, 16px);
-      background: var(--teal);
-      height: 100%;
+      overflow-x: hidden;
     }
 
     html,
@@ -135,20 +134,18 @@
       min-width: 0;
       margin: 0;
       padding: 0;
-      background: var(--teal);
     }
 
     body {
       font-family: var(--font-ui);
       color: var(--text-primary);
-      min-height: 100vh;
-      min-height: 100dvh;
-      overflow-x: hidden;
       background: var(--teal);
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
     #portalApp {
-      background: var(--teal);
+      background: var(--off-white);
     }
 
     /* ── LOGIN ── */
@@ -15326,52 +15323,7 @@
     }
   </style>
 
-  <script>
-    // ════════════════════════════════════════════════════════════════
-    //  AUTO-RESIZE REPORTING — tells the parent Wix page how tall this
-    //  page's content actually is, so the embedding iframe can size
-    //  itself automatically instead of relying on a manually-set fixed
-    //  height. This is the fix for the topbar-getting-scrolled-away bug:
-    //  that happened because the page grew taller than the iframe's
-    //  hardcoded height and nobody updated it. With this in place, the
-    //  Wix side (see Velo snippet) keeps the iframe height in sync
-    //  automatically, every time content changes.
-    // ════════════════════════════════════════════════════════════════
-    (function () {
-      var lastHeight = 0;
-      function reportHeight() {
-        var loginScreen = document.getElementById('loginScreen');
-        var isLoginVisible = loginScreen && getComputedStyle(loginScreen).display !== 'none';
-        var h;
-        if (isLoginVisible) {
-          h = Math.max(window.innerHeight || 0, loginScreen.scrollHeight || 0, document.documentElement.clientHeight || 0);
-        } else {
-          var portalApp = document.getElementById('portalApp');
-          h = Math.max(
-            document.documentElement.scrollHeight || 0,
-            document.body ? document.body.scrollHeight : 0,
-            portalApp ? portalApp.scrollHeight : 0
-          );
-        }
-        if (h && h !== lastHeight) {
-          lastHeight = h;
-          try { window.parent.postMessage({ type: 'imc-portal-resize', height: h }, '*'); } catch (e) { }
-        }
-      }
-      if ('ResizeObserver' in window) {
-        try {
-          var ro = new ResizeObserver(function () { reportHeight(); });
-          ro.observe(document.documentElement);
-        } catch (e) { }
-      }
-      window.addEventListener('load', reportHeight);
-      window.addEventListener('resize', reportHeight);
-      // Safety net fallback in case ResizeObserver misses something
-      // (e.g. content changes that don't affect documentElement directly).
-      setInterval(reportHeight, 1000);
-      reportHeight();
-    })();
-  </script>
+
 
 </body>
 
