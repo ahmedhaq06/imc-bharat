@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMC Card Generator</title>
+<meta name="description" content="IMC Card Generator — Admin tool for creating case study and video cards for the Inspiring Stories Hub."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://www.indianmuslimcount.com/imc-card-generator"/>
+<meta property="og:title" content="IMC Card Generator | Indian Muslim Count"/>
+<meta property="og:description" content="Admin tool for IMC team members. Generate HTML snippets for case studies and inspiring videos. Restricted access."/>
+<meta property="og:image" content="https://imc-network.imc-wordwide.workers.dev/IMC_Logo.png"/>
+<meta property="og:image:width" content="600"/>
+<meta property="og:image:height" content="600"/>
+<meta property="og:site_name" content="Indian Muslim Count"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="IMC Card Generator | Indian Muslim Count"/>
+<meta name="twitter:description" content="Admin tool. Restricted access. Count Us. Count On Us."/>
+<meta name="twitter:image" content="https://imc-network.imc-wordwide.workers.dev/IMC_Logo.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal-deep: #052b27;
+    --teal-mid: #0a3d38;
+    --teal-bright: #0f5248;
+    --orange: #F07B30;
+    --orange-light: #f9a06a;
+    --gold: #C9A84C;
+    --gold-light: #e5c97a;
+    --off-white: #f5f2ec;
+    --light-grey: #e8e4dc;
+    --text-mid: #444;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--teal-deep); min-height: 100vh; }
+
+  /* PASSWORD GATE */
+  #password-gate {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--teal-deep);
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  #password-gate.unlocking { opacity: 0; transform: scale(1.04); pointer-events: none; }
+  #password-gate.hidden { display: none; }
+  .gate-box {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 20px; padding: 52px 48px; width: 100%; max-width: 420px;
+    text-align: center; position: relative; box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+  }
+  .gate-grid-bg { position: fixed; inset: 0; background-image: linear-gradient(rgba(201,168,76,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.05) 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; }
+  .gate-logo-icon { width: 60px; height: 60px; background: var(--orange); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 20px; color: white; margin: 0 auto 20px; box-shadow: 0 0 0 8px rgba(240,123,48,0.12); }
+  .gate-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: white; margin-bottom: 6px; }
+  .gate-sub { font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 32px; line-height: 1.6; }
+  .gate-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 8px; display: block; text-align: left; }
+  .gate-input-wrap { position: relative; margin-bottom: 8px; }
+  .gate-input { width: 100%; background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 14px 48px 14px 18px; font-family: 'DM Sans', sans-serif; font-size: 15px; color: white; outline: none; transition: border-color 0.2s; letter-spacing: 1px; }
+  .gate-input::placeholder { color: rgba(255,255,255,0.2); letter-spacing: 0; }
+  .gate-input:focus { border-color: var(--orange); background: rgba(255,255,255,0.09); }
+  .gate-input.error { border-color: #e07070; animation: shake 0.35s ease; }
+  .gate-toggle-vis { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.3); font-size: 16px; line-height: 1; padding: 4px; transition: color 0.2s; }
+  .gate-toggle-vis:hover { color: rgba(255,255,255,0.7); }
+  .gate-error { font-size: 12px; color: #e07070; min-height: 18px; margin-bottom: 20px; text-align: left; }
+  .gate-btn { width: 100%; background: var(--orange); color: white; border: none; border-radius: 8px; padding: 15px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.25s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .gate-btn:hover { background: #d4692a; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(240,123,48,0.4); }
+  .gate-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.25); color: var(--gold); font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 6px 14px; border-radius: 2px; margin-bottom: 24px; }
+  .gate-session-msg { font-size: 12px; color: rgba(240,123,48,0.75); margin-bottom: 14px; min-height: 18px; text-align: center; }
+  .gate-home-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 24px; font-size: 12px; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
+  .gate-home-link:hover { color: var(--gold); }
+  @keyframes shake { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-6px); } 40%,80% { transform: translateX(6px); } }
+
+  /* TOP BAR */
+  header { background: var(--teal-deep); padding: 0 5vw; height: 70px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(201,168,76,0.2); position: sticky; top: 0; z-index: 99; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-icon { width: 40px; height: 40px; background: var(--orange); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 14px; color: white; }
+  .logo-text { color: white; font-size: 13px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; line-height: 1.3; }
+  .logo-text span { color: var(--gold); display: block; font-size: 10px; letter-spacing: 2.5px; font-weight: 300; }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+  .tb-btn-lock { display: flex; align-items: center; gap: 6px; background: rgba(240,123,48,0.12); border: 1px solid rgba(240,123,48,0.3); color: var(--orange-light); font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; padding: 7px 14px; border-radius: 5px; cursor: pointer; transition: all 0.18s; }
+  .tb-btn-lock:hover { background: rgba(240,123,48,0.25); border-color: rgba(240,123,48,0.55); color: #fff; transform: translateY(-1px); }
+  .tb-btn-lock:active { transform: translateY(0); }
+  .header-badge { background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3); color: var(--gold-light); font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 6px 14px; border-radius: 2px; }
+
+  /* LAYOUT */
+  .app { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 70px); }
+
+  /* LEFT PANEL */
+  .panel-left { padding: 40px; overflow-y: auto; border-right: 1px solid var(--light-grey); }
+  .panel-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--teal-deep); margin-bottom: 6px; }
+  .panel-sub { font-size: 13px; color: var(--text-mid); margin-bottom: 32px; line-height: 1.6; }
+
+  /* TYPE SWITCHER */
+  .type-switcher { display: flex; gap: 4px; background: white; border: 1.5px solid var(--light-grey); border-radius: 8px; padding: 4px; margin-bottom: 32px; }
+  .type-btn { flex: 1; padding: 10px; border: none; background: none; border-radius: 5px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.22s; color: var(--text-mid); }
+  .type-btn.active { background: var(--teal-deep); color: white; }
+  .type-btn:hover:not(.active) { background: var(--off-white); }
+
+  /* FORM */
+  .form-section { margin-bottom: 28px; }
+  .form-section-title { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--orange); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .form-section-title::after { content: ''; flex: 1; height: 1px; background: var(--light-grey); }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: #888; margin-bottom: 6px; }
+  .field input, .field select, .field textarea { width: 100%; background: white; border: 1.5px solid var(--light-grey); border-radius: 7px; padding: 11px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--teal-deep); outline: none; transition: border-color 0.2s; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--orange); }
+  .field textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+  .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .field-hint { font-size: 11px; color: #aaa; margin-top: 4px; line-height: 1.5; }
+
+  /* ── DUAL DATE DISPLAY ── */
+  .dual-date-display {
+    display: flex; align-items: stretch; gap: 0;
+    background: white; border: 1.5px solid var(--light-grey);
+    border-radius: 8px; overflow: hidden; margin-top: 8px;
+  }
+  .date-col {
+    flex: 1; padding: 10px 12px; display: flex; flex-direction: column; gap: 3px;
+  }
+  .date-col:first-child { border-right: 1px solid var(--light-grey); }
+  .date-col-label {
+    font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: #aaa;
+  }
+  .date-col-label.hijri-lbl { color: var(--gold); }
+  .date-col-value {
+    font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500;
+    color: var(--teal-deep);
+  }
+  .date-col-value.hijri-val { color: var(--teal-deep); }
+  .date-col-sub {
+    font-size: 10px; color: #bbb;
+  }
+
+  /* YouTube preview */
+  .yt-preview { margin-top: 10px; border-radius: 8px; overflow: hidden; aspect-ratio: 16/9; background: var(--teal-deep); display: none; position: relative; }
+  .yt-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .yt-preview-label { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(5,43,39,0.85); padding: 8px 12px; font-size: 11px; color: var(--gold); font-family: 'DM Mono', monospace; }
+  .yt-preview.visible { display: block; }
+
+  /* GENERATE BUTTON */
+  .generate-btn { width: 100%; background: var(--orange); color: white; border: none; border-radius: 8px; padding: 16px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.25s; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .generate-btn:hover { background: #d4692a; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(240,123,48,0.35); }
+  .generate-btn:active { transform: translateY(0); }
+
+  /* RIGHT PANEL */
+  .panel-right { padding: 40px; overflow-y: auto; background: white; display: flex; flex-direction: column; gap: 28px; }
+  .output-block { border: 1.5px solid var(--light-grey); border-radius: 10px; overflow: hidden; }
+  .output-header { background: var(--teal-deep); padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; }
+  .output-header-title { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+  .copy-btn { background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3); color: var(--gold-light); font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 6px 14px; border-radius: 4px; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; display: flex; align-items: center; gap: 6px; }
+  .copy-btn:hover { background: rgba(201,168,76,0.3); color: white; }
+  .copy-btn.copied { background: rgba(78,203,122,0.2); border-color: rgba(78,203,122,0.4); color: #4ecb7a; }
+  .output-code { background: #021c1a; padding: 20px; font-family: 'DM Mono', monospace; font-size: 12px; line-height: 1.7; color: rgba(255,255,255,0.75); white-space: pre-wrap; word-break: break-all; max-height: 380px; overflow-y: auto; }
+
+  /* LIVE PREVIEW */
+  .preview-label { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #aaa; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .preview-label::after { content: ''; flex: 1; height: 1px; background: var(--light-grey); }
+  #live-preview { padding: 20px; background: var(--off-white); border-radius: 10px; border: 1.5px solid var(--light-grey); }
+
+  /* INSTRUCTIONS */
+  .instructions { background: rgba(5,43,39,0.04); border: 1px solid rgba(5,43,39,0.1); border-radius: 10px; padding: 20px 22px; }
+  .instructions h4 { font-size: 13px; font-weight: 700; color: var(--teal-deep); margin-bottom: 12px; }
+  .instructions ol { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+  .instructions ol li { font-size: 13px; color: var(--text-mid); line-height: 1.6; }
+  .instructions ol li code { background: rgba(240,123,48,0.1); color: var(--orange); padding: 1px 6px; border-radius: 3px; font-family: 'DM Mono', monospace; font-size: 11px; }
+
+  /* EMPTY STATE */
+  .empty-state { text-align: center; padding: 60px 20px; color: #bbb; }
+  .empty-state .es-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
+  .empty-state p { font-size: 14px; line-height: 1.6; }
+
+  /* MINI CARD PREVIEWS */
+  .preview-case-card { background: white; border-radius: 12px; border: 1px solid #e8e4dc; overflow: hidden; font-family: 'DM Sans', sans-serif; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .preview-case-header { padding: 22px 22px 0; }
+  .preview-sector-tag { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; margin-bottom: 12px; }
+  .preview-sector-tag.edu { background: rgba(15,82,72,0.1); color: #0f5248; }
+  .preview-sector-tag.health { background: rgba(240,123,48,0.1); color: #c05818; }
+  .preview-sector-tag.legal { background: rgba(201,168,76,0.15); color: #8a6d1a; }
+  .preview-sector-tag.employ { background: rgba(5,43,39,0.08); color: #052b27; }
+  .preview-sector-tag.agri { background: rgba(80,140,80,0.1); color: #3a7a3a; }
+  .preview-case-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: #052b27; line-height: 1.3; margin-bottom: 8px; }
+  .preview-case-loc { font-size: 11px; color: #bbb; margin-bottom: 10px; }
+  .preview-case-excerpt { font-size: 12.5px; color: #555; line-height: 1.65; margin-bottom: 16px; }
+  .preview-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #e8e4dc; border-top: 1px solid #e8e4dc; }
+  .preview-metric { background: #f5f2ec; padding: 13px 16px; }
+  .preview-metric-num { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: #F07B30; }
+  .preview-metric-label { font-size: 10px; color: #aaa; }
+  .preview-case-footer { padding: 14px 22px; border-top: 1px solid #e8e4dc; display: flex; justify-content: space-between; align-items: center; }
+  .preview-read-more { font-size: 12px; font-weight: 600; color: #052b27; }
+  /* ── DUAL DATE in preview card footer ── */
+  .preview-date-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+  .preview-date-en { font-size: 10px; color: #999; font-family: 'DM Mono', monospace; }
+  .preview-date-hi { font-size: 9px; color: var(--gold); font-family: 'DM Sans', sans-serif; font-weight: 500; }
+
+  .preview-video-card { background: #052b27; border-radius: 12px; overflow: hidden; font-family: 'DM Sans', sans-serif; }
+  .preview-video-thumb { aspect-ratio: 16/9; background: #0a3d38; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .preview-video-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .preview-video-play { position: absolute; width: 48px; height: 48px; background: #F07B30; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .preview-video-body { padding: 20px; }
+  .preview-video-tag { display: inline-flex; align-items: center; gap: 5px; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; background: rgba(201,168,76,0.15); color: #e5c97a; border: 1px solid rgba(201,168,76,0.25); margin-bottom: 10px; }
+  .preview-video-title { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: white; line-height: 1.3; margin-bottom: 8px; }
+  .preview-video-excerpt { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.6; margin-bottom: 14px; }
+  .preview-video-meta { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); }
+  .preview-video-avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #F07B30, #c05818); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: white; }
+  .preview-speaker-name { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.75); }
+  .preview-speaker-role { font-size: 10px; color: rgba(255,255,255,0.4); }
+  /* dual date in video footer */
+  .preview-video-date-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+  .preview-video-date-en { font-size: 9px; color: rgba(255,255,255,0.35); font-family: 'DM Mono', monospace; }
+  .preview-video-date-hi { font-size: 9px; color: var(--gold); }
+
+  @media (max-width: 900px) {
+    .app { grid-template-columns: 1fr; }
+    .panel-left { border-right: none; border-bottom: 1px solid var(--light-grey); }
+    .header-badge { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PASSWORD GATE -->
+<div id="password-gate">
+  <div class="gate-grid-bg"></div>
+  <div class="gate-box">
+    <div class="gate-logo-icon">imc</div>
+    <div class="gate-badge">&#x1F512; Restricted Access</div>
+    <div class="gate-title">IMC Card Generator</div>
+    <p class="gate-sub">This tool is for authorised IMC team members only. Enter your admin password to continue.</p>
+    <div class="gate-session-msg" id="gate-session-msg"></div>
+    <label class="gate-label">Admin Password</label>
+    <div class="gate-input-wrap">
+      <input class="gate-input" type="password" id="gate-input" placeholder="Enter password&hellip;" onkeydown="if(event.key==='Enter')checkPassword()">
+      <button class="gate-toggle-vis" onclick="toggleVis()" id="vis-btn" title="Show/hide">&#x1F441;</button>
+    </div>
+    <div class="gate-error" id="gate-error">&nbsp;</div>
+    <button class="gate-btn" onclick="checkPassword()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      Unlock Tool
+    </button>
+    <a href="https://www.indianmuslimcount.com/imc-home-page" class="gate-home-link">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to IMC Home
+    </a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">imc</div>
+    <div class="logo-text">IMC Card Generator <span>Admin Tool &middot; Stories &amp; Videos</span></div>
+  </div>
+  <div class="header-right">
+    <a href="https://www.indianmuslimcount.com/imc-home-page"
+       style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.6);text-decoration:none;font-size:13px;font-weight:500;transition:color 0.2s;"
+       onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Home
+    </a>
+    <button class="tb-btn-lock" onclick="lockOut()" title="Lock &amp; sign out">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      &#x1F512; Lock
+    </button>
+  </div>
+</header>
+
+<div class="app">
+
+  <!-- LEFT: FORM -->
+  <div class="panel-left">
+    <div class="panel-title">Add New Content</div>
+    <p class="panel-sub">Fill in the fields below. Your HTML snippet will be generated instantly &mdash; ready to paste into the stories page.</p>
+
+    <div class="type-switcher">
+      <button class="type-btn active" onclick="setType('case')">&#x1F4CB; Case Study</button>
+      <button class="type-btn" onclick="setType('video')">&#x25B6; Inspiring Video</button>
+    </div>
+
+    <!-- CASE STUDY FORM -->
+    <div id="form-case">
+      <div class="form-section">
+        <div class="form-section-title">Sector &amp; Date</div>
+        <div class="field-row">
+          <div class="field">
+            <label>Sector</label>
+            <select id="c-sector" onchange="generate()">
+              <option value="education">&#x1F393; Education</option>
+              <option value="healthcare">&#x1F3E5; Healthcare</option>
+              <option value="employment">&#x1F4BC; Employment</option>
+              <option value="legal">&#x2696;&#xFE0F; Legal Aid</option>
+              <option value="agriculture">&#x1F33E; Agriculture</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Date</label>
+            <input type="date" id="c-date" oninput="onDateChange('c')" onchange="onDateChange('c')">
+            <div class="dual-date-display" id="c-dual-date" style="display:none;">
+              <div class="date-col">
+                <div class="date-col-label">Gregorian</div>
+                <div class="date-col-value" id="c-en-val">—</div>
+                <div class="date-col-sub" id="c-en-sub"></div>
+              </div>
+              <div class="date-col">
+                <div class="date-col-label hijri-lbl">&#x2605; Hijri (Islamic)</div>
+                <div class="date-col-value hijri-val" id="c-hi-val">—</div>
+                <div class="date-col-sub" id="c-hi-sub"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Featured Card? <span style="font-weight:400;text-transform:none;letter-spacing:0">(spans full width)</span></label>
+          <select id="c-featured" onchange="generate()">
+            <option value="no">No &mdash; standard card</option>
+            <option value="yes">Yes &mdash; featured (full-width)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Content</div>
+        <div class="field">
+          <label>Title</label>
+          <input type="text" id="c-title" placeholder="e.g. How one Pioneer changed 47 families in Patna" oninput="generate()">
+        </div>
+        <div class="field">
+          <label>Location</label>
+          <input type="text" id="c-location" placeholder="e.g. Patna, Bihar &middot; PIN 800001" oninput="generate()">
+        </div>
+        <div class="field">
+          <label>Excerpt / Summary</label>
+          <textarea id="c-excerpt" placeholder="2&ndash;3 sentence summary of the case study&hellip;" oninput="generate()"></textarea>
+        </div>
+        <div class="field">
+          <label>Read More Link (URL or leave # for now)</label>
+          <input type="text" id="c-link" placeholder="https://... or #" value="#" oninput="generate()">
+          <div class="field-hint">Link to the full case study page or PDF.</div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Impact Metrics</div>
+        <div class="field-row">
+          <div class="field"><label>Metric 1 &mdash; Number</label><input type="text" id="c-m1n" placeholder="e.g. 47" oninput="generate()"></div>
+          <div class="field"><label>Metric 1 &mdash; Label</label><input type="text" id="c-m1l" placeholder="e.g. Families reached" oninput="generate()"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Metric 2 &mdash; Number</label><input type="text" id="c-m2n" placeholder="e.g. &#x20B9;12L" oninput="generate()"></div>
+          <div class="field"><label>Metric 2 &mdash; Label</label><input type="text" id="c-m2l" placeholder="e.g. Scholarships unlocked" oninput="generate()"></div>
+        </div>
+        <div id="c-extra-metrics" style="display:none">
+          <div class="field-row">
+            <div class="field"><label>Metric 3 &mdash; Number</label><input type="text" id="c-m3n" placeholder="e.g. 8mo" oninput="generate()"></div>
+            <div class="field"><label>Metric 3 &mdash; Label</label><input type="text" id="c-m3l" placeholder="e.g. Time to impact" oninput="generate()"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Metric 4 &mdash; Number</label><input type="text" id="c-m4n" placeholder="e.g. 3" oninput="generate()"></div>
+            <div class="field"><label>Metric 4 &mdash; Label</label><input type="text" id="c-m4l" placeholder="e.g. Medical seats secured" oninput="generate()"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO FORM -->
+    <div id="form-video" style="display:none">
+      <div class="form-section">
+        <div class="form-section-title">YouTube Details</div>
+        <div class="field">
+          <label>YouTube Video URL or ID</label>
+          <input type="text" id="v-ytid" placeholder="https://youtube.com/watch?v=abc123  or just  abc123" oninput="onYtInput()">
+          <div class="field-hint">Paste the full YouTube link or just the video ID.</div>
+          <div class="yt-preview" id="yt-preview-box">
+            <img id="yt-preview-img" src="" alt="Thumbnail preview">
+            <div class="yt-preview-label" id="yt-preview-label">Loading&hellip;</div>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Duration (e.g. 12:08)</label>
+            <input type="text" id="v-duration" placeholder="12:08" oninput="generate()">
+          </div>
+          <div class="field">
+            <label>Sector / Tag</label>
+            <select id="v-sector" onchange="generate()">
+              <option value="education">&#x1F393; Education</option>
+              <option value="healthcare">&#x1F3E5; Healthcare</option>
+              <option value="employment">&#x1F4BC; Employment</option>
+              <option value="legal">&#x2696;&#xFE0F; Legal Aid</option>
+              <option value="agriculture">&#x1F33E; Agriculture</option>
+              <option value="general">&#x2B50; Featured Talk</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Date</label>
+          <input type="date" id="v-date" oninput="onDateChange('v')" onchange="onDateChange('v')">
+          <div class="dual-date-display" id="v-dual-date" style="display:none;">
+            <div class="date-col">
+              <div class="date-col-label">Gregorian</div>
+              <div class="date-col-value" id="v-en-val">—</div>
+              <div class="date-col-sub" id="v-en-sub"></div>
+            </div>
+            <div class="date-col">
+              <div class="date-col-label hijri-lbl">&#x2605; Hijri (Islamic)</div>
+              <div class="date-col-value hijri-val" id="v-hi-val">—</div>
+              <div class="date-col-sub" id="v-hi-sub"></div>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Featured Video? <span style="font-weight:400;text-transform:none;letter-spacing:0">(spans 2 columns)</span></label>
+          <select id="v-featured" onchange="generate()">
+            <option value="no">No &mdash; standard card</option>
+            <option value="yes">Yes &mdash; featured (2-column wide)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Content</div>
+        <div class="field">
+          <label>Video Title</label>
+          <input type="text" id="v-title" placeholder="e.g. Why Rural India Deserves a Doctor in Every Phone" oninput="generate()">
+        </div>
+        <div class="field">
+          <label>Short Description</label>
+          <textarea id="v-excerpt" placeholder="2&ndash;3 sentence description of what the video covers&hellip;" oninput="generate()"></textarea>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Speaker Details</div>
+        <div class="field-row">
+          <div class="field"><label>Speaker Name</label><input type="text" id="v-name" placeholder="e.g. Dr. Rahila Khan" oninput="generate()"></div>
+          <div class="field"><label>Speaker Role / Org</label><input type="text" id="v-role" placeholder="e.g. IMC Health Council Lead" oninput="generate()"></div>
+        </div>
+        <div class="field-hint" style="margin-top:-6px;margin-bottom:8px;">Initials will be auto-generated for the avatar (e.g. &ldquo;Rahila Khan&rdquo; &rarr; &ldquo;RK&rdquo;).</div>
+      </div>
+    </div>
+
+    <button class="generate-btn" onclick="generate()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      Generate HTML Snippet
+    </button>
+  </div>
+
+  <!-- RIGHT: OUTPUT -->
+  <div class="panel-right">
+    <div>
+      <div class="preview-label">Live Preview</div>
+      <div id="live-preview">
+        <div class="empty-state">
+          <div class="es-icon">&#x2736;</div>
+          <p>Fill in the form on the left and your card preview will appear here instantly.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="output-block" id="output-block" style="display:none">
+      <div class="output-header">
+        <div class="output-header-title">HTML Snippet &mdash; Ready to Paste</div>
+        <button class="copy-btn" id="copy-btn" onclick="copyCode()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+      <pre class="output-code" id="output-code"></pre>
+    </div>
+
+    <div class="instructions">
+      <h4>&#x1F4CC; How to use this snippet</h4>
+      <ol>
+        <li>Click <strong>Copy</strong> on the generated snippet above.</li>
+        <li>Open <code>imc-stories.html</code> in any text editor (Notepad, VS Code, etc.).</li>
+        <li>Find the <code>&lt;!-- Add new case study cards below --&gt;</code> comment inside <code>.cases-grid</code>, or <code>.videos-grid</code> for videos.</li>
+        <li>Paste your snippet right after that comment.</li>
+        <li>Save the file and refresh the browser &mdash; your card will appear.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentType = 'case';
+
+  /* SESSION LOCK */
+  const CORRECT     = 'IMCAdmin@2026';
+  const SESSION_KEY = 'imc_cardgen_sess';
+  const SESSION_MS  = 8 * 60 * 60 * 1000;
+  let   lockTimer   = null;
+
+  function checkPassword() {
+    const input = document.getElementById('gate-input');
+    const err   = document.getElementById('gate-error');
+    const msg   = document.getElementById('gate-session-msg');
+    if (input.value === CORRECT) {
+      try { sessionStorage.setItem(SESSION_KEY, Date.now().toString()); } catch(e) {}
+      msg.textContent = '';
+      const gate = document.getElementById('password-gate');
+      gate.classList.add('unlocking');
+      setTimeout(() => { gate.classList.add('hidden'); gate.classList.remove('unlocking'); startSessionTimer(); }, 480);
+      err.textContent = '\u00a0';
+    } else {
+      input.classList.add('error');
+      err.textContent = 'Incorrect password. Please try again.';
+      input.value = '';
+      setTimeout(() => input.classList.remove('error'), 400);
+      input.focus();
+    }
+  }
+
+  function lockOut() {
+    try { sessionStorage.removeItem(SESSION_KEY); } catch(e) {}
+    clearTimeout(lockTimer);
+    const gate = document.getElementById('password-gate');
+    gate.classList.remove('hidden', 'unlocking');
+    gate.style.opacity = '1'; gate.style.transform = '';
+    document.getElementById('gate-session-msg').textContent = 'Session ended. Please sign in again.';
+    document.getElementById('gate-input').value = '';
+    document.getElementById('gate-error').textContent = '\u00a0';
+    document.getElementById('gate-input').focus();
+  }
+
+  function startSessionTimer() {
+    clearTimeout(lockTimer);
+    lockTimer = setTimeout(lockOut, SESSION_MS);
+  }
+
+  ['click','keydown','mousemove','touchstart'].forEach(evt =>
+    document.addEventListener(evt, () => {
+      if (!document.getElementById('password-gate').classList.contains('hidden')) return;
+      startSessionTimer();
+    }, { passive: true })
+  );
+
+  (function checkSession() {
+    try {
+      const t = sessionStorage.getItem(SESSION_KEY);
+      if (t && (Date.now() - parseInt(t)) < SESSION_MS) {
+        document.getElementById('password-gate').classList.add('hidden');
+        startSessionTimer(); return;
+      }
+    } catch(e) {}
+    window.addEventListener('load', () => { try { document.getElementById('gate-input').focus(); } catch(e) {} });
+  })();
+
+  function toggleVis() {
+    const input = document.getElementById('gate-input');
+    const btn   = document.getElementById('vis-btn');
+    if (input.type === 'password') { input.type = 'text';     btn.textContent = '\uD83D\uDE48'; }
+    else                           { input.type = 'password'; btn.textContent = '\uD83D\uDC41'; }
+  }
+
+  /* ══ HIJRI CALENDAR CONVERSION ══
+     Algorithm: Kuwaiti algorithm (accurate to within 1 day for modern dates)
+  */
+  function gregorianToHijri(gYear, gMonth, gDay) {
+    // gMonth is 1-based
+    var jd = Math.floor((14 - gMonth) / 12);
+    var y  = gYear + 4800 - jd;
+    var m  = gMonth + 12 * jd - 3;
+    var JD = gDay + Math.floor((153 * m + 2) / 5) + 365 * y
+             + Math.floor(y / 4) - Math.floor(y / 100)
+             + Math.floor(y / 400) - 32045;
+
+    var l  = JD - 1948440 + 10632;
+    var n  = Math.floor((l - 1) / 10631);
+    l      = l - 10631 * n + 354;
+    var j  = Math.floor((10985 - l) / 5316)
+             * Math.floor((50 * l) / 17719)
+             + Math.floor(l / 5670)
+             * Math.floor((43 * l) / 15238);
+    l      = l - Math.floor((30 - j) / 15) * Math.floor((17719 * j) / 50)
+             - Math.floor(j / 16) * Math.floor((15238 * j) / 43) + 29;
+    var hMonth = Math.floor((24 * l) / 709);
+    var hDay   = l - Math.floor((709 * hMonth) / 24);
+    var hYear  = 30 * n + j - 30;
+    return { year: hYear, month: hMonth, day: hDay };
+  }
+
+  const HIJRI_MONTHS = [
+    'Muharram','Safar','Rabi al-Awwal','Rabi al-Thani',
+    'Jumada al-Awwal','Jumada al-Thani','Rajab','Sha\'ban',
+    'Ramadan','Shawwal','Dhu al-Qi\'dah','Dhu al-Hijjah'
+  ];
+
+  const EN_MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const EN_MONTHS_FULL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  function formatEnglishDate(dateStr) {
+    // dateStr = "YYYY-MM-DD"
+    var parts = dateStr.split('-');
+    var y = parseInt(parts[0]), m = parseInt(parts[1]), d = parseInt(parts[2]);
+    return {
+      short: EN_MONTHS[m-1].toUpperCase() + ' ' + y,
+      full:  d + ' ' + EN_MONTHS_FULL[m-1] + ' ' + y
+    };
+  }
+
+  function formatHijriDate(h) {
+    return {
+      short: HIJRI_MONTHS[h.month - 1] + ' ' + h.year + ' AH',
+      full:  h.day + ' ' + HIJRI_MONTHS[h.month - 1] + ' ' + h.year + ' AH'
+    };
+  }
+
+  // Called whenever a date picker changes
+  function onDateChange(prefix) {
+    var dateStr = document.getElementById(prefix + '-date').value;
+    var display = document.getElementById(prefix + '-dual-date');
+    if (!dateStr) { display.style.display = 'none'; generate(); return; }
+
+    var parts = dateStr.split('-');
+    var y = parseInt(parts[0]), m = parseInt(parts[1]), d = parseInt(parts[2]);
+    var h = gregorianToHijri(y, m, d);
+    var en = formatEnglishDate(dateStr);
+    var hi = formatHijriDate(h);
+
+    document.getElementById(prefix + '-en-val').textContent = en.short;
+    document.getElementById(prefix + '-en-sub').textContent = en.full;
+    document.getElementById(prefix + '-hi-val').textContent = hi.short;
+    document.getElementById(prefix + '-hi-sub').textContent = hi.full;
+    display.style.display = 'flex';
+    generate();
+  }
+
+  // Returns { en, hi, enFull, hiFull } for a date input value, or nulls
+  function getDualDate(prefix) {
+    var dateStr = document.getElementById(prefix + '-date').value;
+    if (!dateStr) return { en: '', hi: '', enFull: '', hiFull: '' };
+    var parts = dateStr.split('-');
+    var y = parseInt(parts[0]), m = parseInt(parts[1]), d = parseInt(parts[2]);
+    var h = gregorianToHijri(y, m, d);
+    var en = formatEnglishDate(dateStr);
+    var hi = formatHijriDate(h);
+    return { en: en.short, hi: hi.short, enFull: en.full, hiFull: hi.full };
+  }
+
+  /* CORE LOGIC */
+  function setType(t) {
+    currentType = t;
+    document.querySelectorAll('.type-btn').forEach((b,i) => {
+      b.classList.toggle('active', (t==='case'&&i===0)||(t==='video'&&i===1));
+    });
+    document.getElementById('form-case').style.display  = t==='case'  ? '' : 'none';
+    document.getElementById('form-video').style.display = t==='video' ? '' : 'none';
+    generate();
+  }
+
+  function extractYtId(raw) {
+    raw = raw.trim();
+    var m = raw.match(/(?:v=|youtu\.be\/|embed\/)([A-Za-z0-9_-]{11})/);
+    return m ? m[1] : (raw.length===11 ? raw : '');
+  }
+
+  function onYtInput() {
+    var raw  = document.getElementById('v-ytid').value;
+    var ytid = extractYtId(raw);
+    var box  = document.getElementById('yt-preview-box');
+    var img  = document.getElementById('yt-preview-img');
+    var lbl  = document.getElementById('yt-preview-label');
+    if (ytid) {
+      img.src = 'https://img.youtube.com/vi/' + ytid + '/maxresdefault.jpg';
+      img.onerror = function() { img.src = 'https://img.youtube.com/vi/' + ytid + '/hqdefault.jpg'; };
+      lbl.textContent = 'ID: ' + ytid;
+      box.classList.add('visible');
+    } else {
+      box.classList.remove('visible');
+    }
+    generate();
+  }
+
+  function initials(name) {
+    return name.trim().split(/\s+/).map(function(w){return w[0]||'';}).join('').toUpperCase().slice(0,2) || 'IM';
+  }
+
+  var SECTORS = {
+    education:   { cls:'edu',    emoji:'\uD83C\uDF93', label:'Education' },
+    healthcare:  { cls:'health', emoji:'\uD83C\uDFE5', label:'Healthcare' },
+    employment:  { cls:'employ', emoji:'\uD83D\uDCBC', label:'Employment' },
+    legal:       { cls:'legal',  emoji:'\u2696\uFE0F', label:'Legal Aid' },
+    agriculture: { cls:'agri',   emoji:'\uD83C\uDF3E', label:'Agriculture' },
+    general:     { cls:'edu',    emoji:'\u2B50',        label:'Featured Talk' },
+  };
+
+  function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function generate() {
+    if (currentType==='case') generateCase();
+    else generateVideo();
+  }
+
+  function generateCase() {
+    var sector   = document.getElementById('c-sector').value;
+    var featured = document.getElementById('c-featured').value === 'yes';
+    var title    = document.getElementById('c-title').value;
+    var location = document.getElementById('c-location').value;
+    var excerpt  = document.getElementById('c-excerpt').value;
+    var link     = document.getElementById('c-link').value || '#';
+    var m1n = document.getElementById('c-m1n').value;
+    var m1l = document.getElementById('c-m1l').value;
+    var m2n = document.getElementById('c-m2n').value;
+    var m2l = document.getElementById('c-m2l').value;
+    var m3n = document.getElementById('c-m3n').value;
+    var m3l = document.getElementById('c-m3l').value;
+    var m4n = document.getElementById('c-m4n').value;
+    var m4l = document.getElementById('c-m4l').value;
+    var dates = getDualDate('c');
+
+    document.getElementById('c-extra-metrics').style.display = featured ? '' : 'none';
+
+    var s = SECTORS[sector];
+    var hasContent = title || excerpt;
+
+    var datePreviewHTML = dates.en
+      ? '<div class="preview-date-wrap"><span class="preview-date-en">' + esc(dates.en) + '</span><span class="preview-date-hi">' + esc(dates.hi) + '</span></div>'
+      : '<span class="preview-date-en">&mdash;</span>';
+
+    var previewHTML = '';
+    if (hasContent) {
+      previewHTML = '<div class="preview-case-card">'
+        + '<div class="preview-case-header">'
+        + '<div class="preview-sector-tag ' + s.cls + '">' + s.emoji + ' ' + s.label + '</div>'
+        + '<div class="preview-case-title">' + (esc(title)||'Your title will appear here') + '</div>'
+        + '<div class="preview-case-loc">\uD83D\uDCCD ' + (esc(location)||'Location') + '</div>'
+        + '<div class="preview-case-excerpt">' + (esc(excerpt)||'Your excerpt will appear here\u2026') + '</div>'
+        + '</div>'
+        + '<div class="preview-metrics">'
+        + '<div class="preview-metric"><div class="preview-metric-num">' + (esc(m1n)||'&mdash;') + '</div><div class="preview-metric-label">' + (esc(m1l)||'Metric label') + '</div></div>'
+        + '<div class="preview-metric"><div class="preview-metric-num">' + (esc(m2n)||'&mdash;') + '</div><div class="preview-metric-label">' + (esc(m2l)||'Metric label') + '</div></div>'
+        + (featured&&m3n ? '<div class="preview-metric"><div class="preview-metric-num">' + esc(m3n) + '</div><div class="preview-metric-label">' + esc(m3l) + '</div></div>' : '')
+        + (featured&&m4n ? '<div class="preview-metric"><div class="preview-metric-num">' + esc(m4n) + '</div><div class="preview-metric-label">' + esc(m4l) + '</div></div>' : '')
+        + '</div>'
+        + '<div class="preview-case-footer"><span class="preview-read-more">Read More &rarr;</span>' + datePreviewHTML + '</div>'
+        + '</div>';
+    } else {
+      previewHTML = '<div class="empty-state"><div class="es-icon">\uD83D\uDCCB</div><p>Start filling in the form to see your Case Study card preview.</p></div>';
+    }
+    document.getElementById('live-preview').innerHTML = previewHTML;
+
+    if (!hasContent) { document.getElementById('output-block').style.display='none'; return; }
+
+    var extraMetrics = featured
+      ? '\n          <div class="case-metric"><div class="case-metric-num">' + esc(m3n) + '</div><div class="case-metric-label">' + esc(m3l) + '</div></div>'
+        + '\n          <div class="case-metric"><div class="case-metric-num">' + esc(m4n) + '</div><div class="case-metric-label">' + esc(m4l) + '</div></div>'
+      : '';
+
+    var dateSnippet = dates.en
+      ? '<div class="case-date-wrap">\n              <span class="case-date-en">' + esc(dates.en) + '</span>\n              <span class="case-date-hi">' + esc(dates.hi) + '</span>\n            </div>'
+      : '';
+
+    var featuredWrap = featured
+      ? '\n      <!-- Paste inside .cases-grid — FEATURED: remove this comment -->'
+      : '\n      <!-- Paste inside .cases-grid -->';
+
+    var code;
+    if (featured) {
+      code = featuredWrap + '\n'
+        + '      <div class="case-card featured" data-sector="' + sector + '">\n'
+        + '        <div class="featured-inner">\n'
+        + '          <div class="case-card-header">\n'
+        + '            <div class="case-sector-tag ' + s.cls + '">' + s.emoji + ' ' + s.label + '</div>\n'
+        + '            <div class="case-card-title">' + esc(title) + '</div>\n'
+        + '            <div class="case-card-location">' + esc(location) + '</div>\n'
+        + '            <div class="case-card-excerpt">' + esc(excerpt) + '</div>\n'
+        + '          </div>\n'
+        + '          <div class="case-card-footer">\n'
+        + '            <a href="' + esc(link) + '" class="case-read-more">Read Full Case Study <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>\n'
+        + '            ' + dateSnippet + '\n'
+        + '          </div>\n'
+        + '        </div>\n'
+        + '        <div class="case-metrics">\n'
+        + '          <div class="case-metric"><div class="case-metric-num">' + esc(m1n) + '</div><div class="case-metric-label">' + esc(m1l) + '</div></div>\n'
+        + '          <div class="case-metric"><div class="case-metric-num">' + esc(m2n) + '</div><div class="case-metric-label">' + esc(m2l) + '</div></div>'
+        + extraMetrics + '\n'
+        + '        </div>\n'
+        + '      </div>';
+    } else {
+      code = featuredWrap + '\n'
+        + '      <div class="case-card fade-up" data-sector="' + sector + '">\n'
+        + '        <div class="case-card-header">\n'
+        + '          <div class="case-sector-tag ' + s.cls + '">' + s.emoji + ' ' + s.label + '</div>\n'
+        + '          <div class="case-card-title">' + esc(title) + '</div>\n'
+        + '          <div class="case-card-location">' + esc(location) + '</div>\n'
+        + '          <div class="case-card-excerpt">' + esc(excerpt) + '</div>\n'
+        + '        </div>\n'
+        + '        <div class="case-metrics">\n'
+        + '          <div class="case-metric"><div class="case-metric-num">' + esc(m1n) + '</div><div class="case-metric-label">' + esc(m1l) + '</div></div>\n'
+        + '          <div class="case-metric"><div class="case-metric-num">' + esc(m2n) + '</div><div class="case-metric-label">' + esc(m2l) + '</div></div>\n'
+        + '        </div>\n'
+        + '        <div class="case-card-footer">\n'
+        + '          <a href="' + esc(link) + '" class="case-read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>\n'
+        + '          ' + dateSnippet + '\n'
+        + '        </div>\n'
+        + '      </div>';
+    }
+
+    document.getElementById('output-code').textContent = code.trim();
+    document.getElementById('output-block').style.display = '';
+    resetCopyBtn();
+  }
+
+  function generateVideo() {
+    var raw      = document.getElementById('v-ytid').value;
+    var ytid     = extractYtId(raw);
+    var duration = document.getElementById('v-duration').value || '';
+    var sector   = document.getElementById('v-sector').value;
+    var featured = document.getElementById('v-featured').value === 'yes';
+    var title    = document.getElementById('v-title').value;
+    var excerpt  = document.getElementById('v-excerpt').value;
+    var name     = document.getElementById('v-name').value;
+    var role     = document.getElementById('v-role').value;
+    var dates    = getDualDate('v');
+
+    var s   = SECTORS[sector];
+    var ini = initials(name);
+    var hasContent = title || ytid;
+
+    var dateVideoPreview = dates.en
+      ? '<div class="preview-video-date-wrap"><span class="preview-video-date-en">' + esc(dates.en) + '</span><span class="preview-video-date-hi">' + esc(dates.hi) + '</span></div>'
+      : '';
+
+    var previewHTML = '';
+    if (hasContent) {
+      previewHTML = '<div class="preview-video-card">'
+        + '<div class="preview-video-thumb">'
+        + (ytid ? '<img src="https://img.youtube.com/vi/' + ytid + '/maxresdefault.jpg" onerror="this.src=\'https://img.youtube.com/vi/' + ytid + '/hqdefault.jpg\'" alt="">' : '<div style="font-size:36px;opacity:0.4">\uD83C\uDFAC</div>')
+        + '<div class="preview-video-play"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>'
+        + '</div>'
+        + '<div class="preview-video-body">'
+        + '<div class="preview-video-tag">' + s.emoji + ' ' + s.label + '</div>'
+        + '<div class="preview-video-title">' + (esc(title)||'Your video title here') + '</div>'
+        + '<div class="preview-video-excerpt">' + (esc(excerpt)||'Your description will appear here\u2026') + '</div>'
+        + '<div class="preview-video-meta">'
+        + '<div style="display:flex;align-items:center;gap:8px">'
+        + '<div class="preview-video-avatar">' + ini + '</div>'
+        + '<div><div class="preview-speaker-name">' + (esc(name)||'Speaker Name') + '</div><div class="preview-speaker-role">' + (esc(role)||'Role / Organisation') + '</div></div>'
+        + '</div>'
+        + dateVideoPreview
+        + '</div>'
+        + '</div>'
+        + '</div>';
+    } else {
+      previewHTML = '<div class="empty-state"><div class="es-icon">\u25B6</div><p>Enter a YouTube URL and title to preview your Video card.</p></div>';
+    }
+    document.getElementById('live-preview').innerHTML = previewHTML;
+
+    if (!hasContent) { document.getElementById('output-block').style.display='none'; return; }
+
+    var thumbSrc  = ytid ? 'https://img.youtube.com/vi/' + ytid + '/maxresdefault.jpg' : '';
+    var ytUrl     = ytid ? 'https://www.youtube.com/watch?v=' + ytid : '#';
+    var clickFn   = ytid ? "openVideo('" + ytid + "','" + esc(title) + "')" : '';
+    var featClass = featured ? ' featured-video' : '';
+    var comment   = featured
+      ? '\n      <!-- Paste inside .videos-grid — FEATURED VIDEO (2-column) -->'
+      : '\n      <!-- Paste inside .videos-grid -->';
+
+    var dateSnippet = dates.en
+      ? '\n            <div class="video-date-wrap">\n              <span class="video-date-en">' + esc(dates.en) + '</span>\n              <span class="video-date-hi">' + esc(dates.hi) + '</span>\n            </div>'
+      : '';
+
+    var code = comment + '\n'
+      + '      <div class="video-card' + featClass + ' fade-up" data-sector="' + sector + '"' + (clickFn?' onclick="' + clickFn + '"':'') + '>\n'
+      + '        <div class="video-thumb-wrap">\n'
+      + '          <img class="video-thumb-img"\n'
+      + '               src="' + thumbSrc + '"\n'
+      + '               alt="' + esc(title) + '"\n'
+      + '               onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">\n'
+      + '          <div class="video-thumb-placeholder" style="display:none">\n'
+      + '            <div class="ph-icon">' + s.emoji + '</div>\n'
+      + '          </div>\n'
+      + '          <div class="video-play-overlay">\n'
+      + '            <div class="video-play-btn">\n'
+      + '              <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>\n'
+      + '            </div>\n'
+      + '          </div>\n'
+      + '          <div class="video-duration">' + esc(duration) + '</div>\n'
+      + '        </div>\n'
+      + '        <div class="video-card-body">\n'
+      + '          <div class="video-tag">' + s.emoji + ' ' + s.label + '</div>\n'
+      + '          <div class="video-title">' + esc(title) + '</div>\n'
+      + '          <div class="video-excerpt">' + esc(excerpt) + '</div>\n'
+      + '          <div class="video-meta">\n'
+      + '            <div class="video-speaker">\n'
+      + '              <div class="video-speaker-avatar">' + ini + '</div>\n'
+      + '              <div>\n'
+      + '                <div class="video-speaker-name">' + esc(name) + '</div>\n'
+      + '                <div class="video-speaker-role">' + esc(role) + '</div>\n'
+      + '              </div>\n'
+      + '            </div>\n'
+      + '            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">'
+      + dateSnippet + '\n'
+      + '              <a href="' + ytUrl + '" target="_blank" class="video-watch-btn" onclick="event.stopPropagation()">\n'
+      + '                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 002.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 002.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.75 15.5V8.5l6.25 3.5-6.25 3.5z"/></svg>\n'
+      + '                Watch on YouTube\n'
+      + '              </a>\n'
+      + '            </div>\n'
+      + '          </div>\n'
+      + '        </div>\n'
+      + '      </div>';
+
+    document.getElementById('output-code').textContent = code.trim();
+    document.getElementById('output-block').style.display = '';
+    resetCopyBtn();
+  }
+
+  function copyCode() {
+    var text = document.getElementById('output-code').textContent;
+    navigator.clipboard.writeText(text).then(function() {
+      var btn = document.getElementById('copy-btn');
+      btn.classList.add('copied');
+      btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+      setTimeout(resetCopyBtn, 2500);
+    });
+  }
+
+  function resetCopyBtn() {
+    var btn = document.getElementById('copy-btn');
+    btn.classList.remove('copied');
+    btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy';
+  }
+</script>
+</body>
+</html>

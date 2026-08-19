@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMC – Inspiring Stories & Case Studies | Count Us. Count On Us.</title>
+<meta name="description" content="Real stories of impact from across India — case studies and inspiring voices from the IMC community. Count Us. Count On Us."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://www.imcbharat.com/imc-inspiring-stories"/>
+<meta property="og:title" content="Inspiring Stories & Case Studies | IMC"/>
+<meta property="og:description" content="Real people. Real change. Case studies and inspiring voices from across India. Count Us. Count On Us."/>
+<meta property="og:image" content="https://imc-network.imc-wordwide.workers.dev/IMC_Logo.png"/>
+<meta property="og:image:width" content="600"/>
+<meta property="og:image:height" content="600"/>
+<meta property="og:site_name" content="IMC"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Inspiring Stories | IMC"/>
+<meta name="twitter:description" content="Real people. Real change. Count Us. Count On Us."/>
+<meta name="twitter:image" content="https://imc-network.imc-wordwide.workers.dev/IMC_Logo.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal-deep: #052b27;
+    --teal-mid: #0a3d38;
+    --teal-bright: #0f5248;
+    --orange: #F07B30;
+    --orange-light: #f9a06a;
+    --gold: #C9A84C;
+    --gold-light: #e5c97a;
+    --white: #ffffff;
+    --off-white: #f5f2ec;
+    --light-grey: #e8e4dc;
+    --text-dark: #1a1a1a;
+    --text-mid: #444444;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 70px; overflow-x: hidden; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--text-dark); overflow-x: hidden; max-width: 100vw; }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    background: rgba(5, 43, 39, 0.96);
+    backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw; height: 70px;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-icon { width: 44px; height: 44px; background: var(--orange); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 16px; color: white; letter-spacing: -1px; }
+  .nav-logo-text { color: white; font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; line-height: 1.3; }
+  .nav-logo-text span { color: var(--gold); display: block; font-size: 10px; letter-spacing: 3px; font-weight: 300; }
+  .nav-back { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: color 0.2s; }
+  .nav-back:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 60vh; background: var(--teal-deep);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 120px 8vw 72px; position: relative; overflow: hidden;
+  }
+  .hero-grid-bg { position: absolute; inset: 0; background-image: linear-gradient(rgba(201,168,76,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.05) 1px, transparent 1px); background-size: 60px 60px; }
+  .hero-glow { position: absolute; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(240,123,48,0.12) 0%, transparent 65%); top: -200px; right: -100px; pointer-events: none; }
+  .hero-glow-2 { position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%); bottom: -50px; left: 5%; pointer-events: none; }
+  .hero-inner { position: relative; z-index: 2; max-width: 860px; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.35); color: var(--gold-light); font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; padding: 8px 16px; border-radius: 2px; margin-bottom: 28px; }
+  .hero-headline { font-family: 'Playfair Display', serif; font-size: clamp(40px, 6vw, 76px); font-weight: 700; color: white; line-height: 1.06; margin-bottom: 20px; }
+  .hero-headline em { font-style: normal; color: var(--orange); }
+  .hero-sub { font-size: 18px; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.7; max-width: 580px; margin-bottom: 40px; }
+  .hero-tabs { display: flex; gap: 4px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 4px; width: fit-content; }
+  .hero-tab { padding: 10px 24px; border-radius: 5px; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; cursor: pointer; transition: all 0.25s; color: rgba(255,255,255,0.5); border: none; background: none; }
+  .hero-tab.active { background: var(--orange); color: white; }
+  .hero-tab:hover:not(.active) { color: rgba(255,255,255,0.85); }
+
+  /* ── FILTER BAR ── */
+  #filter-bar { background: white; border-bottom: 1px solid var(--light-grey); padding: 0 8vw; position: sticky; top: 70px; z-index: 90; }
+  .filter-inner { display: flex; align-items: center; gap: 8px; height: 60px; overflow-x: auto; scrollbar-width: none; }
+  .filter-inner::-webkit-scrollbar { display: none; }
+  .filter-chip { white-space: nowrap; padding: 7px 16px; border-radius: 100px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; cursor: pointer; border: 1.5px solid var(--light-grey); background: transparent; color: var(--text-mid); transition: all 0.2s; }
+  .filter-chip.active { background: var(--teal-deep); color: white; border-color: var(--teal-deep); }
+  .filter-chip:hover:not(.active) { border-color: var(--orange); color: var(--orange); }
+
+  /* ── MAIN GRID ── */
+  #content { padding: 64px 8vw 100px; }
+  .section-intro { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 40px; flex-wrap: wrap; gap: 16px; }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--orange); margin-bottom: 10px; }
+  .section-headline { font-family: 'Playfair Display', serif; font-size: clamp(28px, 3vw, 42px); font-weight: 700; color: var(--teal-deep); line-height: 1.15; }
+  .count-badge { background: var(--teal-deep); color: var(--gold); font-size: 12px; font-weight: 600; letter-spacing: 1px; padding: 8px 16px; border-radius: 4px; white-space: nowrap; }
+
+  /* ── CASE STUDY CARDS ── */
+  .cases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 80px; }
+  .case-card {
+    background: white; border-radius: 14px; overflow: hidden;
+    border: 1px solid var(--light-grey); transition: all 0.35s;
+    display: flex; flex-direction: column;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .case-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(5,43,39,0.12); border-color: rgba(240,123,48,0.3); }
+  .case-card-header { padding: 28px 28px 0; }
+  .case-sector-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 5px 12px; border-radius: 2px; margin-bottom: 18px; }
+  .case-sector-tag.edu { background: rgba(15,82,72,0.1); color: var(--teal-bright); }
+  .case-sector-tag.health { background: rgba(240,123,48,0.1); color: #c05818; }
+  .case-sector-tag.legal { background: rgba(201,168,76,0.15); color: #8a6d1a; }
+  .case-sector-tag.employ { background: rgba(5,43,39,0.08); color: var(--teal-deep); }
+  .case-sector-tag.agri { background: rgba(80,140,80,0.1); color: #3a7a3a; }
+  .case-card-title { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 700; color: var(--teal-deep); line-height: 1.3; margin-bottom: 10px; }
+  .case-card-location { font-size: 12px; color: #999; display: flex; align-items: center; gap: 5px; margin-bottom: 14px; }
+  .case-card-location::before { content: '📍'; font-size: 11px; }
+  .case-card-excerpt { font-size: 13.5px; color: var(--text-mid); line-height: 1.7; margin-bottom: 20px; }
+  .case-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--light-grey); border-top: 1px solid var(--light-grey); margin-top: auto; }
+  .case-metric { background: var(--off-white); padding: 16px 18px; }
+  .case-metric-num { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--orange); line-height: 1; margin-bottom: 3px; }
+  .case-metric-label { font-size: 11px; color: #999; font-weight: 400; }
+  .case-card-footer { padding: 18px 28px; border-top: 1px solid var(--light-grey); display: flex; align-items: center; justify-content: space-between; }
+  .case-read-more { font-size: 13px; font-weight: 600; color: var(--teal-deep); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+  .case-read-more:hover { color: var(--orange); }
+  .case-read-more svg { transition: transform 0.2s; }
+  .case-read-more:hover svg { transform: translateX(3px); }
+  .case-date { font-size: 11px; color: #bbb; font-family: 'DM Mono', monospace; }
+
+  /* Featured case study */
+  .case-card.featured {
+    grid-column: span 3;
+    flex-direction: row;
+    border-color: rgba(240,123,48,0.25);
+    background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal-mid) 100%);
+    color: white;
+  }
+  .case-card.featured .case-card-header { padding: 40px 40px 40px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .case-card.featured .case-card-title { font-size: clamp(22px, 2.5vw, 32px); color: white; }
+  .case-card.featured .case-card-location { color: rgba(255,255,255,0.5); }
+  .case-card.featured .case-card-excerpt { color: rgba(255,255,255,0.65); font-size: 15px; max-width: 560px; }
+  .case-card.featured .case-metrics { grid-template-columns: repeat(4,1fr); background: rgba(255,255,255,0.08); border: none; border-left: 1px solid rgba(255,255,255,0.1); min-width: 340px; flex-shrink: 0; }
+  .case-card.featured .case-metric { background: transparent; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .case-card.featured .case-metric:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.06); }
+  .case-card.featured .case-metric-num { color: var(--orange); font-size: 28px; }
+  .case-card.featured .case-metric-label { color: rgba(255,255,255,0.45); }
+  .case-card.featured .case-card-footer { border-top: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.1); padding: 20px 40px; }
+  .case-card.featured .case-read-more { color: var(--gold); }
+  .case-card.featured .case-read-more:hover { color: var(--orange-light); }
+  .case-card.featured .case-date { color: rgba(255,255,255,0.3); }
+  .case-card.featured .case-sector-tag.edu { background: rgba(201,168,76,0.2); color: var(--gold-light); }
+  .featured-inner { display: flex; flex-direction: column; flex: 1; }
+
+  /* ── DIVIDER ── */
+  .section-divider { display: flex; align-items: center; gap: 20px; margin: 80px 0 48px; }
+  .divider-line { flex: 1; height: 1px; background: var(--light-grey); }
+  .divider-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--text-mid); white-space: nowrap; display: flex; align-items: center; gap: 10px; }
+  .divider-dot { width: 6px; height: 6px; background: var(--orange); border-radius: 50%; }
+
+  /* ── VIDEO SECTION ── */
+  .videos-intro { margin-bottom: 40px; }
+  .videos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+  /* Featured video — spans 2 columns */
+  .video-card {
+    background: var(--teal-deep); border-radius: 14px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06); transition: all 0.35s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: flex; flex-direction: column;
+  }
+  .video-card:hover { transform: translateY(-5px); box-shadow: 0 20px 56px rgba(0,0,0,0.25); border-color: rgba(201,168,76,0.25); }
+  .video-card.featured-video { grid-column: span 2; flex-direction: row; }
+
+  .video-thumb-wrap { position: relative; overflow: hidden; flex-shrink: 0; cursor: pointer; }
+  .video-card:not(.featured-video) .video-thumb-wrap { aspect-ratio: 16/9; }
+  .video-card.featured-video .video-thumb-wrap { width: 56%; aspect-ratio: auto; min-height: 280px; }
+  .video-thumb-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; display: block; }
+  .video-thumb-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, var(--teal-mid), #021c1a); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; }
+  .video-thumb-placeholder .ph-icon { font-size: 40px; opacity: 0.6; }
+  .video-card:hover .video-thumb-img { transform: scale(1.04); }
+  .video-play-overlay {
+    position: absolute; inset: 0;
+    background: rgba(5,43,39,0.35);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .video-card:hover .video-play-overlay { opacity: 1; }
+  .video-play-btn {
+    width: 60px; height: 60px; background: var(--orange); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 24px rgba(240,123,48,0.5);
+    transform: scale(0.85); transition: transform 0.25s;
+  }
+  .video-card:hover .video-play-btn { transform: scale(1); }
+  .video-play-btn svg { margin-left: 4px; }
+  .video-duration { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.75); color: white; font-family: 'DM Mono', monospace; font-size: 11px; padding: 3px 8px; border-radius: 3px; }
+  .video-card-body { padding: 24px; display: flex; flex-direction: column; flex: 1; }
+  .video-card.featured-video .video-card-body { padding: 32px 28px; }
+  .video-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 2px; background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.25); margin-bottom: 14px; width: fit-content; }
+  .video-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: white; line-height: 1.35; margin-bottom: 10px; }
+  .video-card.featured-video .video-title { font-size: 22px; }
+  .video-excerpt { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.65; margin-bottom: 20px; flex: 1; }
+  .video-meta { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08); }
+  .video-speaker { display: flex; align-items: center; gap: 10px; }
+  .video-speaker-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), #c05818); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: white; flex-shrink: 0; }
+  .video-speaker-name { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.75); }
+  .video-speaker-role { font-size: 11px; color: rgba(255,255,255,0.4); }
+  .video-watch-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(240,123,48,0.15); border: 1px solid rgba(240,123,48,0.35); color: var(--orange-light);
+    font-size: 12px; font-weight: 600; padding: 8px 14px; border-radius: 5px;
+    text-decoration: none; transition: all 0.2s; white-space: nowrap;
+  }
+  .video-watch-btn:hover { background: var(--orange); color: white; border-color: var(--orange); }
+
+  /* Modal for YouTube embed */
+  .video-modal-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(2,28,26,0.92); backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  }
+  .video-modal-overlay.open { opacity: 1; pointer-events: all; }
+  .video-modal-box {
+    width: 100%; max-width: 900px;
+    transform: scale(0.95); transition: transform 0.35s cubic-bezier(0.34,1.2,0.64,1);
+  }
+  .video-modal-overlay.open .video-modal-box { transform: scale(1); }
+  .video-modal-header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 16px; }
+  .video-modal-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: white; }
+  .video-modal-close {
+    width: 36px; height: 36px; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: rgba(255,255,255,0.5); font-size: 18px; transition: all 0.2s;
+  }
+  .video-modal-close:hover { background: rgba(240,123,48,0.25); color: var(--orange); border-color: var(--orange); }
+  .video-modal-frame { width: 100%; aspect-ratio: 16/9; border-radius: 10px; overflow: hidden; background: #000; }
+  .video-modal-frame iframe { width: 100%; height: 100%; border: none; display: block; }
+
+  /* ── SUBMIT BANNER ── */
+  #submit { background: var(--teal-mid); padding: 72px 8vw; display: grid; grid-template-columns: 1fr auto; gap: 60px; align-items: center; position: relative; overflow: hidden; }
+  #submit::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px); background-size: 60px 60px; }
+  .submit-content { position: relative; z-index: 2; }
+  .submit-title { font-family: 'Playfair Display', serif; font-size: clamp(26px, 3vw, 40px); font-weight: 700; color: white; margin-bottom: 12px; line-height: 1.2; }
+  .submit-title span { color: var(--orange); }
+  .submit-sub { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.65; max-width: 500px; }
+  .submit-actions { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
+  .btn-primary { background: var(--orange); color: white; padding: 14px 28px; border: none; border-radius: 4px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.25s; display: inline-block; text-align: center; }
+  .btn-primary:hover { background: #d4692a; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(240,123,48,0.4); }
+  .btn-outline-light { background: transparent; color: rgba(255,255,255,0.7); padding: 13px 28px; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.25s; display: inline-block; text-align: center; }
+  .btn-outline-light:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── FOOTER ── */
+  footer { background: #021c1a; padding: 40px 8vw; text-align: center; }
+  footer p { font-size: 13px; color: rgba(255,255,255,0.35); }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer .footer-logo { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: white; margin-bottom: 8px; }
+  footer .tagline { color: var(--gold); font-style: italic; font-size: 14px; margin-bottom: 16px; }
+
+  /* ── FADE-UP ── */
+  .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up.delay-1 { transition-delay: 0.1s; }
+  .fade-up.delay-2 { transition-delay: 0.2s; }
+  .fade-up.delay-3 { transition-delay: 0.32s; }
+
+  /* ── PANEL: hidden unless correct tab active ── */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .cases-grid { grid-template-columns: 1fr 1fr; }
+    .case-card.featured { grid-column: span 2; flex-direction: column; }
+    .case-card.featured .video-thumb-wrap,
+    .case-card.featured .case-metrics { width: 100%; min-height: auto; }
+    .case-card.featured .case-metrics { grid-template-columns: 1fr 1fr; border-left: none; border-top: 1px solid rgba(255,255,255,0.1); }
+    .videos-grid { grid-template-columns: 1fr 1fr; }
+    .video-card.featured-video { grid-column: span 2; flex-direction: column; }
+    .video-card.featured-video .video-thumb-wrap { width: 100%; aspect-ratio: 16/9; min-height: auto; }
+    #submit { grid-template-columns: 1fr; gap: 32px; }
+  }
+  @media (max-width: 720px) {
+    .cases-grid { grid-template-columns: 1fr; }
+    .case-card.featured { grid-column: span 1; }
+    .videos-grid { grid-template-columns: 1fr; }
+    .video-card.featured-video { grid-column: span 1; }
+    .hero-tabs { display: grid; grid-template-columns: 1fr 1fr; width: 100%; gap: 4px; }
+    .hero-tab { font-size: 11px; padding: 8px 10px; white-space: nowrap; text-align: center; }
+    .hero-tab:first-child { grid-column: 1 / -1; width: fit-content; text-align: left; }
+    #filter-bar { display: none; }
+  }
+
+  @media (max-width: 560px) {
+    nav { padding: 0 16px; }
+    .nav-logo-icon { width: 36px; height: 36px; font-size: 13px; flex-shrink: 0; }
+    .nav-logo-text { font-size: 10px; letter-spacing: 0.8px; white-space: nowrap; }
+    .nav-logo-text span { font-size: 8px; letter-spacing: 1px; }
+    .nav-back { display: none; }
+    #admin-btn { display: none !important; }
+    .video-meta { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .video-speaker-name { white-space: nowrap; }
+    .video-speaker-role { white-space: normal; line-height: 1.2; }
+    .video-watch-btn { align-self: flex-start; }
+    #hero { padding: 100px 20px 48px; }
+    .hero-badge { font-size: 10px; letter-spacing: 1px; padding: 6px 12px; max-width: 100%; }
+    .hero-sub { font-size: 15px; }
+    #content { padding: 40px 16px 60px; }
+    .cases-grid { gap: 16px; }
+    .videos-grid { gap: 16px; }
+    .case-card.featured { grid-column: span 1 !important; flex-direction: column !important; }
+    .case-card.featured .case-metrics { min-width: 0 !important; grid-template-columns: 1fr 1fr !important; border-left: none !important; border-top: 1px solid rgba(255,255,255,0.1) !important; }
+    .case-card.featured .case-card-header { padding: 24px 20px !important; }
+    .case-card.featured .case-card-footer { padding: 16px 20px !important; flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
+    .case-card.featured .case-read-more { white-space: nowrap; }
+    .case-card.featured .case-date { align-self: flex-start; }
+    .video-card.featured-video { grid-column: span 1 !important; flex-direction: column !important; }
+    .video-card.featured-video .video-thumb-wrap { width: 100% !important; aspect-ratio: 16/9 !important; min-height: auto !important; }
+    #submit { padding: 48px 16px; }
+    footer { padding: 28px 16px; }
+    .count-badge { white-space: normal; font-size: 11px; text-align: center; }
+    .section-intro { flex-direction: column; align-items: flex-start; }
+    footer .footer-logo { font-size: 16px; margin-bottom: 6px; }
+    footer .tagline { font-size: 12px; margin-bottom: 12px; }
+    footer p { font-size: 11px; line-height: 1.8; color: rgba(255,255,255,0.35); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="https://www.imcbharat.com/imc-home-page" class="nav-logo">
+    <img src="imc-logo.png" alt="IMC" class="nav-logo-icon" style="border-radius:50%;object-fit:cover;">
+    <div class="nav-logo-text"><span>Count Us. Count On Us.</span></div>
+  </a>
+  <div style="display:flex;align-items:center;gap:12px;">
+<a href="https://www.imcbharat.com/imc-home-page" style="display:inline-flex;align-items:center;gap:7px;color:rgba(255,255,255,0.75);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:8px 4px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.75)'">
+      &larr; Home Page
+    </a>
+<a id="admin-btn" href="https://www.imcbharat.com/imc-card-generator" target="_blank" style="display:inline-flex;align-items:center;gap:7px;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.3);color:var(--gold);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:8px 16px;border-radius:4px;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(201,168,76,0.25)';this.style.color='#e5c97a'" onmouseout="this.style.background='rgba(201,168,76,0.12)';this.style.color='var(--gold)'">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      Admin
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">Real People. Real Change.</div>
+    <h1 class="hero-headline">Stories that <em>prove</em><br>the system works.</h1>
+    <p class="hero-sub">Case studies and inspiring voices from across India — each one a data point in the most important national project of our time.</p>
+    <div class="hero-tabs">
+      <button class="hero-tab active" onclick="switchTab('both')">All</button>
+      <button class="hero-tab" onclick="switchTab('cases')">Case Studies</button>
+      <button class="hero-tab" onclick="switchTab('videos')">Inspiring Videos</button>
+    </div>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div id="filter-bar">
+  <div class="filter-inner">
+    <button class="filter-chip active" onclick="filterSector(this,'all')">All Sectors</button>
+    <button class="filter-chip" onclick="filterSector(this,'education')">🎓 Education</button>
+    <button class="filter-chip" onclick="filterSector(this,'healthcare')">🏥 Healthcare</button>
+    <button class="filter-chip" onclick="filterSector(this,'employment')">💼 Employment</button>
+    <button class="filter-chip" onclick="filterSector(this,'legal')">⚖️ Legal Aid</button>
+    <button class="filter-chip" onclick="filterSector(this,'agriculture')">🌾 Agriculture</button>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<section id="content">
+
+  <!-- ════ CASE STUDIES PANEL ════ -->
+  <div id="panel-cases" class="tab-panel active">
+    <div class="section-intro fade-up">
+      <div>
+        <div class="section-label">Case Studies</div>
+        <h2 class="section-headline">Where data meets<br>human dignity</h2>
+      </div>
+      <div class="count-badge">12 Published · More Coming</div>
+    </div>
+
+    <div class="cases-grid">
+
+      <!-- FEATURED -->
+      <div class="case-card featured fade-up" data-sector="education">
+        <div class="featured-inner">
+          <div class="case-card-header">
+            <div class="case-sector-tag edu">🎓 Education</div>
+            <div class="case-card-title">From madrasa to medicine: How one PIN Code Pioneer changed the trajectory of 47 families in Patna</div>
+            <div class="case-card-location">Patna, Bihar · PIN 800001</div>
+            <div class="case-card-excerpt">When Dr. Arshad Hussain joined IMC as a Pioneer in January 2024, his PIN code had zero scholarship applications on record. Eight months later, 47 students from his locality had accessed government scholarships, coaching support, and mentorship. This is the story of a system that works when one trusted person shows the way.</div>
+          </div>
+          <div class="case-card-footer">
+            <a href="https://www.imcbharat.com/imc-case-study-stories" target="_blank" class="case-read-more">Read Full Case Study <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <span class="case-date">MAR 2024</span>
+          </div>
+        </div>
+        <div class="case-metrics">
+          <div class="case-metric"><div class="case-metric-num">47</div><div class="case-metric-label">Families reached</div></div>
+          <div class="case-metric"><div class="case-metric-num">₹12L</div><div class="case-metric-label">Scholarships unlocked</div></div>
+          <div class="case-metric"><div class="case-metric-num">8mo</div><div class="case-metric-label">Time to impact</div></div>
+          <div class="case-metric"><div class="case-metric-num">3</div><div class="case-metric-label">Medical seats secured</div></div>
+        </div>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="case-card fade-up delay-1" data-sector="healthcare">
+        <div class="case-card-header">
+          <div class="case-sector-tag health">🏥 Healthcare</div>
+          <div class="case-card-title">Free health camp transforms preventive care in Bhopal's underserved quarters</div>
+          <div class="case-card-location">Bhopal, Madhya Pradesh</div>
+          <div class="case-card-excerpt">A single IMC health camp — 12 volunteer doctors, one Saturday morning — screened 340 residents, identified 28 undiagnosed diabetics, and connected 6 patients to specialist care they couldn't have otherwise afforded.</div>
+        </div>
+        <div class="case-metrics">
+          <div class="case-metric"><div class="case-metric-num">340</div><div class="case-metric-label">People screened</div></div>
+          <div class="case-metric"><div class="case-metric-num">28</div><div class="case-metric-label">Diagnoses made</div></div>
+        </div>
+        <div class="case-card-footer">
+          <a href="#" class="case-read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <span class="case-date">FEB 2024</span>
+        </div>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="case-card fade-up delay-2" data-sector="legal">
+        <div class="case-card-header">
+          <div class="case-sector-tag legal">⚖️ Legal Aid</div>
+          <div class="case-card-title">IMC Lifeline resolves 3-year land dispute in 11 days for family in Lucknow</div>
+          <div class="case-card-location">Lucknow, Uttar Pradesh</div>
+          <div class="case-card-excerpt">A widow facing eviction after a fraudulent property transfer called the IMC helpline on a Tuesday. By the following Saturday, an IMC council lawyer had filed an urgent injunction. The family is still in their home.</div>
+        </div>
+        <div class="case-metrics">
+          <div class="case-metric"><div class="case-metric-num">11</div><div class="case-metric-label">Days to resolution</div></div>
+          <div class="case-metric"><div class="case-metric-num">1</div><div class="case-metric-label">Family protected</div></div>
+        </div>
+        <div class="case-card-footer">
+          <a href="#" class="case-read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <span class="case-date">JAN 2024</span>
+        </div>
+      </div>
+
+      <!-- CARD 4 -->
+      <div class="case-card fade-up" data-sector="employment">
+        <div class="case-card-header">
+          <div class="case-sector-tag employ">💼 Employment</div>
+          <div class="case-card-title">How IMC's job network placed 22 graduates in one quarter in Hyderabad</div>
+          <div class="case-card-location">Hyderabad, Telangana</div>
+          <div class="case-card-excerpt">IMC's verified employment network connected 22 engineering and commerce graduates from low-income households to formal sector jobs — bypassing nepotism and placing merit at the centre.</div>
+        </div>
+        <div class="case-metrics">
+          <div class="case-metric"><div class="case-metric-num">22</div><div class="case-metric-label">Graduates placed</div></div>
+          <div class="case-metric"><div class="case-metric-num">₹4.2L</div><div class="case-metric-label">Avg. annual CTC</div></div>
+        </div>
+        <div class="case-card-footer">
+          <a href="#" class="case-read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <span class="case-date">APR 2024</span>
+        </div>
+      </div>
+
+      <!-- CARD 5 -->
+      <div class="case-card fade-up delay-1" data-sector="agriculture">
+        <div class="case-card-header">
+          <div class="case-sector-tag agri">🌾 Agriculture</div>
+          <div class="case-card-title">Drip irrigation training doubles income for 15 smallholder farmers in Marathwada</div>
+          <div class="case-card-location">Aurangabad, Maharashtra</div>
+          <div class="case-card-excerpt">IMC's agriculture council connected 15 struggling farmers to a drip irrigation cooperative. Within one growing season, average household income rose by 94% — and the model is now being replicated in 3 neighbouring villages.</div>
+        </div>
+        <div class="case-metrics">
+          <div class="case-metric"><div class="case-metric-num">15</div><div class="case-metric-label">Farmers impacted</div></div>
+          <div class="case-metric"><div class="case-metric-num">94%</div><div class="case-metric-label">Income increase</div></div>
+        </div>
+        <div class="case-card-footer">
+          <a href="#" class="case-read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <span class="case-date">MAY 2024</span>
+        </div>
+      </div>
+
+      <!-- CARD 6 -->
+      <div class="case-card fade-up delay-2" data-sector="education">
+        <div class="case-card-header">
+          <div class="case-sector-tag edu">🎓 Education</div>
+          <div class="case-card-title">Digital literacy workshops bring 60+ women online for the first time in Mewat</div>
+          <div class="case-card-location">Mewat, Haryana</div>
+          <div class="case-card-excerpt">In a region where smartphone ownership among women was under 20%, IMC's education council ran six weekend workshops. 63 women completed training and are now independently accessing government portals, banking apps, and health information.</div>
+        </div>
+        <div class="case-metrics">
+          <div class="case-metric"><div class="case-metric-num">63</div><div class="case-metric-label">Women trained</div></div>
+          <div class="case-metric"><div class="case-metric-num">6</div><div class="case-metric-label">Weekend workshops</div></div>
+        </div>
+        <div class="case-card-footer">
+          <a href="#" class="case-read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <span class="case-date">JUN 2024</span>
+        </div>
+      </div>
+
+    </div><!-- /cases-grid -->
+  </div><!-- /panel-cases -->
+
+  <!-- ════ VIDEOS PANEL ════ -->
+  <div id="panel-videos" class="tab-panel active">
+    <div class="section-divider">
+      <div class="divider-line"></div>
+      <div class="divider-label"><div class="divider-dot"></div>Inspiring Voices<div class="divider-dot"></div></div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="videos-intro section-intro fade-up">
+      <div>
+        <div class="section-label">Motivational Videos</div>
+        <h2 class="section-headline">Voices that move<br>a community</h2>
+      </div>
+      <div class="count-badge">YouTube Curated · Growing Weekly</div>
+    </div>
+
+    <div class="videos-grid">
+      <!-- FEATURED VIDEO -->
+      <div class="video-card featured-video fade-up" data-sector="education"
+           onclick="openVideo('ioE0mKEJXNw','The Vision Behind IMC – Adnan Safee, Founder')">
+        <div class="video-thumb-wrap">
+          <img class="video-thumb-img"
+               src="https://img.youtube.com/vi/ioE0mKEJXNw/maxresdefault.jpg"
+               alt="IMC Vision Talk"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="video-thumb-placeholder" style="display:none">
+            <div class="ph-icon">🎬</div>
+            <span style="color:rgba(255,255,255,0.4);font-size:12px;">Video Preview</span>
+          </div>
+          <div class="video-play-overlay">
+            <div class="video-play-btn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+          </div>
+          <div class="video-duration">18:42</div>
+        </div>
+        <div class="video-card-body">
+          <div class="video-tag">⭐ Featured Talk</div>
+          <div class="video-title">The Vision Behind IMC: Why 200 Million People Need a System, Not Sympathy</div>
+          <div class="video-excerpt">In this landmark address, Adnan Safee lays out why India's Muslim community — the world's third largest national Muslim population — requires a technological infrastructure built on data, dignity, and systems thinking rather than charity and sentiment.</div>
+          <div class="video-meta">
+            <div class="video-speaker">
+              <div class="video-speaker-avatar">AS</div>
+              <div>
+                <div class="video-speaker-name">Adnan Safee</div>
+                <div class="video-speaker-role">Founder, Nine Angle Foundation</div>
+              </div>
+            </div>
+            <a href="https://www.youtube.com/watch?v=ioE0mKEJXNw" target="_blank" class="video-watch-btn" onclick="event.stopPropagation()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 002.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 002.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.75 15.5V8.5l6.25 3.5-6.25 3.5z"/></svg>
+              Watch on YouTube
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIDEO 2 -->
+      <!-- Paste inside .videos-grid -->
+      <div class="video-card fade-up" data-sector="general" onclick="openVideo('Tuw8hxrFBH8','One of the Greatest Speeches Ever ')">
+        <div class="video-thumb-wrap">
+          <img class="video-thumb-img"
+               src="https://img.youtube.com/vi/Tuw8hxrFBH8/maxresdefault.jpg"
+               alt="One of the Greatest Speeches Ever "
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="video-thumb-placeholder" style="display:none">
+            <div class="ph-icon">⭐</div>
+          </div>
+          <div class="video-play-overlay">
+            <div class="video-play-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+          </div>
+          <div class="video-duration"></div>
+        </div>
+        <div class="video-card-body">
+          <div class="video-tag">⭐ Featured Talk</div>
+          <div class="video-title">One of the Greatest Speeches Ever </div>
+          <div class="video-excerpt">Steve Jobs delivers an inspirational speech. Listen to the end for the most life changing quote of all-time. Don't let anyone ever tell you that you cannot achieve your dreams.</div>
+          <div class="video-meta">
+            <div class="video-speaker">
+              <div class="video-speaker-avatar">SJ</div>
+              <div>
+                <div class="video-speaker-name">Steve Jobs</div>
+                <div class="video-speaker-role">Motivation</div>
+              </div>
+            </div>
+            <a href="https://www.youtube.com/watch?v=Tuw8hxrFBH8" target="_blank" class="video-watch-btn" onclick="event.stopPropagation()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 002.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 002.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.75 15.5V8.5l6.25 3.5-6.25 3.5z"/></svg>
+              Watch on YouTube
+            </a>
+          </div>
+        </div>
+      </div>   
+<!-- VIDEO 3 -->
+      <div class="video-card fade-up delay-2" data-sector="legal"
+           onclick="openVideo('2lAe1cqCOXo','Sania Mirza on Legal Rights Awareness')">
+        <div class="video-thumb-wrap">
+          <img class="video-thumb-img"
+               src="https://img.youtube.com/vi/mGQNlnv5Ycg/maxresdefault.jpg"
+               alt="Legal Rights"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="video-thumb-placeholder" style="display:none">
+            <div class="ph-icon">⚖️</div>
+          </div>
+          <div class="video-play-overlay">
+            <div class="video-play-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+          </div>
+          <div class="video-duration">9:55</div>
+        </div>
+        <div class="video-card-body">
+          <div class="video-tag">⚖️ Legal Aid</div>
+          <div class="video-title">Know Your Rights: The Legal Toolkit Every Indian Muslim Should Have</div>
+          <div class="video-excerpt">Sania Mirza breaks down the five most commonly misunderstood rights — from property law to custodial protections — in plain language, for everyday people.</div>
+          <div class="video-meta">
+            <div class="video-speaker">
+              <div class="video-speaker-avatar">SM</div>
+              <div>
+                <div class="video-speaker-name">Adv. Sana Mirza</div>
+                <div class="video-speaker-role">IMC Legal Council</div>
+              </div>
+            </div>
+            <a href="https://www.youtube.com/watch?v=mGQNlnv5Ycg" target="_blank" class="video-watch-btn" onclick="event.stopPropagation()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 002.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 002.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.75 15.5V8.5l6.25 3.5-6.25 3.5z"/></svg>
+              Watch
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIDEO 4 -->
+      <div class="video-card fade-up" data-sector="employment"
+           onclick="openVideo('M7lc1UVf-VE','Youth Employment in Modern India')">
+        <div class="video-thumb-wrap">
+          <img class="video-thumb-img"
+               src="https://img.youtube.com/vi/M7lc1UVf-VE/maxresdefault.jpg"
+               alt="Employment"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="video-thumb-placeholder" style="display:none">
+            <div class="ph-icon">💼</div>
+          </div>
+          <div class="video-play-overlay">
+            <div class="video-play-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+          </div>
+          <div class="video-duration">14:30</div>
+        </div>
+        <div class="video-card-body">
+          <div class="video-tag">💼 Employment</div>
+          <div class="video-title">Cracking the Job Market: What No One Tells Muslim Youth</div>
+          <div class="video-excerpt">Career coach Farrukh Siddiqui shares the hiring biases, realities, and tactics that help young professionals from the community land competitive roles in India's top firms.</div>
+          <div class="video-meta">
+            <div class="video-speaker">
+              <div class="video-speaker-avatar">FS</div>
+              <div>
+                <div class="video-speaker-name">Farrukh Siddiqui</div>
+                <div class="video-speaker-role">Career Coach & IMC Mentor</div>
+              </div>
+            </div>
+            <a href="https://www.youtube.com/watch?v=M7lc1UVf-VE" target="_blank" class="video-watch-btn" onclick="event.stopPropagation()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 002.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 002.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.75 15.5V8.5l6.25 3.5-6.25 3.5z"/></svg>
+              Watch
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIDEO 5 -->
+      <div class="video-card fade-up delay-1" data-sector="education"
+           onclick="openVideo('kJQP7kiw5Fk','Scholar Stories: From Village Schools to IITs')">
+        <div class="video-thumb-wrap">
+          <img class="video-thumb-img"
+               src="https://img.youtube.com/vi/kJQP7kiw5Fk/maxresdefault.jpg"
+               alt="Education Stories"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="video-thumb-placeholder" style="display:none">
+            <div class="ph-icon">🎓</div>
+          </div>
+          <div class="video-play-overlay">
+            <div class="video-play-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+          </div>
+          <div class="video-duration">21:17</div>
+        </div>
+        <div class="video-card-body">
+          <div class="video-tag">🎓 Education</div>
+          <div class="video-title">Scholar Stories: From Village Schools to the IITs</div>
+          <div class="video-excerpt">Five students who cracked India's toughest entrance exams talk about the role of community mentorship, self-belief, and the IMC scholarship network in making the impossible possible.</div>
+          <div class="video-meta">
+            <div class="video-speaker">
+              <div class="video-speaker-avatar">IS</div>
+              <div>
+                <div class="video-speaker-name">IMC Scholar Series</div>
+                <div class="video-speaker-role">5 Voices · 1 Mission</div>
+              </div>
+            </div>
+            <a href="https://www.youtube.com/watch?v=kJQP7kiw5Fk" target="_blank" class="video-watch-btn" onclick="event.stopPropagation()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 002.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 002.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.75 15.5V8.5l6.25 3.5-6.25 3.5z"/></svg>
+              Watch
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIDEO 6 -->
+      <div class="video-card fade-up delay-2" data-sector="agriculture"
+           onclick="openVideo('3JZ_D3ELwOQ','Farmers who transformed their fields')">
+        <div class="video-thumb-wrap">
+          <img class="video-thumb-img"
+               src="https://img.youtube.com/vi/3JZ_D3ELwOQ/maxresdefault.jpg"
+               alt="Agriculture"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="video-thumb-placeholder" style="display:none">
+            <div class="ph-icon">🌾</div>
+          </div>
+          <div class="video-play-overlay">
+            <div class="video-play-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+          </div>
+          <div class="video-duration">16:40</div>
+        </div>
+        <div class="video-card-body">
+          <div class="video-tag">🌾 Agriculture</div>
+          <div class="video-title">The Farmers Who Doubled Their Yield Using WhatsApp and IMC</div>
+          <div class="video-excerpt">A documentary short following three smallholder farmers in Marathwada who used IMC's agricultural network — and a single WhatsApp group — to share data, techniques and collectively negotiate with traders.</div>
+          <div class="video-meta">
+            <div class="video-speaker">
+              <div class="video-speaker-avatar">IM</div>
+              <div>
+                <div class="video-speaker-name">IMC Agriculture Docs</div>
+                <div class="video-speaker-role">Field Documentary Series</div>
+              </div>
+            </div>
+            <a href="https://www.youtube.com/watch?v=3JZ_D3ELwOQ" target="_blank" class="video-watch-btn" onclick="event.stopPropagation()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 002.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 002.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.75 15.5V8.5l6.25 3.5-6.25 3.5z"/></svg>
+              Watch
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /videos-grid -->
+  </div><!-- /panel-videos -->
+
+</section>
+
+<!-- ADD YOUR STORY / SUBMIT VIDEO -->
+<div id="submit">
+  <div class="submit-content">
+    <div class="section-label" style="color:var(--gold);">Contribute to the Archive</div>
+    <div class="submit-title">Have a story worth <span>counting?</span></div>
+    <p class="submit-sub">If you've been impacted by IMC, or want to nominate an inspiring Muslim Indian whose story deserves to be told — write to us or share a video link. Every story is a data point. Every voice makes the community more visible.</p>
+  </div>
+  <div class="submit-actions">
+    <a href="mailto:contact@nineangle.co.in?subject=Story%20Submission%20–%20IMC&body=Dear%20IMC%20Team%2C%0A%0AI'd%20like%20to%20submit%20a%20story%20%2F%20video%20for%20the%20Inspiring%20Stories%20Hub.%0A%0AName%3A%0ALocation%3A%0ASector%3A%0AStory%20%2F%20Video%20Link%3A%0A%0AThank%20you." class="btn-primary">Submit Your Story →</a>
+    <a href="https://wa.me/919619496194?text=Hi%2C%20I%20have%20an%20inspiring%20story%20%2F%20video%20I'd%20like%20to%20share%20for%20the%20IMC%20stories%20hub." target="_blank" class="btn-outline-light">Share via WhatsApp</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">imc</div>
+  <div class="tagline">"Count Us. Count On Us."</div>
+  <p>IMC — A <a href="https://www.imcbharat.com" target="_blank">Nine Angle Foundation</a> Initiative · <a href="mailto:contact@nineangle.co.in">contact@nineangle.co.in</a> · Non-partisan · Apolitical · DPDP Compliant</p>
+  <div style="display:flex;align-items:center;justify-content:center;gap:20px;margin-top:20px;">
+    <a href="#" onclick="window.open('https://www.facebook.com/profile.php?id=61589971334029','_blank');return false;" style="color:rgba(255,255,255,0.4);transition:color 0.2s;cursor:pointer;" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='rgba(255,255,255,0.4)'" title="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+    <a href="#" onclick="window.open('https://x.com/imcfamily','_blank');return false;" style="color:rgba(255,255,255,0.4);transition:color 0.2s;cursor:pointer;" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='rgba(255,255,255,0.4)'" title="X / Twitter"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    <a href="#" onclick="window.open('https://www.instagram.com/imcfamily001?igsh=MWttbHQyOW9rdnpsNg%3D%3D&utm_source=qr','_blank');return false;" style="color:rgba(255,255,255,0.4);transition:color 0.2s;cursor:pointer;" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='rgba(255,255,255,0.4)'" title="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+    <a href="#" onclick="window.open('https://www.linkedin.com/company/124284008/','_blank');return false;" style="color:rgba(255,255,255,0.4);transition:color 0.2s;cursor:pointer;" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='rgba(255,255,255,0.4)'" title="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+    <a href="#" onclick="window.open('https://www.youtube.com/channel/UC6yLmLcQb0twuvzCGUFI8Kw','_blank');return false;" style="color:rgba(255,255,255,0.4);transition:color 0.2s;cursor:pointer;" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='rgba(255,255,255,0.4)'" title="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 002.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 002.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.75 15.5V8.5l6.25 3.5-6.25 3.5z"/></svg></a>
+  </div>
+</footer>
+
+<!-- VIDEO MODAL -->
+<div class="video-modal-overlay" id="videoModal">
+  <div class="video-modal-box">
+    <div class="video-modal-header">
+      <div class="video-modal-title" id="videoModalTitle">Loading…</div>
+      <button class="video-modal-close" onclick="closeVideo()">✕</button>
+    </div>
+    <div class="video-modal-frame">
+      <iframe id="videoIframe" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ── Fade-up observer ── */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  /* ── Tab switching ── */
+  function switchTab(tab) {
+    document.querySelectorAll('.hero-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    const casesPanel  = document.getElementById('panel-cases');
+    const videosPanel = document.getElementById('panel-videos');
+    if (tab === 'cases') {
+      casesPanel.style.display  = 'block';
+      videosPanel.style.display = 'none';
+    } else if (tab === 'videos') {
+      casesPanel.style.display  = 'none';
+      videosPanel.style.display = 'block';
+    } else {
+      casesPanel.style.display  = 'block';
+      videosPanel.style.display = 'block';
+    }
+  }
+
+  /* ── Sector filter ── */
+  function filterSector(btn, sector) {
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    const cards = document.querySelectorAll('[data-sector]');
+    cards.forEach(card => {
+      if (sector === 'all' || card.dataset.sector === sector) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  /* ── Video modal ── */
+  function openVideo(ytId, title) {
+    document.getElementById('videoModalTitle').textContent = title || '';
+    document.getElementById('videoIframe').src = `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0`;
+    document.getElementById('videoModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeVideo() {
+    document.getElementById('videoModal').classList.remove('open');
+    document.getElementById('videoIframe').src = '';
+    document.body.style.overflow = '';
+  }
+  document.getElementById('videoModal').addEventListener('click', function(e) {
+    if (e.target === this) closeVideo();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideo(); });
+</script>
+</body>
+</html>

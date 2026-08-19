@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title id="pgTitle">IMC — PIN Code Community | Count Us. Count On Us.</title>
+<meta id="pgDesc" name="description" content="See IMC's community presence in your PIN code — verified members, growth, and how to join.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --teal:#052b27;--teal-mid:#0a3d38;--teal-bright:#0f5248;
+    --orange:#F07B30;--orange-lt:#f9a06a;
+    --cream:#f5f2ec;--border:#e8e4dc;
+    --gold:#C9A84C;--gold-bg:#fffbea;
+  }
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--teal);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:99;display:flex;align-items:center;justify-content:space-between;
+    background:rgba(5,43,39,.97);backdrop-filter:blur(12px);padding:0 5vw;height:66px;border-bottom:1px solid rgba(201,168,76,.2)}
+  .nav-logo{display:flex;align-items:center}
+  .nav-logo-icon{width:40px;height:40px;border-radius:50%;object-fit:cover}
+  .nav-back{color:rgba(255,255,255,.7);font-size:13px;font-weight:600}
+  .nav-back:hover{color:var(--gold)}
+
+  main{max-width:900px;margin:0 auto;padding:106px 20px 60px}
+
+  .pin-hero{background:linear-gradient(135deg,var(--teal),var(--teal-mid));border-radius:16px;padding:40px 32px;color:#fff;position:relative;overflow:hidden;display:flex;align-items:stretch;justify-content:space-between;gap:28px;flex-wrap:wrap}
+  .pin-hero-left{flex:1;min-width:240px}
+  .pin-hero-ad{display:none;width:auto;height:auto;aspect-ratio:1/1;max-width:280px;border-radius:12px;overflow:hidden;flex-shrink:0;position:relative;background:rgba(255,255,255,0.04);margin-right:18px;}
+  .pin-hero-ad img{width:100%;height:100%;object-fit:cover;display:block;}
+  .pin-hero-ad-tag{position:absolute;top:8px;left:8px;background:rgba(5,43,39,0.75);color:rgba(255,255,255,0.8);font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:3px 7px;border-radius:3px;}
+  @media (max-width:600px){ .pin-hero-ad{width:100%;max-width:none;aspect-ratio:auto;height:180px;margin-right:0;} }
+  .pin-tag{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:10px}
+  .pin-num{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(38px,7vw,58px);line-height:1}
+  .pin-loc{font-size:16px;color:rgba(255,255,255,.75);margin-top:6px}
+  .pin-stats{display:flex;gap:28px;flex-wrap:wrap;margin-top:26px}
+  .pin-stat-v{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:var(--gold)}
+  .pin-stat-l{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-top:2px}
+  .pin-cta{display:inline-block;margin-top:28px;background:var(--orange);color:#fff;font-weight:700;font-size:14.5px;
+    padding:13px 26px;border-radius:8px}
+  .pin-cta:hover{background:var(--orange-lt)}
+
+  .section{margin-top:36px}
+  .section-hd{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;margin-bottom:14px;color:var(--teal)}
+
+  .recent-list{display:flex;flex-direction:column;gap:0;background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+  .recent-row{display:flex;justify-content:space-between;align-items:center;padding:13px 18px;border-bottom:1px solid var(--border);font-size:14px;gap:12px}
+  .recent-row:last-child{border-bottom:none}
+  .recent-left{display:flex;align-items:center;gap:12px;min-width:0}
+  .recent-avatar{width:32px;height:32px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--gold);flex-shrink:0;font-family:'Playfair Display',serif}
+  .recent-name{font-weight:600}
+  .recent-tier{font-size:11px;color:#9a9484;font-weight:500;margin-left:6px}
+  .recent-time{font-size:12px;color:#9a9484}
+
+  .fow-list{display:flex;flex-direction:column;gap:10px}
+  .fow-row{display:flex;align-items:center;gap:12px}
+  .fow-label{width:180px;flex-shrink:0;font-size:13px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .fow-bar-bg{flex:1;height:8px;background:var(--border);border-radius:5px;overflow:hidden}
+  .fow-bar{height:100%;background:var(--orange);border-radius:5px}
+  .fow-count{width:28px;text-align:right;font-size:12px;color:#7a7568;flex-shrink:0}
+
+  .empty-state{background:#fff;border:1px dashed var(--border);border-radius:12px;padding:36px 24px;text-align:center}
+  .empty-state h2{font-family:'Cormorant Garamond',serif;font-size:22px;margin-bottom:8px}
+  .empty-state p{color:#7a7568;font-size:14px;margin-bottom:18px}
+
+  .footer-note{margin-top:48px;text-align:center;font-size:12px;color:#9a9484}
+  .loading{padding:100px 0;text-align:center;color:#9a9484;font-size:14px}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://www.imcbharat.com/imc-home-page" class="nav-logo">
+    <img src="imc-logo.png" alt="IMC" class="nav-logo-icon">
+  </a>
+  <a href="https://www.imcbharat.com/imc-community-map" class="nav-back">&larr; All India</a>
+</nav>
+
+<main id="mainContent">
+  <div class="loading">Loading PIN code data&hellip;</div>
+</main>
+
+<script>
+const WIX_BASE = 'https://www.imcbharat.com/_functions';
+
+function getPinFromUrl(){
+  const params = new URLSearchParams(window.location.search);
+  const p = params.get('pin');
+  if(p && /^\d{6}$/.test(p)) return p;
+  // Fallback: support /imc-pin-page.html/110025 style paths if ever routed that way
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  const last = parts[parts.length-1];
+  if(last && /^\d{6}$/.test(last)) return last;
+  return null;
+}
+
+function timeAgo(dateStr){
+  const then = new Date(dateStr).getTime();
+  if(isNaN(then)) return '';
+  const diffMin = Math.max(0, Math.round((Date.now()-then)/60000));
+  if(diffMin < 1) return 'just now';
+  if(diffMin < 60) return diffMin+' min ago';
+  const diffHr = Math.round(diffMin/60);
+  if(diffHr < 24) return diffHr+' hr ago';
+  const diffDay = Math.round(diffHr/24);
+  if(diffDay < 30) return diffDay+' d ago';
+  return Math.round(diffDay/30)+' mo ago';
+}
+
+function tierColor(tier){
+  return {observer:'#0f5248',verified:'#F07B30',professional:'#6b21a8',contributor:'#9a3412',pin:'#1d4ed8',fc:'#C9A84C'}[tier]||'#052b27';
+}
+
+function renderNotFound(pin){
+  document.getElementById('mainContent').innerHTML = `
+    <div class="pin-hero">
+      <div class="pin-tag">PIN Code</div>
+      <div class="pin-num">${pin}</div>
+      <div class="pin-loc">No IMC members here yet</div>
+      <a class="pin-cta" href="imc-unified-form.html?tier=observer&pin=${pin}">Be the First to Join &rarr;</a>
+    </div>
+    <div class="section">
+      <div class="empty-state">
+        <h2>Start the count in PIN ${pin}</h2>
+        <p>Every PIN code starts with one member. Be the one who brings IMC to your area.</p>
+      </div>
+    </div>
+    <div class="footer-note">Count Us. Count On Us. &mdash; IMC, an initiative of Nine Angle Foundation</div>
+  `;
+}
+
+function renderPinPage(data){
+  const pin = data.pin;
+  document.getElementById('pgTitle').textContent = 'IMC — PIN ' + pin + (data.city ? ' · ' + data.city : '') + ' | Count Us. Count On Us.';
+  document.getElementById('pgDesc').setAttribute('content',
+    'IMC in PIN ' + pin + (data.city ? ', ' + data.city : '') + ': ' + data.totalMembers + ' verified members and growing. Join India\'s PIN code-based community network.');
+
+  const locLine = [data.city, data.state].filter(Boolean).join(', ') || 'India';
+
+  const recentHtml = (data.recent && data.recent.length)
+    ? data.recent.map(r => {
+        const initials = (r.fullName || 'M').trim().substring(0,2).toUpperCase();
+        return `<div class="recent-row"><div class="recent-left"><div class="recent-avatar" style="background:${tierColor(r.tier)}">${initials}</div><span><span class="recent-name">${r.fullName}</span>${r.tierLabel ? '<span class="recent-tier">· '+r.tierLabel+'</span>' : ''}</span></div><span class="recent-time">${timeAgo(r.joinedAt)}</span></div>`;
+      }).join('')
+    : '<div class="recent-row"><span class="recent-time">No recent activity yet.</span></div>';
+
+  const maxCount = (data.fieldsOfWork && data.fieldsOfWork.length) ? data.fieldsOfWork[0].c : 1;
+  const fowHtml = (data.fieldsOfWork && data.fieldsOfWork.length)
+    ? data.fieldsOfWork.map(f => `
+        <div class="fow-row">
+          <div class="fow-label">${f.n}</div>
+          <div class="fow-bar-bg"><div class="fow-bar" style="width:${Math.round(f.c/maxCount*100)}%"></div></div>
+          <div class="fow-count">${f.c}</div>
+        </div>`).join('')
+    : '<div style="font-size:13px;color:#9a9484">Not enough data yet.</div>';
+
+  document.getElementById('mainContent').innerHTML = `
+    <div class="pin-hero">
+      <div class="pin-hero-left">
+        <div class="pin-tag">PIN Code</div>
+        <div class="pin-num">${pin}</div>
+        <div class="pin-loc">${locLine}</div>
+        <div class="pin-stats">
+          <div><div class="pin-stat-v">${data.totalMembers}</div><div class="pin-stat-l">Members</div></div>
+          <div><div class="pin-stat-v">${data.thisMonth}</div><div class="pin-stat-l">Joined This Month</div></div>
+        </div>
+        <a class="pin-cta" href="imc-unified-form.html?tier=observer&pin=${pin}">Join IMC &mdash; PIN ${pin} &rarr;</a>
+      </div>
+      <a id="pinSquareAd" class="pin-hero-ad" href="#" target="_blank" rel="noopener sponsored">
+        <span class="pin-hero-ad-tag">Sponsored</span>
+        <img id="pinSquareAdImg" src="" alt="Advertisement">
+      </a>
+    </div>
+
+    <div class="section">
+      <div class="section-hd">Recently Joined</div>
+      <div class="recent-list">${recentHtml}</div>
+    </div>
+
+    <div class="section">
+      <div class="section-hd">Field of Work</div>
+      <div class="fow-list">${fowHtml}</div>
+    </div>
+
+    <div class="footer-note">Count Us. Count On Us. &mdash; IMC, an initiative of Nine Angle Foundation</div>
+  `;
+}
+
+function loadPinSquareAd(pin, state){
+  const stateParam = state ? '&state=' + encodeURIComponent(state) : '';
+  fetch(WIX_BASE + '/getActiveAds?pinCode=' + pin + stateParam)
+    .then(r => r.json())
+    .then(data => {
+      if(!data.success || !data.ads || !data.ads.length) return;
+      const ad = data.ads.find(a => a.placement === 'pinsquare');
+      if(!ad || !ad.imageUrl) return;
+      const slot = document.getElementById('pinSquareAd');
+      const img = document.getElementById('pinSquareAdImg');
+      if(!slot || !img) return;
+      img.onerror = () => { slot.style.display = 'none'; };
+      img.onload = () => { slot.style.display = 'block'; };
+      img.src = ad.imageUrl;
+      slot.href = ad.linkUrl || ad.imageUrl;
+      slot.title = ad.clientName ? 'Sponsored — ' + ad.clientName : 'Sponsored';
+    })
+    .catch(err => console.warn('[IMC PIN Page] Ad load skipped:', err));
+}
+
+(function init(){
+  const pin = getPinFromUrl();
+  if(!pin){
+    document.getElementById('mainContent').innerHTML = '<div class="loading">No PIN code specified. Try a URL like <code>?pin=110025</code>.</div>';
+    return;
+  }
+  fetch(WIX_BASE + '/getPinInfo?pin=' + pin)
+    .then(r => r.json())
+    .then(data => {
+      if(!data.success){ renderNotFound(pin); return; }
+      if(!data.found){ renderNotFound(pin); return; }
+      renderPinPage(data);
+      loadPinSquareAd(pin, data.state);
+    })
+    .catch(err => {
+      console.error('[IMC PIN Page] Failed to load:', err);
+      document.getElementById('mainContent').innerHTML = '<div class="loading">Couldn\'t load this PIN code right now. Please try again shortly.</div>';
+    });
+})();
+</script>
+</body>
+</html>

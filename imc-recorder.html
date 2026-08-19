@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>IMC — Record Your Story</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--teal:#052b27;--orange:#F07B30;--gold:#C9A84C;--cream:#f5f2ec}
+body{font-family:'DM Sans',sans-serif;color:white;background:var(--teal);min-height:100vh;overflow-x:hidden}
+
+/* WELCOME */
+#welcome{min-height:100vh;display:flex;flex-direction:column;align-items:center;background:radial-gradient(ellipse 80% 50% at 50% 0%,#0f5040,transparent 60%),var(--teal)}
+#welcome.hide{display:none}
+.deco-line{width:100%;height:4px;display:flex}
+.deco-line .a{flex:2;background:var(--orange)}.deco-line .b{flex:1;background:var(--gold)}.deco-line .c{flex:3;background:#0a3d38}
+.hero{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:36px 28px 20px}
+.logo{width:80px;height:80px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:26px;color:white;box-shadow:0 0 0 8px rgba(240,123,48,0.1),0 0 32px rgba(240,123,48,0.3);margin-bottom:24px}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+h1{font-family:'Playfair Display',serif;font-size:clamp(28px,8vw,42px);font-weight:900;line-height:1.1;margin-bottom:8px}
+h1 span{color:#e5c97a}h1 em{color:var(--orange);font-style:normal}
+.divider{width:48px;height:3px;background:linear-gradient(to right,var(--orange),var(--gold));border-radius:3px;margin:14px auto}
+.hi{font-size:15px;color:rgba(255,255,255,0.7);margin-bottom:10px}
+.hi strong{color:#e5c97a}
+.desc{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.75;margin-bottom:24px;max-width:360px}
+.steps{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.15);border-radius:14px;padding:18px;margin-bottom:24px;display:flex;flex-direction:column;gap:12px;text-align:left}
+.step{display:flex;gap:12px;align-items:center}
+.snum{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--gold));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.stxt{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.4}
+.stxt b{color:rgba(255,255,255,0.85)}
+.cta-btn{width:100%;padding:16px;border-radius:12px;background:linear-gradient(135deg,var(--orange),#e06820);color:white;border:none;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 6px 24px rgba(240,123,48,0.4)}
+.note{font-size:11px;color:rgba(255,255,255,0.3);margin-top:10px;line-height:1.6;text-align:center}
+.footer{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.15);padding:20px 0 8px;text-align:center}
+
+/* CAMERA */
+#cam{display:none;position:fixed;inset:0;background:#000;z-index:10}
+#cam.active{display:block}
+#vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+/* OVERLAY */
+#overlay{position:absolute;inset:0;pointer-events:none;z-index:2}
+.border-t,.border-b{position:absolute;left:0;right:0;height:5px}
+.border-t{top:0;background:linear-gradient(to right,var(--orange),var(--gold),var(--orange),#0a3d38)}
+.border-b{bottom:0;background:linear-gradient(to left,var(--orange),var(--gold),var(--orange),#0a3d38)}
+.border-l,.border-r{position:absolute;top:0;bottom:0;width:5px}
+.border-l{left:0;background:linear-gradient(to bottom,var(--orange),var(--gold),var(--orange))}
+.border-r{right:0;background:linear-gradient(to bottom,var(--orange),var(--gold),var(--orange))}
+.top-bar{position:absolute;top:0;left:0;right:0;padding:12px 16px;background:linear-gradient(to bottom,rgba(5,43,39,0.9),transparent);display:flex;align-items:center;gap:10px}
+.ol{width:32px;height:32px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:11px;color:white;flex-shrink:0}
+.on{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:white;line-height:1.3}
+.ot{font-size:8px;color:var(--gold);letter-spacing:2px;display:block;font-weight:300}
+#recBadge{margin-left:auto;font-size:10px;font-weight:700;letter-spacing:2px;color:#ff8080;background:rgba(255,59,48,0.15);border:1px solid rgba(255,59,48,0.35);padding:3px 9px;border-radius:20px;display:none;align-items:center;gap:5px}
+#recBadge.on{display:flex}
+#recBadge::before{content:'';width:6px;height:6px;border-radius:50%;background:#ff3b30;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.1}}
+.bot-bar{position:absolute;bottom:0;left:0;right:0;padding:14px 16px 100px;background:linear-gradient(to top,rgba(5,43,39,0.95),transparent)}
+#timerDisp{font-size:10px;font-family:monospace;letter-spacing:2px;color:rgba(255,255,255,0.35);margin-bottom:6px;display:none}
+#timerDisp.on{display:block}
+.accent{height:1.5px;background:linear-gradient(to right,var(--orange),var(--gold),transparent);margin-bottom:7px;opacity:0.7}
+#dName{font-family:'Playfair Display',serif;font-size:clamp(20px,6vw,30px);font-weight:900;color:#e5c97a;text-shadow:0 2px 8px rgba(0,0,0,0.5)}
+#dCity{font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:2px;text-transform:uppercase;margin:3px 0 7px}
+.dcta{font-size:clamp(11px,3vw,14px);font-weight:700;margin-bottom:7px;line-height:1.3}
+.dcta .o{color:var(--orange)}
+.accent2{height:1px;background:linear-gradient(to right,var(--gold),var(--orange),transparent);opacity:0.6;margin-bottom:5px}
+.dfooter{display:flex;justify-content:space-between}
+.dfw{font-size:8px;letter-spacing:1.5px;color:rgba(255,255,255,0.2)}
+.dfh{font-size:9px;font-weight:700;color:rgba(201,168,76,0.5);letter-spacing:1px}
+
+/* CONTROLS */
+#controls{position:absolute;bottom:0;left:0;right:0;z-index:3;padding:16px 24px 44px;display:flex;align-items:center;justify-content:center;gap:28px}
+.cb{width:46px;height:46px;border-radius:50%;border:none;background:rgba(255,255,255,0.12);backdrop-filter:blur(10px);color:white;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.rb{width:70px;height:70px;border-radius:50%;border:3px solid rgba(255,255,255,0.75);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.ri{width:46px;height:46px;border-radius:50%;background:#ff3b30;transition:all .3s;box-shadow:0 0 14px rgba(255,59,48,0.5)}
+.rb.rec .ri{border-radius:10px;width:30px;height:30px}
+#cancelBtn{display:none}
+
+/* DONE SCREEN */
+#done{display:none;position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 20%,#0f5040,transparent 60%),var(--teal);z-index:20;flex-direction:column;align-items:center;justify-content:center;padding:48px 28px;text-align:center}
+#done.show{display:flex}
+.done-inner{width:100%;max-width:460px;display:flex;flex-direction:column;align-items:center}
+.done-icon{font-size:52px;margin-bottom:18px}
+.done-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;margin-bottom:8px}
+.done-div{width:48px;height:3px;background:linear-gradient(to right,var(--orange),var(--gold));border-radius:3px;margin:0 auto 16px}
+#androidNote{display:none;width:100%;background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);border-radius:12px;padding:14px;margin-bottom:16px;text-align:left}
+#androidNote p:first-child{font-size:11px;color:var(--gold);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+#androidNote p:last-child{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.8}
+.done-sub{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.65;margin-bottom:28px}
+.done-btn{width:100%;padding:16px;border-radius:12px;background:linear-gradient(135deg,var(--orange),#e06820);color:white;border:none;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;box-shadow:0 6px 24px rgba(240,123,48,0.4)}
+.done-btn2{width:100%;padding:15px;border-radius:12px;background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.14);font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px}
+.done-sec{background:none;border:none;color:rgba(255,255,255,0.35);font-size:13px;cursor:pointer;padding:8px;margin-top:4px}
+
+/* PERM FIX */
+#permFix{display:none;position:fixed;inset:0;background:rgba(5,43,39,0.98);z-index:99;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;text-align:center}
+#permFix.show{display:flex}
+
+/* CHROME BANNER */
+#chromeBanner{display:none;position:fixed;inset:0;background:var(--teal);z-index:99;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;text-align:center}
+#chromeBanner.show{display:flex}
+.cb-btn2{width:100%;padding:16px;border-radius:12px;background:linear-gradient(135deg,var(--orange),#e06820);color:white;border:none;font-size:16px;font-weight:700;cursor:pointer;margin-bottom:20px;box-shadow:0 6px 24px rgba(240,123,48,0.4)}
+
+/* CONVERTING */
+#converting{display:none;position:fixed;inset:0;background:rgba(5,43,39,0.98);z-index:99;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;text-align:center}
+#converting.show{display:flex}
+.prog-wrap{width:100%;height:6px;background:rgba(255,255,255,0.08);border-radius:6px;overflow:hidden;margin-bottom:8px}
+.prog-bar{height:100%;width:0%;background:linear-gradient(to right,var(--orange),var(--gold));border-radius:6px;transition:width 0.4s}
+</style>
+</head>
+<body>
+
+<!-- WELCOME -->
+<div id="welcome">
+  <div class="deco-line"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  <div class="hero">
+    <div class="logo">imc</div>
+    <div class="eyebrow">Pre-Launch Invitation</div>
+    <h1>Share Your<br><span>IMC </span><em>Story</em></h1>
+    <div class="divider"></div>
+    <p class="hi">Hello <strong id="wName">Friend</strong>! 👋</p>
+    <p class="desc">You're among the first to know. IMC is India's first tech-driven, invite-only platform for 200M+ Indian Muslims. Record your 30-second support message and help us build momentum before launch.</p>
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div class="stxt"><b>Allow camera</b> when prompted</div></div>
+      <div class="step"><div class="snum">2</div><div class="stxt"><b>Record your message</b> — your name & city appear on screen</div></div>
+      <div class="step"><div class="snum">3</div><div class="stxt"><b>Save & share</b> your branded video on WhatsApp</div></div>
+    </div>
+    <button class="cta-btn" id="startBtn">📷 Start Recording →</button>
+    <p class="note">📱 Please open in <strong>Google Chrome</strong> on Android</p>
+  </div>
+  <div class="footer">Indian Muslim Count · Count Us. Count On Us.</div>
+</div>
+
+<!-- CAMERA -->
+<div id="cam">
+  <video id="vid" autoplay playsinline muted></video>
+  <div id="overlay">
+    <div class="border-t"></div><div class="border-b"></div>
+    <div class="border-l"></div><div class="border-r"></div>
+    <div class="top-bar">
+      <div class="ol">imc</div>
+      <div><div class="on">Indian Muslim Count</div><span class="ot">Count Us. Count On Us.</span></div>
+      <div id="recBadge">REC</div>
+    </div>
+    <div class="bot-bar">
+      <div id="timerDisp">⏱ <span id="timerVal">00:00</span></div>
+      <div class="accent"></div>
+      <div id="dName"></div>
+      <div id="dCity"></div>
+      <div class="dcta"><span class="o">200 million voices. One platform.</span><br>The count begins.</div>
+      <div class="accent2"></div>
+      <div class="dfooter"><div class="dfw">indianmuslimcount.com</div><div class="dfh">Rise. Unite. Be Counted.</div></div>
+    </div>
+  </div>
+  <div id="controls">
+    <button class="cb" id="flipBtn">🔄</button>
+    <button class="rb" id="recBtn"><div class="ri"></div></button>
+    <button class="cb" id="cancelBtn">✕</button>
+  </div>
+</div>
+
+<!-- DONE -->
+<div id="done">
+  <div class="done-inner">
+    <div class="done-icon">🎉</div>
+    <div class="done-title">Video Ready!</div>
+    <div class="done-div"></div>
+    <div id="androidNote">
+      <p>Share your video</p>
+      <p>Tap <strong>Share to WhatsApp</strong> directly, or save first then share from your Gallery.</p>
+    </div>
+    <p class="done-sub" id="doneSub">Your branded IMC story video is ready.</p>
+    <button class="done-btn" id="doneBtn1">📤 Share Video</button>
+    <button class="done-btn2" id="doneBtn2">💾 Save to Phone</button>
+    <p id="debugInfo" style="font-size:10px;color:rgba(255,255,255,0.2);margin-top:8px;word-break:break-all;"></p>
+    <button class="done-sec" onclick="recordAgain()">🔄 Record Again</button>
+  </div>
+</div>
+
+<!-- PERMISSION FIX -->
+<div id="permFix">
+  <div style="font-size:48px;margin-bottom:16px">📷</div>
+  <h2 style="font-family:'Playfair Display',serif;font-size:22px;margin-bottom:12px">Allow Camera Access</h2>
+  <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:24px">Camera permission was blocked. Please follow these steps:</p>
+  <div style="background:rgba(255,255,255,0.06);border-radius:12px;padding:18px;width:100%;text-align:left;margin-bottom:24px">
+    <p style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:10px"><span style="color:var(--gold);font-weight:700">1.</span> Tap the <strong>lock icon 🔒</strong> in the address bar</p>
+    <p style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:10px"><span style="color:var(--gold);font-weight:700">2.</span> Tap <strong>Permissions</strong></p>
+    <p style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:10px"><span style="color:var(--gold);font-weight:700">3.</span> Enable <strong>Camera</strong> and <strong>Microphone</strong></p>
+    <p style="font-size:13px;color:rgba(255,255,255,0.7)"><span style="color:var(--gold);font-weight:700">4.</span> Tap Try Again below</p>
+  </div>
+  <button onclick="location.reload()" style="width:100%;padding:16px;border-radius:12px;background:var(--orange);color:white;border:none;font-size:16px;font-weight:700;cursor:pointer">🔄 Try Again</button>
+</div>
+
+<!-- CHROME BANNER -->
+<div id="chromeBanner">
+  <div style="font-size:56px;margin-bottom:16px">🌐</div>
+  <h2 style="font-family:'Playfair Display',serif;font-size:22px;margin-bottom:12px">Open in Chrome to Record</h2>
+  <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:24px">This browser doesn't support camera recording.<br>Please open in <strong style="color:#e5c97a">Google Chrome</strong>.</p>
+  <button class="cb-btn2" onclick="openChrome()">Open in Google Chrome →</button>
+  <div id="chromeCopy" style="display:none;width:100%;margin-bottom:16px">
+    <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px">Copy this link and paste in Chrome:</p>
+    <div id="chromeUrl" style="font-size:11px;color:rgba(255,255,255,0.35);word-break:break-all;background:rgba(255,255,255,0.05);padding:10px;border-radius:8px;margin-bottom:8px"></div>
+    <button onclick="copyUrl()" style="width:100%;padding:12px;border-radius:10px;background:var(--orange);color:white;border:none;font-size:14px;font-weight:700;cursor:pointer">📋 Copy Link</button>
+  </div>
+  <div style="text-align:left;width:100%;font-size:13px;color:rgba(255,255,255,0.45);line-height:1.9">
+    <div>1. Tap button above — Chrome will open</div>
+    <div>2. Or copy the link and paste in Chrome</div>
+    <div>3. Or tap ≡ menu → "Open in" → Chrome</div>
+  </div>
+</div>
+
+<!-- CONVERTING -->
+<div id="converting">
+  <div style="font-size:44px;margin-bottom:14px">⚙️</div>
+  <h2 style="font-family:'Playfair Display',serif;font-size:22px;margin-bottom:8px">Preparing Video…</h2>
+  <div class="done-div"></div>
+  <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:20px;line-height:1.7">Converting for WhatsApp.<br>Takes about 20–30 seconds.</p>
+  <div class="prog-wrap"><div class="prog-bar" id="progBar"></div></div>
+  <p id="progStatus" style="font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:1px;text-transform:uppercase;margin-top:6px">Please wait…</p>
+</div>
+
+<script>
+// ── PARAMS ──────────────────────────────────────────────────────────────────
+const P=new URLSearchParams(location.search);
+const NAME=P.get('name')||'Friend';
+const CITY=P.get('city')||'';
+document.getElementById('wName').textContent=NAME;
+document.getElementById('dName').textContent=NAME;
+document.getElementById('dCity').textContent=CITY?'📍 '+CITY.toUpperCase():'';
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+let stream=null, recorder=null, chunks=[], blob=null, finalBlob=null;
+let seconds=0, timer=null, facing='user';
+const isAndroid=()=>/Android/.test(navigator.userAgent);
+const isIOS=()=>/iPhone|iPad|iPod/.test(navigator.userAgent);
+
+// ── CHROME BANNER ────────────────────────────────────────────────────────────
+function checkBrowser(){
+  const ua=navigator.userAgent;
+  const android=/Android/.test(ua);
+  const chrome=/Chrome\//.test(ua)&&!/Chromium/.test(ua);
+  const bad=/SamsungBrowser|WhatsApp|FBAN|FBAV|FB_IAB|Instagram/.test(ua);
+  if(android&&(!chrome||bad)){
+    document.getElementById('chromeBanner').classList.add('show');
+    return true;
+  }
+  return false;
+}
+function openChrome(){
+  const url=location.href;
+  location.href='intent://'+url.replace(/^https?:\/\//,'')+'#Intent;scheme=https;package=com.android.chrome;end';
+  setTimeout(()=>{
+    document.getElementById('chromeUrl').textContent=url;
+    document.getElementById('chromeCopy').style.display='block';
+  },1500);
+}
+function copyUrl(){
+  const url=location.href;
+  navigator.clipboard&&navigator.clipboard.writeText(url).then(()=>{
+    event.target.textContent='✓ Copied!';event.target.style.background='#2a7a4b';
+  }).catch(()=>prompt('Copy:',url));
+}
+
+// ── CAMERA ───────────────────────────────────────────────────────────────────
+document.getElementById('startBtn').addEventListener('click',startCamera);
+
+async function startCamera(){
+  if(checkBrowser()) return;
+  document.getElementById('welcome').classList.add('hide');
+  document.getElementById('cam').classList.add('active');
+
+  try{
+    stream=await getStream(facing);
+  }catch(e){
+    document.getElementById('welcome').classList.remove('hide');
+    document.getElementById('cam').classList.remove('active');
+    if(e.name==='NotAllowedError'||e.name==='PermissionDeniedError'){
+      document.getElementById('permFix').classList.add('show');
+    }
+    return;
+  }
+
+  attachStream(stream,facing);
+}
+
+async function getStream(f){
+  // Try exact first (forces correct camera), then ideal, then bare
+  const constraints=[
+    {video:{facingMode:{exact:f}},audio:true},
+    {video:{facingMode:{ideal:f}},audio:true},
+    {video:true,audio:true}
+  ];
+  let lastErr;
+  for(const c of constraints){
+    try{ return await navigator.mediaDevices.getUserMedia(c); }
+    catch(e){ lastErr=e; }
+  }
+  throw lastErr;
+}
+
+function attachStream(s,f){
+  const v=document.getElementById('vid');
+  v.srcObject=s;
+  v.style.transform=f==='user'?'scaleX(-1)':'none';
+  // Use event-driven play — most reliable across Android versions
+  v.onloadedmetadata=()=>v.play().catch(()=>{});
+  v.oncanplay=()=>v.play().catch(()=>{});
+  v.play().catch(()=>{});
+}
+
+// ── FLIP ─────────────────────────────────────────────────────────────────────
+document.getElementById('flipBtn').addEventListener('click',async()=>{
+  facing=facing==='user'?'environment':'user';
+  if(stream) stream.getTracks().forEach(t=>t.stop());
+  try{
+    stream=await getStream(facing);
+    attachStream(stream,facing);
+  }catch(e){
+    // flip failed — revert
+    facing=facing==='user'?'environment':'user';
+  }
+});
+
+// ── RECORD ───────────────────────────────────────────────────────────────────
+document.getElementById('recBtn').addEventListener('click',()=>{
+  if(!recorder||recorder.state==='inactive') startRec();
+  else stopRec();
+});
+document.getElementById('cancelBtn').addEventListener('click',()=>{
+  stopRec(true);
+});
+
+function getMime(){
+  const mp4=['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4;codecs=avc1','video/mp4'];
+  const webm=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
+  for(const t of[...mp4,...webm]) if(MediaRecorder.isTypeSupported(t)) return t;
+  return '';
+}
+
+function startRec(){
+  chunks=[];seconds=0;
+  document.getElementById('timerVal').textContent='00:00';
+  const mime=getMime();
+  try{ recorder=new MediaRecorder(stream,mime?{mimeType:mime,videoBitsPerSecond:4000000}:{}); }
+  catch(e){ recorder=new MediaRecorder(stream); }
+  recorder.ondataavailable=e=>{if(e.data&&e.data.size>0)chunks.push(e.data);};
+  recorder.onstop=()=>{
+    blob=new Blob(chunks,{type:recorder.mimeType||'video/webm'});
+    onRecordingDone();
+  };
+  recorder.start(200);
+  document.getElementById('recBtn').classList.add('rec');
+  document.getElementById('recBadge').classList.add('on');
+  document.getElementById('cancelBtn').style.display='flex';
+  document.getElementById('flipBtn').style.display='none';
+  document.getElementById('timerDisp').classList.add('on');
+  timer=setInterval(()=>{
+    seconds++;
+    const m=String(Math.floor(seconds/60)).padStart(2,'0');
+    const s=String(seconds%60).padStart(2,'0');
+    document.getElementById('timerVal').textContent=m+':'+s;
+    if(seconds>=120) stopRec();
+  },1000);
+}
+
+function stopRec(cancel=false){
+  clearInterval(timer);timer=null;
+  if(recorder&&recorder.state!=='inactive') recorder.stop();
+  document.getElementById('recBtn').classList.remove('rec');
+  document.getElementById('recBadge').classList.remove('on');
+  document.getElementById('cancelBtn').style.display='none';
+  document.getElementById('flipBtn').style.display='flex';
+  document.getElementById('timerDisp').classList.remove('on');
+  if(cancel){chunks=[];blob=null;}
+}
+
+// ── AFTER RECORDING ──────────────────────────────────────────────────────────
+function onRecordingDone(){
+  // Always set finalBlob — on Android always use .mp4 extension
+  // Some devices record webm with H.264 codec inside — renaming to .mp4 works on WhatsApp
+  finalBlob=blob;
+  showDone();
+}
+
+function setProgress(pct,msg){
+  document.getElementById('progBar').style.width=pct+'%';
+  if(msg) document.getElementById('progStatus').textContent=msg;
+}
+
+async function convertToMp4(){
+  try{
+    setProgress(8,'Loading converter…');
+    await new Promise((res,rej)=>{
+      const s=document.createElement('script');
+      s.src='https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js';
+      s.onload=res;s.onerror=()=>rej(new Error('load failed'));
+      document.head.appendChild(s);
+    });
+    setProgress(15,'Initialising…');
+    const FC=(window.FFmpegWASM&&window.FFmpegWASM.FFmpeg)||window.FFmpeg;
+    if(!FC) throw new Error('FFmpeg not found');
+    const ff=new FC();
+    ff.on('progress',({progress})=>setProgress(Math.round(15+progress*75),'Converting… '+Math.round(progress*100)+'%'));
+    await ff.load({
+      coreURL:'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
+      wasmURL:'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm'
+    });
+    setProgress(25,'Processing…');
+    await ff.writeFile('in.webm',new Uint8Array(await blob.arrayBuffer()));
+    await ff.exec(['-i','in.webm','-c:v','libx264','-preset','ultrafast','-crf','28','-c:a','aac','-b:a','128k','-movflags','+faststart','-y','out.mp4']);
+    setProgress(93,'Wrapping up…');
+    const out=await ff.readFile('out.mp4');
+    finalBlob=new Blob([out.buffer],{type:'video/mp4'});
+    setProgress(100,'Done!');
+    setTimeout(()=>{
+      document.getElementById('converting').classList.remove('show');
+      showDone();
+    },400);
+  }catch(err){
+    console.error('FFmpeg:',err);
+    finalBlob=blob; // use raw blob as fallback
+    document.getElementById('converting').classList.remove('show');
+    showDone();
+  }
+}
+
+function showDone(){
+  const android=isAndroid();
+  const ios=isIOS();
+
+  if(android){
+    document.getElementById('androidNote').style.display='block';
+    document.getElementById('doneSub').style.display='none';
+    document.getElementById('doneBtn1').textContent='📤 Share to WhatsApp';
+    document.getElementById('doneBtn1').onclick=shareToWhatsApp;
+    document.getElementById('doneBtn2').style.display='flex';
+    document.getElementById('doneBtn2').textContent='💾 Save to Phone';
+    document.getElementById('doneBtn2').onclick=saveFile;
+  } else {
+    document.getElementById('androidNote').style.display='none';
+    document.getElementById('doneSub').style.display='block';
+    document.getElementById('doneBtn1').textContent='📤 Share Video';
+    document.getElementById('doneBtn1').onclick=shareFile;
+    document.getElementById('doneBtn2').style.display='flex';
+    document.getElementById('doneBtn2').onclick=saveFile;
+  }
+
+  // Show what format was recorded — debug info
+  const b=finalBlob||blob;
+  const dbg=document.getElementById('debugInfo');
+  if(dbg&&b) dbg.textContent='Format: '+b.type+' | Size: '+(b.size/1024/1024).toFixed(1)+'MB';
+  document.getElementById('done').classList.add('show');
+}
+
+// ── SAVE / SHARE ─────────────────────────────────────────────────────────────
+function getFilename(){
+  // Always .mp4 — Android records webm with H.264/AAC which WhatsApp accepts as mp4
+  return 'IMC-Story-'+NAME.replace(/\s+/g,'-')+'.mp4';
+}
+
+// Share directly via Android share sheet — works even with webm/VP9
+// because Android's share intent routes through Chrome which handles VP9
+async function shareToWhatsApp(){
+  const b=finalBlob||blob;
+  if(!b) return;
+  // Use video/mp4 mime type so WhatsApp accepts the share intent
+  const shareBlob=new Blob([b],{type:'video/mp4'});
+  const fname='IMC-Story-'+NAME.replace(/\s+/g,'-')+'.mp4';
+  const file=new File([shareBlob],fname,{type:'video/mp4',lastModified:Date.now()});
+  if(navigator.canShare&&navigator.canShare({files:[file]})){
+    try{
+      await navigator.share({
+        files:[file],
+        title:'My IMC Story',
+        text:'Rise. Unite. Be Counted. — '+NAME+' #CountMeIn'
+      });
+      return;
+    }catch(e){
+      if(e.name==='AbortError') return;
+      // Share failed — fall back to download
+    }
+  }
+  saveFile();
+}
+
+function saveFile(){
+  const b=finalBlob||blob;
+  if(!b) return;
+  // Create new blob with video/mp4 type — forces .mp4 even if recorded as webm
+  const mp4blob=new Blob([b],{type:'video/mp4'});
+  const url=URL.createObjectURL(mp4blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=getFilename();a.style.display='none';
+  document.body.appendChild(a);a.click();
+  setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url);},60000);
+}
+
+async function shareFile(){
+  const b=finalBlob||blob;
+  if(!b) return;
+  const isMp4=b.type.includes('mp4');
+  const type=isMp4?'video/mp4':b.type.split(';')[0];
+  const fname=getFilename();
+  const file=new File([b],fname,{type,lastModified:Date.now()});
+  if(navigator.canShare&&navigator.canShare({files:[file]})){
+    try{
+      await navigator.share({files:[file],title:'My IMC Story',text:'Rise. Unite. Be Counted. — '+NAME+' #CountMeIn'});
+      return;
+    }catch(e){if(e.name==='AbortError')return;}
+  }
+  saveFile();
+}
+
+// ── RECORD AGAIN ─────────────────────────────────────────────────────────────
+function recordAgain(){
+  blob=null;finalBlob=null;chunks=[];seconds=0;
+  document.getElementById('done').classList.remove('show');
+  document.getElementById('timerVal').textContent='00:00';
+}
+</script>
+</body>
+</html>

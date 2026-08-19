@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMC — Social Card Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+:root{
+  --td:#052b27; --tm:#0a3d38; --tb:#0f5248;
+  --or:#F07B30; --ol:#f9a06a;
+  --go:#C9A84C; --gl:#e5c97a;
+  --ow:#f5f2ec;
+  --panel:#040f0d;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{font-family:'DM Sans',sans-serif;background:var(--panel);color:#f0ead6;overflow-x:hidden;}
+
+/* ══ HEADER ══ */
+header{
+  position:sticky;top:0;z-index:200;height:64px;
+  background:rgba(5,43,39,.97);
+  border-bottom:1px solid rgba(201,168,76,.2);
+  backdrop-filter:blur(14px);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 36px;
+}
+.hl{display:flex;align-items:center;gap:13px;}
+.hlm{
+  width:40px;height:40px;border-radius:50%;background:var(--or);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-weight:900;font-size:14px;color:#fff;letter-spacing:-1px;
+}
+.hlt{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.5);}
+.hlt span{display:block;font-size:9px;letter-spacing:3px;font-weight:300;color:var(--go);margin-top:2px;}
+.hpill{
+  display:flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--go);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);
+  padding:7px 16px;border-radius:2px;
+}
+.hpill::before{content:'';width:6px;height:6px;background:var(--or);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+
+/* ══ WORKSPACE ══ */
+.ws{display:grid;grid-template-columns:380px 1fr;min-height:calc(100vh - 64px);}
+
+/* ══ LEFT ══ */
+.lp{
+  background:var(--td);
+  border-right:1px solid rgba(201,168,76,.1);
+  overflow-y:auto;display:flex;flex-direction:column;
+}
+.ps{padding:20px 22px;border-bottom:1px solid rgba(255,255,255,.04);}
+.ps:last-child{border-bottom:none;}
+.psl{
+  font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--go);
+  display:flex;align-items:center;gap:8px;margin-bottom:13px;
+}
+.psl::after{content:'';flex:1;height:1px;background:linear-gradient(to right,rgba(201,168,76,.3),transparent);}
+
+/* heading input */
+.hi{
+  width:100%;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.18);
+  border-radius:8px;padding:11px 14px;color:var(--gl);
+  font-family:'Playfair Display',serif;font-size:15px;font-weight:600;
+  outline:none;transition:border-color .2s;
+}
+.hi:focus{border-color:var(--go);}
+.hi::placeholder{color:rgba(201,168,76,.25);font-style:italic;}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;}
+.chip{
+  font-size:10px;font-weight:600;letter-spacing:.4px;
+  padding:4px 10px;border-radius:20px;cursor:pointer;transition:all .2s;white-space:nowrap;
+}
+.chip-gold{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);color:var(--go);}
+.chip-gold:hover{background:rgba(201,168,76,.18);border-color:var(--go);}
+.chip-or{background:rgba(240,123,48,.08);border:1px solid rgba(240,123,48,.2);color:var(--ol);}
+.chip-or:hover{background:rgba(240,123,48,.18);border-color:var(--or);}
+
+/* platform row */
+.pr{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.pb{
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  border-radius:8px;padding:10px 4px;cursor:pointer;text-align:center;
+  transition:all .2s;color:rgba(255,255,255,.45);font-family:'DM Sans',sans-serif;
+}
+.pb:hover{border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.75);}
+.pb.on{background:rgba(240,123,48,.12);border-color:var(--or);color:var(--or);}
+.pb .pi{font-size:18px;display:block;margin-bottom:4px;}
+.pb .pn{font-size:10px;font-weight:600;display:block;}
+
+/* day/track row */
+.dtr{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:11px;}
+.sf{display:flex;flex-direction:column;gap:5px;}
+.sf label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);}
+.sel{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);
+  border-radius:7px;padding:9px 30px 9px 12px;color:rgba(255,255,255,.8);
+  font-family:'DM Sans',sans-serif;font-size:13px;outline:none;cursor:pointer;
+  transition:border-color .2s;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23C9A84C' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 11px center;
+}
+.sel:focus{border-color:var(--go);}
+.sel option{background:var(--td);color:#f0ead6;}
+
+/* caption */
+.ca{
+  width:100%;min-height:120px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.09);
+  border-radius:10px;padding:13px 15px;
+  color:rgba(255,255,255,.92);
+  font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.65;
+  outline:none;resize:vertical;transition:border-color .2s;
+}
+.ca:focus{border-color:var(--go);}
+.ca::placeholder{color:rgba(255,255,255,.18);}
+.cmeta{display:flex;justify-content:space-between;align-items:center;margin-top:6px;}
+.ccount{font-size:10px;color:rgba(255,255,255,.22);font-family:'DM Mono',monospace;}
+.cclr{font-size:10px;color:rgba(255,255,255,.2);cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;transition:color .2s;}
+.cclr:hover{color:var(--or);}
+
+/* subtext (replaces hashtags on card) */
+.si{
+  width:100%;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);
+  border-radius:8px;padding:10px 14px;color:rgba(255,255,255,.6);
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;
+  outline:none;transition:border-color .2s;
+  resize:none;line-height:1.6;
+}
+.si:focus{border-color:var(--go);}
+.si::placeholder{color:rgba(255,255,255,.18);}
+
+/* cta */
+.ci{
+  width:100%;background:rgba(240,123,48,.06);border:1px solid rgba(240,123,48,.22);
+  border-radius:8px;padding:11px 14px;color:var(--ol);
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;
+  outline:none;transition:border-color .2s;
+}
+.ci:focus{border-color:var(--or);}
+.ci::placeholder{color:rgba(240,123,48,.25);}
+
+/* hash */
+.hhi{
+  width:100%;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);
+  border-radius:8px;padding:9px 13px;color:var(--go);
+  font-family:'DM Mono',monospace;font-size:11px;
+  outline:none;transition:border-color .2s;
+}
+.hhi:focus{border-color:var(--go);}
+.hhi::placeholder{color:rgba(201,168,76,.2);}
+
+/* toggles */
+.tgl-list{display:flex;flex-direction:column;gap:9px;}
+.tgl-row{display:flex;align-items:center;justify-content:space-between;}
+.tgl-lbl{font-size:12px;color:rgba(255,255,255,.55);}
+.tog{
+  width:40px;height:22px;background:rgba(255,255,255,.1);
+  border-radius:11px;position:relative;cursor:pointer;border:none;outline:none;
+  transition:background .2s;flex-shrink:0;
+}
+.tog.on{background:var(--or);}
+.tog::after{content:'';position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:3px;transition:left .2s;}
+.tog.on::after{left:21px;}
+
+/* format buttons */
+.fr{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;}
+.fb{
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  border-radius:8px;padding:10px 5px;cursor:pointer;text-align:center;
+  transition:all .2s;color:rgba(255,255,255,.45);font-family:'DM Sans',sans-serif;
+}
+.fb:hover{border-color:rgba(255,255,255,.18);}
+.fb.on{background:rgba(240,123,48,.12);border-color:var(--or);color:var(--or);}
+.fb .fi{font-size:17px;display:block;margin-bottom:4px;}
+.fb .fn{font-size:10px;font-weight:600;display:block;}
+.fb .fd{font-size:8px;color:rgba(255,255,255,.25);display:block;margin-top:2px;}
+
+/* template buttons */
+.tr2{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+.tb2{border-radius:9px;padding:9px 5px;cursor:pointer;border:2px solid transparent;transition:all .25s;text-align:center;}
+.tb2.on{border-color:var(--go);}
+.tb2:hover{transform:translateY(-2px);}
+.tsw{width:100%;height:26px;border-radius:4px;margin-bottom:5px;display:flex;align-items:center;justify-content:center;}
+.tml{width:13px;height:13px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--or);font-family:'Playfair Display',serif;font-weight:900;font-size:5px;color:#fff;}
+.tnm{font-size:9px;font-weight:700;color:rgba(255,255,255,.65);display:block;letter-spacing:.4px;}
+
+/* download */
+.dlb{
+  width:100%;background:var(--or);color:#fff;border:none;border-radius:9px;
+  padding:14px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.dlb:hover{background:#d4692a;transform:translateY(-2px);box-shadow:0 8px 24px rgba(240,123,48,.4);}
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:7px;}
+.sb{
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  border-radius:7px;padding:9px 3px;font-family:'DM Sans',sans-serif;
+  font-size:10px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.5);
+  transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;
+}
+.sb:hover{border-color:var(--go);color:var(--go);}
+.sb.wa{border-color:rgba(37,211,102,.2);color:#4ade80;}
+.sb.wa:hover{background:rgba(37,211,102,.07);}
+
+/* ══ RIGHT ══ */
+.rp{
+  background:#0a0a0a;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  padding:32px 24px;gap:20px;overflow-y:auto;position:relative;
+}
+.rlbl{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.2);align-self:flex-start;position:relative;z-index:2;}
+
+/* ══ THE CARD ══ */
+.cw{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;width:100%;}
+
+#card{position:relative;overflow:hidden;font-family:'DM Sans',sans-serif;flex-shrink:0;}
+
+/* sizes */
+.csq{width:540px;height:540px;}
+.cst{width:304px;height:540px;}
+.cls{width:540px;height:480px;}
+
+/* ══ TEMPLATE BACKGROUNDS ══ */
+
+/* A — DEEP TEAL (hero-matched) */
+#card.ta{background:var(--td);}
+#card.ta .bg-grid{display:none;}
+#card.ta .bg-glow1{position:absolute;width:60%;padding-bottom:60%;border-radius:50%;background:radial-gradient(circle,rgba(240,123,48,.15) 0%,transparent 65%);top:-20%;right:-15%;pointer-events:none;}
+#card.ta .bg-glow2{position:absolute;width:35%;padding-bottom:35%;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.09) 0%,transparent 65%);bottom:-10%;left:5%;pointer-events:none;}
+#card.ta .bg-sidebar{position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(to bottom,var(--or),var(--go),var(--or));}
+#card.ta .badge-bg{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:var(--gl);}
+#card.ta .badge-dot{background:var(--or);}
+#card.ta .headline-main{color:#fff;}
+#card.ta .headline-em{color:var(--or);}
+#card.ta .sub-text{color:rgba(255,255,255,.62);}
+#card.ta .divline{background:rgba(255,255,255,.1);}
+#card.ta .footer-bg{background:rgba(0,0,0,.3);}
+#card.ta .tagline-text{color:var(--gl);}
+#card.ta .cta-pill{background:rgba(240,123,48,.18);border:1px solid rgba(240,123,48,.45);color:var(--ol);}
+#card.ta .platform-badge{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);}
+#card.ta .track-badge{background:rgba(240,123,48,.15);border:1px solid rgba(240,123,48,.35);color:var(--ol);}
+#card.ta .wmark{color:rgba(255,255,255,.035);}
+#card.ta .hash-text{color:var(--go);}
+#card.ta .url-text{color:rgba(255,255,255,.25);}
+#card.ta .day-text{color:rgba(255,255,255,.08);}
+
+/* B — CREAM */
+#card.tb{background:var(--ow);}
+#card.tb .bg-grid{display:none;}
+#card.tb .bg-glow1{display:none;}
+#card.tb .bg-glow2{position:absolute;width:50%;padding-bottom:50%;border-radius:50%;background:radial-gradient(circle,rgba(240,123,48,.07) 0%,transparent 65%);bottom:-10%;right:-10%;}
+#card.tb .bg-sidebar{position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(to bottom,var(--or),var(--go));}
+#card.tb .badge-bg{background:rgba(5,43,39,.08);border:1px solid rgba(5,43,39,.18);color:var(--td);}
+#card.tb .badge-dot{background:var(--or);}
+#card.tb .headline-main{color:var(--td);}
+#card.tb .headline-em{color:var(--or);}
+#card.tb .sub-text{color:rgba(5,43,39,.6);}
+#card.tb .divline{background:rgba(5,43,39,.12);}
+#card.tb .footer-bg{background:rgba(5,43,39,.07);}
+#card.tb .tagline-text{color:var(--td);}
+#card.tb .cta-pill{background:rgba(240,123,48,.1);border:1px solid rgba(240,123,48,.3);color:#a03800;}
+#card.tb .platform-badge{background:rgba(5,43,39,.07);border:1px solid rgba(5,43,39,.12);color:rgba(5,43,39,.45);}
+#card.tb .track-badge{background:rgba(5,43,39,.1);border:1px solid rgba(5,43,39,.2);color:var(--td);}
+#card.tb .wmark{color:rgba(5,43,39,.04);}
+#card.tb .hash-text{color:var(--tb);}
+#card.tb .url-text{color:rgba(5,43,39,.25);}
+#card.tb .day-text{color:rgba(5,43,39,.06);}
+
+/* C — PRESTIGE GOLD */
+#card.tc{background:linear-gradient(145deg,#0a0a0a 0%,#111111 55%,#080808 100%);}
+#card.tc .bg-grid{display:none;}
+#card.tc .bg-glow1{position:absolute;width:55%;padding-bottom:55%;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.18) 0%,transparent 65%);top:-20%;right:-10%;pointer-events:none;}
+#card.tc .bg-glow2{position:absolute;width:30%;padding-bottom:30%;border-radius:50%;background:radial-gradient(circle,rgba(240,123,48,.1) 0%,transparent 65%);bottom:-5%;left:8%;pointer-events:none;}
+#card.tc .bg-sidebar{position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(to bottom,var(--gl),var(--go),var(--gl));}
+#card.tc .badge-bg{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:var(--gl);}
+#card.tc .badge-dot{background:var(--go);}
+#card.tc .headline-main{color:var(--gl);}
+#card.tc .headline-em{color:var(--or);}
+#card.tc .sub-text{color:rgba(201,168,76,.6);}
+#card.tc .divline{background:rgba(201,168,76,.18);}
+#card.tc .footer-bg{background:rgba(0,0,0,.4);}
+#card.tc .tagline-text{color:var(--gl);}
+#card.tc .cta-pill{background:rgba(201,168,76,.14);border:1px solid rgba(201,168,76,.4);color:var(--gl);}
+#card.tc .platform-badge{background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.15);color:rgba(201,168,76,.45);}
+#card.tc .track-badge{background:rgba(201,168,76,.13);border:1px solid rgba(201,168,76,.35);color:var(--gl);}
+#card.tc .wmark{color:rgba(201,168,76,.035);}
+#card.tc .hash-text{color:rgba(201,168,76,.6);}
+#card.tc .url-text{color:rgba(201,168,76,.22);}
+#card.tc .day-text{color:rgba(201,168,76,.06);}
+
+/* D — BOLD ORANGE */
+#card.td2{background:linear-gradient(145deg,#8a2e08 0%,#c85a18 45%,#7a2406 100%);}
+#card.td2 .bg-grid{display:none;}
+#card.td2 .bg-glow1{position:absolute;width:50%;padding-bottom:50%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.14) 0%,transparent 60%);top:-15%;right:-8%;pointer-events:none;}
+#card.td2 .bg-glow2{position:absolute;width:30%;padding-bottom:30%;border-radius:50%;background:radial-gradient(circle,rgba(255,200,100,.12) 0%,transparent 65%);bottom:-5%;left:10%;}
+#card.td2 .bg-sidebar{position:absolute;left:0;top:0;bottom:0;width:5px;background:rgba(255,255,255,.35);}
+#card.td2 .badge-bg{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;}
+#card.td2 .badge-dot{background:#fff;}
+#card.td2 .headline-main{color:#fff;}
+#card.td2 .headline-em{color:rgba(255,230,150,1);}
+#card.td2 .sub-text{color:rgba(255,255,255,.7);}
+#card.td2 .divline{background:rgba(255,255,255,.18);}
+#card.td2 .footer-bg{background:rgba(0,0,0,.22);}
+#card.td2 .tagline-text{color:rgba(255,255,255,.85);}
+#card.td2 .cta-pill{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);color:#fff;}
+#card.td2 .platform-badge{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.5);}
+#card.td2 .track-badge{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;}
+#card.td2 .wmark{color:rgba(255,255,255,.04);}
+#card.td2 .hash-text{color:rgba(255,255,255,.65);}
+#card.td2 .url-text{color:rgba(255,255,255,.25);}
+#card.td2 .day-text{color:rgba(255,255,255,.07);}
+
+/* ══ CARD INTERIOR ══ */
+.cin{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;}
+
+/* — TOP BAR — */
+.ctop{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 22px 15px 26px;flex-shrink:0;
+}
+.clogo{display:flex;align-items:center;gap:9px;}
+.clm{
+  width:34px;height:34px;border-radius:50%;background:var(--or);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-weight:900;font-size:12px;color:#fff;letter-spacing:-1px;
+  flex-shrink:0;
+}
+/* override logo color per template */
+#card.tc .clm{background:var(--go);}
+#card.td2 .clm{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);}
+.platform-badge{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:2px;}
+.track-badge{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:2px;}
+.ctop-right{display:flex;align-items:center;gap:6px;}
+
+/* — DIVIDER — no white lines — */
+.divline{height:1px;margin:0 26px;flex-shrink:0;}
+
+/* — BADGE ROW (like hero badge) — */
+.cbadge-wrap{padding:14px 26px 10px;flex-shrink:0;}
+.cbadge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 14px;border-radius:2px;
+  font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  width:fit-content;
+}
+.bdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+
+/* — HEADLINE (Playfair, big, hero-matched) — */
+.cheadline-wrap{padding:10px 26px 0;flex-shrink:0;}
+.cheadline{
+  font-family:'Playfair Display',serif;font-weight:700;line-height:1.1;
+  /* em spans get orange color */
+}
+.headline-em{/* set per template */}
+
+/* — SUBTEXT — sits right under headline — */
+.csub-wrap{margin-top:16px;padding-top:16px;border-top:1px solid;}
+/* border-top color per template (reuses divline color) */
+#card.ta .csub-wrap{border-top-color:rgba(201,168,76,.18);}
+#card.tb .csub-wrap{border-top-color:rgba(5,43,39,.12);}
+#card.tc .csub-wrap{border-top-color:rgba(201,168,76,.2);}
+#card.td2 .csub-wrap{border-top-color:rgba(255,255,255,.15);}
+.csub-rule{display:none;}
+.sub-text{
+  font-size:15px;font-weight:300;line-height:1.7;
+  word-break:break-word;white-space:pre-wrap;
+}
+#card.ta .sub-text{color:rgba(255,255,255,.62);}
+#card.tb .sub-text{color:rgba(5,43,39,.62);}
+#card.tc .sub-text{color:rgba(201,168,76,.65);}
+#card.td2 .sub-text{color:rgba(255,255,255,.75);}
+
+/* — BODY — pure flex spacer, holds only hashtags at bottom — */
+.cbody{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding:0 26px 10px;overflow:hidden;}
+.hash-text{font-family:'DM Mono',monospace;font-size:10px;line-height:1.6;word-break:break-all;}
+
+/* — FOOTER — */
+.cfooter{flex-shrink:0;}
+.footer-bg{padding:12px 22px 14px 26px;}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+
+.tagline-text{font-family:'Playfair Display',serif;font-style:italic;font-size:12px;letter-spacing:.3px;flex-shrink:0;}
+.cta-pill{font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 12px;border-radius:3px;white-space:nowrap;}
+.url-text{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.5px;}
+
+/* — WATERMARK — */
+.wmark{
+  position:absolute;
+  font-family:'Playfair Display',serif;font-weight:900;
+  line-height:1;pointer-events:none;user-select:none;z-index:1;letter-spacing:-4px;
+}
+
+/* SIZE-SPECIFIC OVERRIDES */
+.csq .cheadline{font-size:34px;}
+.csq .sub-text{font-size:15px;}
+.csq .wmark{font-size:180px;bottom:-18px;left:-12px;}
+.csq .cbadge-wrap{padding:16px 26px 10px;}
+.csq .cheadline-wrap{padding:10px 26px 14px;}
+
+.cst .cheadline{font-size:22px;}
+.cst .sub-text{font-size:15px;}
+.cst .wmark{font-size:100px;bottom:-8px;left:-6px;}
+.cst .ctop{padding:10px 14px 9px 18px;}
+.cst .divline{margin:0 18px;}
+.cst .cbadge-wrap{padding:8px 18px 5px;}
+.cst .cbadge{font-size:9px;padding:4px 10px;}
+.cst .cheadline-wrap{padding:5px 18px 8px;}
+.cst .csub-wrap{margin-top:8px;padding-top:8px;}
+.cst .cbody{padding:0 18px 5px;}
+.cst .hash-text{font-size:9px;}
+.cst .footer-bg{padding:12px 14px 14px 18px;}
+.cst .tagline-text{font-size:11px;}
+.cst .cta-pill{font-size:8px;padding:4px 9px;}
+
+
+
+.cls .cheadline{font-size:24px;}
+.cls .sub-text{font-size:15px;}
+.cls .wmark{font-size:130px;bottom:-14px;left:-8px;}
+.cls .ctop{padding:12px 20px 10px 24px;}
+.cls .cbadge-wrap{padding:8px 24px 4px;}
+.cls .cbadge{font-size:9px;padding:4px 10px;}
+.cls .cheadline-wrap{padding:5px 24px 8px;}
+.cls .csub-wrap{margin-top:8px;padding-top:8px;}
+.cls .cbody{padding:0 24px 4px;}
+.cls .footer-bg{padding:9px 20px 11px 24px;}
+.cls .tagline-text{font-size:11px;}
+.cls .cta-pill{font-size:8px;padding:4px 9px;}
+
+/* ══ INFO BAR ══ */
+.ibar{
+  position:relative;z-index:2;
+  display:flex;gap:0;background:rgba(255,255,255,.02);
+  border:1px solid rgba(201,168,76,.1);border-radius:10px;overflow:hidden;
+  width:100%;max-width:560px;
+}
+.ic{flex:1;padding:11px 14px;border-right:1px solid rgba(201,168,76,.07);text-align:center;}
+.ic:last-child{border-right:none;}
+.iv{font-size:12px;font-weight:700;color:rgba(255,255,255,.7);}
+.ik{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.22);margin-top:3px;}
+
+.hint{position:relative;z-index:2;font-size:11px;color:rgba(255,255,255,.15);text-align:center;max-width:460px;line-height:1.6;}
+.hint strong{color:rgba(255,255,255,.3);}
+
+/* DATE PANEL */
+.dt-input{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:9px 12px;color:rgba(255,255,255,.8);font-family:'DM Mono',monospace;font-size:13px;outline:none;transition:border-color .2s;color-scheme:dark;}
+.dt-input:focus{border-color:var(--go);}
+.dd-row{display:none;flex-direction:row;margin-top:8px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:8px;overflow:hidden;}
+.dd-col{flex:1;padding:9px 12px;border-right:1px solid rgba(255,255,255,.06);}
+.dd-col:last-child{border-right:none;}
+.dd-lbl{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:3px;}
+.dd-lbl.hi{color:var(--go);}
+.dd-val{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:rgba(255,255,255,.8);}
+.dd-val.hi{color:var(--gl);}
+.dd-sub{font-size:9px;color:rgba(255,255,255,.3);margin-top:2px;}
+.crd-dt{display:none;flex-direction:column;align-items:flex-end;gap:1px;text-align:right;margin-right:2px;}
+.crd-dt-en{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.8px;opacity:.7;}
+.crd-dt-hi{font-size:7.5px;font-weight:600;letter-spacing:.3px;}
+/* Story: hide top-bar date, show below-subtext date */
+.cst .crd-dt{display:none !important;}
+.crd-dt-story{display:none !important;flex-direction:column;align-items:flex-end;gap:2px;margin-top:10px;text-align:right;}
+.cst .crd-dt-story{display:flex !important;}
+.crd-dt-story .crd-dt-en{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.8px;}
+.crd-dt-story .crd-dt-hi{font-size:7.5px;font-weight:600;letter-spacing:.3px;}
+/* template colors for story date */
+#card.ta .crd-dt-story .crd-dt-en{color:rgba(255,255,255,.5);}
+#card.ta .crd-dt-story .crd-dt-hi{color:var(--go);}
+#card.tb .crd-dt-story .crd-dt-en{color:rgba(5,43,39,.4);}
+#card.tb .crd-dt-story .crd-dt-hi{color:var(--or);}
+#card.tc .crd-dt-story .crd-dt-en{color:rgba(201,168,76,.5);}
+#card.tc .crd-dt-story .crd-dt-hi{color:var(--gl);}
+#card.td2 .crd-dt-story .crd-dt-en{color:rgba(255,255,255,.5);}
+#card.td2 .crd-dt-story .crd-dt-hi{color:rgba(255,230,150,.9);}
+#card.ta .crd-dt-en{color:rgba(255,255,255,.4);}#card.ta .crd-dt-hi{color:var(--go);}
+#card.tb .crd-dt-en{color:rgba(5,43,39,.4);}#card.tb .crd-dt-hi{color:var(--or);}
+#card.tc .crd-dt-en{color:rgba(201,168,76,.4);}#card.tc .crd-dt-hi{color:var(--gl);}
+#card.td2 .crd-dt-en{color:rgba(255,255,255,.45);}#card.td2 .crd-dt-hi{color:rgba(255,230,150,.9);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hl">
+    <div class="hlm">imc</div>
+    <div class="hlt">Social Card Studio<span>Pre-Launch Campaign Tool</span></div>
+  </div>
+  <div class="hpill">Card Generator</div>
+</header>
+
+<div class="ws">
+
+<!-- ══════ LEFT ══════ -->
+<div class="lp">
+
+  <div class="ps">
+    <div class="psl">Card Heading</div>
+    <input class="hi" id="headingInput" placeholder="Pre-Launch Message…" oninput="render()" maxlength="60">
+    <div class="chips">
+      <div class="chip chip-gold" onclick="sh('Pre-Launch Message')">Pre-Launch Message</div>
+      <div class="chip chip-gold" onclick="sh('Coming Soon')">Coming Soon</div>
+      <div class="chip chip-gold" onclick="sh('Did You Know?')">Did You Know?</div>
+      <div class="chip chip-gold" onclick="sh('The Vision')">The Vision</div>
+      <div class="chip chip-gold" onclick="sh('Why IMC?')">Why IMC?</div>
+      <div class="chip chip-gold" onclick="sh('Our Mission')">Our Mission</div>
+      <div class="chip chip-gold" onclick="sh('Nation Building')">Nation Building</div>
+      <div class="chip chip-gold" onclick="sh('Community First')">Community First</div>
+    </div>
+  </div>
+
+  <div class="ps">
+    <div class="psl">Platform & Schedule</div>
+    <div class="pr" id="platRow">
+      <button class="pb on"  onclick="sp('Instagram Post',this)"><span class="pi">📸</span><span class="pn">Instagram</span></button>
+      <button class="pb"     onclick="sp('Facebook Post',this)"><span class="pi">📘</span><span class="pn">Facebook</span></button>
+      <button class="pb"     onclick="sp('X Post',this)"><span class="pi">𝕏</span><span class="pn">X / Twitter</span></button>
+      <button class="pb"     onclick="sp('LinkedIn Post',this)"><span class="pi">💼</span><span class="pn">LinkedIn</span></button>
+      <button class="pb"     onclick="sp('WhatsApp',this)"><span class="pi">💬</span><span class="pn">WhatsApp</span></button>
+      <button class="pb"     onclick="sp('General Post',this)"><span class="pi">🌐</span><span class="pn">General</span></button>
+    </div>
+    <div class="dtr">
+      <div class="sf">
+        <label>Campaign Day</label>
+        <select class="sel" id="daySelect" onchange="render()">
+          <option value="">— No Day —</option>
+          <option>Day 1</option><option>Day 2</option><option>Day 3</option><option>Day 4</option><option>Day 5</option>
+          <option>Day 6</option><option>Day 7</option><option>Day 8</option><option>Day 9</option><option>Day 10</option>
+          <option>Day 11</option><option>Day 12</option><option>Day 13</option><option>Day 14</option><option>Day 15</option>
+          <option>Day 16</option><option>Day 17</option><option>Day 18</option><option>Day 19</option><option>Day 20</option>
+          <option>Day 21</option><option>Day 22</option><option>Day 23</option><option>Day 24</option><option>Day 25</option>
+          <option>Day 26</option><option>Day 27</option><option>Day 28</option><option>Day 29</option><option>Day 30 🚀</option>
+        </select>
+      </div>
+      <div class="sf">
+        <label>Content Track</label>
+        <select class="sel" id="trackSelect" onchange="render()">
+          <option value="">— No Track —</option>
+          <option>Awareness</option><option>Inspiration</option><option>Vision</option>
+          <option>Engagement</option><option>Trust</option><option>Growth</option><option>Launch 🚀</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAPTION — this is the HEADLINE on the card -->
+  <div class="ps">
+    <div class="psl">Caption Copy (appears as headline)</div>
+    <textarea class="ca" id="captionInput"
+      placeholder="People don't need sympathy.&#10;They need a system.&#10;&#10;Keep it to 2–3 powerful lines."
+      oninput="render()" maxlength="200"></textarea>
+    <div class="cmeta">
+      <span class="ccount"><span id="charCount">0</span> / 200</span>
+      <button class="cclr" onclick="document.getElementById('captionInput').value='';render()">Clear</button>
+    </div>
+  </div>
+
+  <!-- SUBTEXT — smaller line below headline -->
+  <div class="ps">
+    <div class="psl">Subtext (smaller line below)</div>
+    <textarea class="si" id="subInput" placeholder="IMC is building that system.&#10;Coming soon." oninput="render()" maxlength="500" rows="3"></textarea>
+    <div class="chips" style="margin-top:8px;">
+      <div class="chip chip-gold" onclick="document.getElementById('subInput').value='IMC is building that system. Coming soon.';render()">Coming Soon</div>
+      <div class="chip chip-gold" onclick="document.getElementById('subInput').value='200 million people. One platform.';render()">200M · 1 Platform</div>
+      <div class="chip chip-gold" onclick="document.getElementById('subInput').value='indianmuslimcount.com';render()">Website</div>
+      <div class="chip chip-gold" onclick="document.getElementById('subInput').value='';render()">None</div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="ps">
+    <div class="psl">Call to Action</div>
+    <input class="ci" id="ctaInput" placeholder="Follow for updates →" oninput="render()" maxlength="50">
+    <div class="chips" style="margin-top:8px;">
+      <div class="chip chip-or" onclick="sc('Follow for updates →')">Follow</div>
+      <div class="chip chip-or" onclick="sc('Save & share →')">Save & Share</div>
+      <div class="chip chip-or" onclick="sc('Tag someone 👇')">Tag Someone</div>
+      <div class="chip chip-or" onclick="sc('Register now →')">Register Now</div>
+      <div class="chip chip-or" onclick="sc('Comment below 👇')">Comment</div>
+      <div class="chip chip-or" onclick="sc('DM us \'PIONEER\' →')">DM Pioneer</div>
+      <div class="chip chip-or" onclick="sc('Join the movement →')">Join</div>
+    </div>
+  </div>
+
+  <!-- HASHTAGS -->
+  <div class="ps">
+    <div class="psl">Hashtags</div>
+    <input class="hhi" id="hashInput" placeholder="#IMC #CountUsCountOnUs" oninput="render()">
+    <div class="tgl-list" style="margin-top:11px;">
+      <div class="tgl-row"><span class="tgl-lbl">Show hashtags on card</span><button class="tog on" id="togH" onclick="toggleH()"></button></div>
+      <div class="tgl-row"><span class="tgl-lbl">Show tagline on card</span><button class="tog on" id="togT" onclick="toggleT()"></button></div>
+      <div class="tgl-row"><span class="tgl-lbl">Show watermark</span><button class="tog on" id="togW" onclick="toggleW()"></button></div>
+    </div>
+  </div>
+
+  <!-- DATE -->
+  <div class="ps">
+    <div class="psl">Date (English &amp; Hijri)</div>
+    <input class="dt-input" type="date" id="dtIn" onchange="onDtPick()">
+    <div class="dd-row" id="ddRow">
+      <div class="dd-col"><div class="dd-lbl">Gregorian</div><div class="dd-val" id="ddEn">—</div><div class="dd-sub" id="ddEnS"></div></div>
+      <div class="dd-col"><div class="dd-lbl hi">&#9733; Hijri</div><div class="dd-val hi" id="ddHi">—</div><div class="dd-sub" id="ddHiS"></div></div>
+    </div>
+    <div class="tgl-list" style="margin-top:11px;">
+      <div class="tgl-row"><span class="tgl-lbl">Show date on card</span><button class="tog on" id="togDt" onclick="toggleDt()"></button></div>
+    </div>
+  </div>
+
+  <!-- TEMPLATE -->
+  <div class="ps">
+    <div class="psl">Template</div>
+    <div class="tr2">
+      <button class="tb2 on" onclick="stpl('ta',this)" style="background:rgba(5,43,39,.8);">
+        <div class="tsw" style="background:var(--td);border:1px solid rgba(201,168,76,.2);"><div class="tml">imc</div></div>
+        <span class="tnm">Deep Teal</span>
+      </button>
+      <button class="tb2" onclick="stpl('tb',this)" style="background:rgba(220,215,206,.12);">
+        <div class="tsw" style="background:var(--ow);border:1px solid #ccc;"><div class="tml">imc</div></div>
+        <span class="tnm">Cream</span>
+      </button>
+      <button class="tb2" onclick="stpl('tc',this)" style="background:rgba(28,18,0,.9);">
+        <div class="tsw" style="background:linear-gradient(135deg,#0e0900,#1c1200);border:1px solid rgba(201,168,76,.25);"><div class="tml" style="background:var(--go);color:#0e0900;">imc</div></div>
+        <span class="tnm">Prestige</span>
+      </button>
+      <button class="tb2" onclick="stpl('td2',this)" style="background:rgba(138,46,8,.6);">
+        <div class="tsw" style="background:linear-gradient(135deg,#8a2e08,#c85a18);border:1px solid rgba(255,255,255,.15);"><div class="tml" style="background:var(--td);">imc</div></div>
+        <span class="tnm">Orange</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- FORMAT -->
+  <div class="ps">
+    <div class="psl">Format</div>
+    <div class="fr">
+      <button class="fb on" onclick="sfmt('sq',this)"><span class="fi">⬛</span><span class="fn">Square</span><span class="fd">1:1 · Feed</span></button>
+      <button class="fb"    onclick="sfmt('st',this)"><span class="fi">📱</span><span class="fn">Story</span><span class="fd">9:16 · Stories</span></button>
+      <button class="fb"    onclick="sfmt('ls',this)"><span class="fi">🖥️</span><span class="fn">Landscape</span><span class="fd">16:9 · LinkedIn</span></button>
+    </div>
+  </div>
+
+  <!-- EXPORT -->
+  <div class="ps">
+    <div class="psl">Export & Share</div>
+    <button class="dlb" onclick="dl()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
+      Download Card Image
+    </button>
+    <div class="sgrid">
+      <button class="sb wa" onclick="goWA()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </button>
+      <button class="sb" onclick="goX()">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        X / Twitter
+      </button>
+      <button class="sb" onclick="goLI()">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </button>
+      <button class="sb" id="cpyBtn" onclick="cpyTxt()">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy Text
+      </button>
+    </div>
+  </div>
+
+</div><!-- end left -->
+
+<!-- ══════ RIGHT ══════ -->
+<div class="rp">
+  <div class="rlbl">Live Preview</div>
+
+  <div class="cw">
+    <div id="card" class="ta csq">
+      <!-- BG -->
+      <div class="bg-grid"></div>
+      <div class="bg-glow1"></div>
+      <div class="bg-glow2"></div>
+      <div class="bg-sidebar"></div>
+      <!-- Watermark -->
+      <div class="wmark" id="cWmark">imc</div>
+
+      <div class="cin">
+        <!-- TOP BAR -->
+        <div class="ctop">
+          <div class="clogo">
+            <div class="clm">imc</div>
+            <div class="platform-badge" id="cPlatBadge">Instagram Post</div>
+          </div>
+          <div class="ctop-right">
+            <div class="crd-dt" id="crdDt"></div>
+            <div class="track-badge" id="cTrackBadge" style="display:none;"></div>
+          </div>
+        </div>
+
+        <!-- DIVIDER — no white line, uses template color -->
+        <div class="divline"></div>
+
+        <!-- BADGE (like hero: "India's Community Operating System") -->
+        <div class="cbadge-wrap">
+          <div class="cbadge badge-bg" id="cBadge">
+            <span class="bdot badge-dot" id="cBadgeDot"></span>
+            <span id="cBadgeText">Pre-Launch Message</span>
+          </div>
+        </div>
+
+        <!-- HEADLINE — big Playfair, hero-style, last word in orange -->
+        <div class="cheadline-wrap">
+          <div class="cheadline headline-main" id="cHeadline">
+            People don't need sympathy.<br>They need a <em class="headline-em" style="font-style:normal;">system</em>.
+          </div>
+          <!-- SUBTEXT — sits directly under headline with gap + left rule -->
+          <div class="csub-wrap" id="cSubWrap" style="display:none;">
+            <div class="csub-rule divline"></div>
+            <div class="sub-text" id="cSub"></div>
+          </div>
+          <!-- DATE below subtext — Story format only -->
+          <div class="crd-dt-story" id="crdDtStory"></div>
+        </div>
+
+        <!-- BODY — spacer + hashtags only -->
+        <div class="cbody">
+          <div class="hash-text" id="cHash" style="display:none;"></div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="cfooter">
+          <div class="footer-bg">
+            <div class="footer-inner">
+              <div class="tagline-text" id="cTagline">"Count Us. Count On Us."</div>
+              <div class="cta-pill" id="cCTA">Follow for updates →</div>
+            </div>
+          </div>
+        </div>
+      </div><!-- cin -->
+    </div><!-- card -->
+  </div><!-- cw -->
+
+  <!-- INFO BAR -->
+  <div class="ibar">
+    <div class="ic"><div class="iv" id="iPlatform">Instagram</div><div class="ik">Platform</div></div>
+    <div class="ic"><div class="iv" id="iFormat">1:1 Square</div><div class="ik">Format</div></div>
+    <div class="ic"><div class="iv" id="iTemplate">Deep Teal</div><div class="ik">Template</div></div>
+    <div class="ic"><div class="iv" id="iChars">0 / 200</div><div class="ik">Characters</div></div>
+  </div>
+
+  <div class="hint">Download the card then post it. Use <strong>Copy Text</strong> to grab caption + hashtags for the post body.</div>
+</div><!-- end right -->
+
+</div><!-- ws -->
+
+<script>
+const TPLS = {ta:'Deep Teal',tb:'Cream White',tc:'Prestige Gold',td2:'Bold Orange'};
+const FMTS = {sq:{cls:'csq',lbl:'1:1 Square',sc:2},st:{cls:'cst',lbl:'9:16 Story',sc:3.2},ls:{cls:'cls',lbl:'16:9 Landscape',sc:3.2}};
+
+let curTpl='ta', curFmt='sq', curPlat='Instagram Post';
+let showH=true, showT=true, showW=true;
+
+function sh(v){document.getElementById('headingInput').value=v;render();}
+function sc(v){document.getElementById('ctaInput').value=v;render();}
+function sp(p,el){
+  curPlat=p;
+  document.querySelectorAll('.pb').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('iPlatform').textContent=p.replace(' Post','');
+  render();
+}
+function stpl(t,el){
+  curTpl=t;
+  document.querySelectorAll('.tb2').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('iTemplate').textContent=TPLS[t];
+  applyCard();
+}
+function sfmt(f,el){
+  curFmt=f;
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('iFormat').textContent=FMTS[f].lbl;
+  applyCard();
+}
+function toggleH(){showH=!showH;document.getElementById('togH').classList.toggle('on',showH);render();}
+function toggleT(){showT=!showT;document.getElementById('togT').classList.toggle('on',showT);render();}
+function toggleW(){showW=!showW;document.getElementById('togW').classList.toggle('on',showW);render();}
+
+function applyCard(){
+  const c=document.getElementById('card');
+  Object.keys(TPLS).forEach(t=>c.classList.remove(t));
+  Object.values(FMTS).forEach(f=>c.classList.remove(f.cls));
+  c.classList.add(curTpl);
+  c.classList.add(FMTS[curFmt].cls);
+  render();
+}
+
+// Parse caption: find last word/phrase, wrap in em.headline-em
+function parseHeadline(raw){
+  if(!raw||!raw.trim()) return 'Your headline<br>will appear <em class="headline-em" style="font-style:normal;">here</em>.';
+  // Split on line breaks first
+  const lines = raw.trim().split(/\n/);
+  // On last line, wrap last word in orange em
+  const lastIdx = lines.length-1;
+  const lastLine = lines[lastIdx];
+  const words = lastLine.trim().split(/\s+/);
+  if(words.length>1){
+    const last = words.pop();
+    lines[lastIdx] = words.join(' ')+' <em class="headline-em" style="font-style:normal;">'+last+'</em>';
+  } else {
+    lines[lastIdx] = '<em class="headline-em" style="font-style:normal;">'+lastLine+'</em>';
+  }
+  return lines.join('<br>');
+}
+
+function render(){
+  const caption = document.getElementById('captionInput').value;
+  const sub     = document.getElementById('subInput').value.trim();
+  const cta     = document.getElementById('ctaInput').value.trim();
+  const hash    = document.getElementById('hashInput').value.trim();
+  const day     = document.getElementById('daySelect').value;
+  const track   = document.getElementById('trackSelect').value;
+  const heading = document.getElementById('headingInput').value.trim();
+  const count   = caption.length;
+
+  document.getElementById('charCount').textContent=count;
+  document.getElementById('iChars').textContent=count+' / 200';
+
+  // Platform badge
+  document.getElementById('cPlatBadge').textContent=curPlat;
+
+  // Track badge
+  const tb=document.getElementById('cTrackBadge');
+  if(track){tb.textContent=track;tb.style.display='block';}else{tb.style.display='none';}
+
+  // Badge label (day + heading or heading or day)
+  const bdTxt = document.getElementById('cBadgeText');
+  let bdVal='';
+  if(day&&heading) bdVal=day+' · '+heading;
+  else if(day) bdVal=day;
+  else if(heading) bdVal=heading;
+  else bdVal='IMC';
+  bdTxt.textContent=bdVal;
+
+  // Headline — big Playfair with last-word orange
+  const hl=document.getElementById('cHeadline');
+  hl.innerHTML=parseHeadline(caption);
+
+  // Dynamic font-size: big by default, scale down if long
+  const base = curFmt==='sq'?34:curFmt==='st'?26:26;
+  let fs=base;
+  if(count>100) fs=base-6;
+  else if(count>70) fs=base-4;
+  else if(count>40) fs=base-2;
+  hl.style.fontSize=fs+'px';
+
+  // Subtext — directly under headline
+  const subWrap=document.getElementById('cSubWrap');
+  const subEl=document.getElementById('cSub');
+  if(sub){subEl.textContent=sub;subWrap.style.display='block';}else{subWrap.style.display='none';}
+
+  // Hashtags
+  const hEl=document.getElementById('cHash');
+  if(showH&&hash){hEl.textContent=hash;hEl.style.display='block';}else{hEl.style.display='none';}
+
+  // Tagline
+  document.getElementById('cTagline').style.display=showT?'block':'none';
+
+  // CTA
+  const ctaEl=document.getElementById('cCTA');
+  if(cta){ctaEl.textContent=cta;ctaEl.style.display='block';}else{ctaEl.style.display='none';}
+
+  // Watermark
+  document.getElementById('cWmark').style.display=showW?'block':'none';
+
+
+  // Date on card
+  var _cd=document.getElementById('crdDt');
+  var _cds=document.getElementById('crdDtStory');
+  var _inner='<span class="crd-dt-en">'+_dtEn+'</span><span class="crd-dt-hi">'+_dtHi+'</span>';
+  if(_shDt&&_dtEn){
+    _cd.innerHTML=_inner;_cd.style.display='flex';
+    _cds.innerHTML=_inner;_cds.style.display='flex';
+  }else{
+    _cd.style.display='none';
+    _cds.style.display='none';
+  }
+  // Info bar platform
+  document.getElementById('iPlatform').textContent=curPlat.replace(' Post','');
+}
+
+function dl(){
+  const c=document.getElementById('card');
+  html2canvas(c,{scale:FMTS[curFmt].sc,useCORS:true,allowTaint:true,backgroundColor:null,logging:false})
+    .then(cv=>{
+      const a=document.createElement('a');
+      a.download='IMC-card-'+curFmt+'-'+curTpl+'.png';
+      a.href=cv.toDataURL('image/png');
+      a.click();
+    });
+}
+
+function getText(){
+  const cap=document.getElementById('captionInput').value;
+  const sub=document.getElementById('subInput').value;
+  const hash=document.getElementById('hashInput').value;
+  const cta=document.getElementById('ctaInput').value;
+  return [cap,sub,hash,cta?'\n'+cta:'','\n📲 indianmuslimcount.com'].filter(Boolean).join('\n').trim();
+}
+function goWA(){window.open('https://wa.me/?text='+encodeURIComponent(getText()),'_blank');}
+function goX(){window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(document.getElementById('captionInput').value.slice(0,240)),'_blank');}
+function goLI(){window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent('https://indianmuslimcount.com'),'_blank');}
+function cpyTxt(){
+  const btn=document.getElementById('cpyBtn');
+  navigator.clipboard.writeText(getText()).then(()=>{
+    btn.innerHTML='✓ Copied!';btn.style.color='#4ade80';btn.style.borderColor='rgba(74,222,128,.35)';
+    setTimeout(()=>{
+      btn.innerHTML='<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy Text';
+      btn.style.color='';btn.style.borderColor='';
+    },2200);
+  });
+}
+
+
+/* HIJRI */
+const _HMo=["Muharram","Safar","Rabi al-Awwal","Rabi al-Thani","Jumada al-Awwal","Jumada al-Thani","Rajab","Sha'ban","Ramadan","Shawwal","Dhu al-Qi'dah","Dhu al-Hijjah"];
+const _GMo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const _GMoL=['January','February','March','April','May','June','July','August','September','October','November','December'];
+let _dtEn='',_dtHi='',_shDt=true;
+function _toH(y,m,d){var jd=Math.floor((14-m)/12),yr=y+4800-jd,mo=m+12*jd-3;var JD=d+Math.floor((153*mo+2)/5)+365*yr+Math.floor(yr/4)-Math.floor(yr/100)+Math.floor(yr/400)-32045;var l=JD-1948440+10632,n=Math.floor((l-1)/10631);l=l-10631*n+354;var j=Math.floor((10985-l)/5316)*Math.floor((50*l)/17719)+Math.floor(l/5670)*Math.floor((43*l)/15238);l=l-Math.floor((30-j)/15)*Math.floor((17719*j)/50)-Math.floor(j/16)*Math.floor((15238*j)/43)+29;var hm=Math.floor((24*l)/709);return{y:30*n+j-30,m:hm,d:l-Math.floor((709*hm)/24)};}
+function onDtPick(){var v=document.getElementById('dtIn').value;var row=document.getElementById('ddRow');if(!v){row.style.display='none';_dtEn='';_dtHi='';render();return;}var p=v.split('-'),y=+p[0],m=+p[1],d=+p[2];var h=_toH(y,m,d);_dtEn=d+' '+_GMo[m-1].toUpperCase()+' '+y;_dtHi=h.d+' '+_HMo[h.m-1]+' '+h.y+' AH';document.getElementById('ddEn').textContent=_dtEn;document.getElementById('ddEnS').textContent=d+' '+_GMoL[m-1]+' '+y;document.getElementById('ddHi').textContent=_dtHi;document.getElementById('ddHiS').textContent=h.d+' '+_HMo[h.m-1]+' '+h.y+' AH';row.style.display='flex';render();}
+function toggleDt(){_shDt=!_shDt;document.getElementById('togDt').classList.toggle('on',_shDt);render();}
+
+applyCard();
+</script>
+</body>
+</html>

@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>IMC - The Founding Council Form</title>
+<meta name="description" content="IMC Founding Council — Join India's most ambitious community movement. By invitation only."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://www.imcbharat.com/the-founding-council"/>
+<meta property="og:title" content="IMC Founding Council"/>
+<meta property="og:description" content="Join the IMC Founding Council. Not a committee. A covenant. By invitation only. Count Us. Count On Us."/>
+<meta property="og:image" content="https://imc-network.imc-wordwide.workers.dev/imc-logo.png"/>
+<meta property="og:image:width" content="600"/>
+<meta property="og:image:height" content="600"/>
+<meta property="og:site_name" content="IMC"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="IMC Founding Council"/>
+<meta name="twitter:description" content="Not a committee. A covenant. Count Us. Count On Us."/>
+<meta name="twitter:image" content="https://imc-network.imc-wordwide.workers.dev/IMC_Logo.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#e8651a;--primary-dark:#c4510e;--primary-lt:#f07c35;
+  --teal:#0a3535;--radius:6px;
+  --red:#c0392b;--red-bg:#fdf0ef;--red-border:#e74c3c;
+  --green:#1a7a4a;--green-bg:#f0faf4;--green-border:#27ae60;
+}
+html{font-size:15px}
+body{background:#fdf6ef;font-family:'DM Sans',sans-serif;color:#1a1a1a;min-height:100vh;padding:0}
+.page-header{background:var(--teal);padding:28px 40px 24px;display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;overflow:hidden;animation:fadeUp .5s ease both}
+.page-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(255,255,255,.07) 0%,transparent 70%);pointer-events:none;}
+.imc-logo-circle{width:80px !important;height:80px !important;min-width:80px;min-height:80px;max-width:80px;max-height:80px;border-radius:50% !important;object-fit:cover !important;display:block;box-shadow:0 4px 24px rgba(0,0,0,.25);}
+.tagline-top{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.55);}
+.form-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:#fff;letter-spacing:.05em;text-align:center;}
+.header-divider{width:48px;height:2.5px;background:rgba(255,255,255,.5);border-radius:2px;margin:6px auto 0;}
+.page-body{max-width:700px;margin:0 auto;padding:32px 20px 60px}
+.card{background:#fff;border:1px solid #edd9c4;border-radius:12px;padding:32px 36px 40px;box-shadow:0 4px 28px rgba(232,101,26,.09);animation:fadeUp .6s .1s ease both}
+@media(max-width:560px){.card{padding:20px 16px 28px}.page-header{padding:20px 20px 16px}}
+.section-label{font-size:.67rem;letter-spacing:.26em;text-transform:uppercase;color:var(--primary);font-weight:700;margin-bottom:14px;padding-bottom:7px;border-bottom:1.5px solid #f0d9c8;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:560px){.grid-2{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:5px}
+label.field-label{font-size:.7rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#5a4030;}
+label.field-label span.req{color:var(--primary);margin-left:2px}
+label.field-label span.opt{color:#bbb;font-size:.65rem;font-weight:400;letter-spacing:.04em;text-transform:none;margin-left:4px;}
+input,select,textarea{background:#fdf8f4;border:1.5px solid #e4cdb8;border-radius:var(--radius);color:#1a1a1a;font-family:'DM Sans',sans-serif;font-size:.92rem;padding:9px 13px;outline:none;width:100%;transition:border-color .18s,box-shadow .18s,background .18s;}
+input::placeholder,textarea::placeholder{color:#c5a98a}
+input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(232,101,26,.13);background:#fff;}
+input.valid-field{border-color:var(--green-border);background:var(--green-bg)}
+input.invalid,select.invalid,textarea.invalid{border-color:var(--red-border);background:var(--red-bg);}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23e8651a' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;}
+textarea{resize:vertical;min-height:88px}
+.error-msg{font-size:.71rem;color:var(--red);margin-top:4px;display:none;align-items:center;gap:5px;}
+.error-msg::before{content:'!';font-size:.75rem}
+.error-msg.show{display:flex}
+.hint-msg{font-size:.7rem;color:#a0826d;margin-top:3px;display:block;line-height:1.4}
+.input-wrap{position:relative}
+.input-wrap .status-icon{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:.85rem;pointer-events:none;opacity:0;transition:opacity .2s;}
+.input-wrap.show-ok .status-icon{opacity:1}
+.input-wrap.show-ok .status-icon::after{content:'v';color:var(--green)}
+.input-wrap.show-err .status-icon::after{content:'x';color:var(--red);opacity:1}
+.input-wrap.show-err .status-icon{opacity:1}
+.input-wrap input{padding-right:32px}
+.pin-row{display:grid;grid-template-columns:160px 1fr;gap:14px;align-items:start}
+@media(max-width:560px){.pin-row{grid-template-columns:1fr}}
+@media(max-width:480px){.member-id-box{font-size:.78rem;letter-spacing:.06em;padding:10px 14px;white-space:nowrap;}}
+.pin-wrap{position:relative;margin-top:18px}
+.pin-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--teal);color:#fff;font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:2px 10px;border-radius:20px;white-space:nowrap;}
+.pin-wrap input{font-size:1.3rem;font-weight:700;letter-spacing:.28em;text-align:center;border-color:var(--primary);padding:11px 14px;background:#fff8f3;}
+.pin-lookup-note{font-size:.72rem;color:var(--primary-dark);margin-top:5px;min-height:18px;font-style:italic}
+.aadhaar-wrap input{letter-spacing:.12em;font-size:1rem;font-weight:500}
+.gap{margin-top:26px}
+.role-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px}
+.role-card{background:#fdf8f4;border:1.5px solid #e4cdb8;border-radius:var(--radius);padding:11px 13px;cursor:pointer;display:flex;align-items:flex-start;gap:9px;transition:border-color .18s,background .18s;}
+.role-card input[type=checkbox]{display:none}
+.check-box{width:15px;height:15px;flex-shrink:0;border:1.5px solid #c5a98a;border-radius:3px;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:background .18s,border-color .18s;}
+.role-card:has(input:checked) .check-box{background:var(--primary);border-color:var(--primary);}
+.role-card:has(input:checked) .check-box::after{content:'v';font-size:.6rem;color:#fff}
+.role-card:has(input:checked){border-color:var(--primary);background:#fff4ec}
+.role-text strong{display:block;font-size:.78rem;font-weight:700;color:var(--teal)}
+.role-text span{font-size:.68rem;color:#8a6a55;line-height:1.4}
+.consent-row{display:flex;align-items:flex-start;gap:11px;background:#fdf8f4;border:1px solid #e4cdb8;border-radius:var(--radius);padding:13px 15px;}
+.consent-row input[type=checkbox]{width:15px;height:15px;flex-shrink:0;accent-color:var(--primary);margin-top:2px;}
+.consent-row p{font-size:.78rem;color:#6a4f3a;line-height:1.65}
+.consent-row a{color:var(--primary-lt);text-decoration:none}
+.btn-wrap{margin-top:26px;text-align:center}
+.btn-submit{display:inline-block;background:var(--teal);color:#fff;font-family:'DM Sans',sans-serif;font-size:.86rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border:none;border-radius:var(--radius);padding:14px 56px;cursor:pointer;box-shadow:0 3px 14px rgba(10,53,53,.22);transition:background .18s,transform .14s;}
+.btn-submit:hover{background:var(--primary);transform:translateY(-1px)}
+.btn-submit:disabled{background:#bbb;cursor:not-allowed;transform:none}
+.tagline-footer{text-align:center;margin-top:16px;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:#c5a98a;}
+.alert-box{display:none;background:var(--red-bg);border:1px solid var(--red-border);border-radius:var(--radius);padding:12px 16px;font-size:.82rem;color:var(--red);margin-top:16px;text-align:center;}
+.referral-lookup-note{font-size:.72rem;margin-top:4px;min-height:18px;font-style:italic;color:#a0826d;}
+.member-id-box{display:inline-block;background:#fff4ec;border:2px solid var(--primary);border-radius:8px;padding:12px 28px;margin:14px auto 18px;font-family:'DM Sans',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:.14em;color:var(--teal);}
+.member-id-label{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:#c5a98a;margin-top:14px;display:block;}
+.success-screen{display:none;text-align:center;padding:54px 20px}
+.success-icon{width:58px;height:58px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:1.6rem;color:#fff;}
+.success-screen h2{font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:var(--teal);margin-bottom:10px;}
+.success-screen p{font-size:.88rem;color:#6a4f3a;line-height:1.75}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ── Photo Upload ── */
+.photo-upload-section{margin-top:0}
+.photo-upload-wrapper{display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap}
+.photo-preview-box{width:96px;height:96px;border-radius:50%;border:2.5px dashed #e4cdb8;background:#fdf8f4;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;position:relative;cursor:pointer;transition:border-color .2s;}
+.photo-preview-box:hover{border-color:var(--primary)}
+.photo-preview-box img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:none}
+.photo-preview-box .photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:5px;pointer-events:none}
+.photo-placeholder svg{opacity:.45}
+.photo-placeholder span{font-size:.58rem;color:#c5a98a;text-transform:uppercase;letter-spacing:.08em;text-align:center}
+.photo-actions{display:flex;flex-direction:column;gap:8px;justify-content:center}
+.photo-btn{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1.5px solid #e4cdb8;border-radius:var(--radius);padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:.76rem;font-weight:600;color:#5a4030;cursor:pointer;transition:border-color .18s,background .18s;white-space:nowrap}
+.photo-btn:hover{border-color:var(--primary);background:#fff8f3;color:var(--primary)}
+.photo-btn.capture-btn{border-color:var(--teal);color:var(--teal)}
+.photo-btn.capture-btn:hover{background:#0a353510}
+.photo-btn svg{flex-shrink:0}
+.photo-meta{font-size:.69rem;color:#a0826d;margin-top:2px;line-height:1.5}
+.photo-filename{font-size:.71rem;color:var(--green);margin-top:4px;display:none;align-items:center;gap:5px;font-weight:500}
+.photo-filename.show{display:flex}
+.photo-remove{background:none;border:none;cursor:pointer;color:#c5a98a;font-size:.78rem;margin-left:4px;text-decoration:underline;padding:0;font-family:inherit}
+.photo-remove:hover{color:var(--red)}
+/* Camera modal */
+.camera-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:9999;align-items:center;justify-content:center}
+.camera-modal.open{display:flex}
+.camera-inner{background:#fff;border-radius:12px;padding:24px;width:min(420px,94vw);display:flex;flex-direction:column;gap:14px}
+.camera-inner h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--teal);text-align:center}
+.camera-inner video{width:100%;border-radius:8px;background:#000;max-height:280px;object-fit:cover}
+.camera-inner canvas{display:none}
+.camera-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.cam-btn{padding:9px 22px;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;border:none;transition:background .18s}
+.cam-btn.snap{background:var(--primary);color:#fff}
+.cam-btn.snap:hover{background:var(--primary-dark)}
+.cam-btn.close-cam{background:#eee;color:#555}
+.cam-btn.close-cam:hover{background:#ddd}
+.cam-btn.use-photo{background:var(--teal);color:#fff;display:none}
+.cam-btn.use-photo:hover{background:#0d4040}
+.cam-retake{font-size:.75rem;color:var(--primary);cursor:pointer;text-align:center;text-decoration:underline;display:none}
+
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <a href="https://www.imcbharat.com/imc-home-page" style="position:absolute;top:18px;right:20px;display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.65);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:color 0.2s;z-index:2;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">&larr; Home Page</a>
+  <img src="imc-logo.png" alt="IMC" class="imc-logo-circle">
+  <div class="form-title">The Founding Council Form</div>
+  <div class="header-divider"></div>
+</div>
+
+<div class="page-body">
+<div class="card" id="formCard">
+<form id="imcForm" novalidate>
+
+  <div class="section-label">&#128205; Your Pin Code &amp; Location</div>
+  <div class="pin-row">
+    <div class="field">
+      <label class="field-label">Pin Code <span class="req">*</span></label>
+      <div class="pin-wrap">
+        <div class="pin-badge">Pioneer Zone</div>
+        <input type="text" id="pinCode" maxlength="6" placeholder="000000" inputmode="numeric"/>
+      </div>
+      <div class="pin-lookup-note" id="pinNote">&nbsp;</div>
+      <div class="error-msg" id="err-pinCode">Please enter a valid 6-digit PIN code.</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="field">
+        <label class="field-label">City / District <span class="req">*</span></label>
+        <div class="input-wrap" id="wrap-city">
+          <input type="text" id="city" placeholder="Auto-filled or enter manually"/>
+          <span class="status-icon"></span>
+        </div>
+        <div class="error-msg" id="err-city">City / District is required.</div>
+      </div>
+      <div class="field">
+        <label class="field-label">State <span class="req">*</span></label>
+        <select id="state">
+          <option value="">-- Select State / UT --</option>
+          <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option>
+          <option>Bihar</option><option>Chhattisgarh</option><option>Goa</option>
+          <option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option>
+          <option>Jharkhand</option><option>Karnataka</option><option>Kerala</option>
+          <option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option>
+          <option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option>
+          <option>Odisha</option><option>Punjab</option><option>Rajasthan</option>
+          <option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option>
+          <option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option>
+          <option>West Bengal</option><option>Andaman &amp; Nicobar Islands</option>
+          <option>Chandigarh</option><option>Delhi</option><option>Jammu &amp; Kashmir</option>
+          <option>Ladakh</option><option>Lakshadweep</option><option>Puducherry</option>
+        </select>
+        <div class="error-msg" id="err-state">Please select your state.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label gap">&#128100; Personal Details</div>
+  <div class="grid-2">
+    <div class="field">
+      <label class="field-label">Full Name <span class="req">*</span></label>
+      <div class="input-wrap" id="wrap-fullName">
+        <input type="text" id="fullName" placeholder="Your full name"/>
+        <span class="status-icon"></span>
+      </div>
+      <div class="error-msg" id="err-fullName">Full name is required.</div>
+    </div>
+    <div class="field">
+      <label class="field-label">Gender <span class="req">*</span></label>
+      <select id="gender">
+        <option value="">-- Select --</option>
+        <option>Male</option><option>Female</option><option>Prefer not to say</option>
+      </select>
+      <div class="error-msg" id="err-gender">Please select your gender.</div>
+    </div>
+    <div class="field">
+      <label class="field-label">Mobile Number <span class="req">*</span></label>
+      <div class="input-wrap" id="wrap-mobile">
+        <div style="display:flex;gap:6px">
+          <select id="mobileCode" style="width:110px;flex-shrink:0;padding:9px 6px;font-size:.82rem">
+            <option value="+91">+91 India</option><option value="+1">+1 USA</option>
+            <option value="+44">+44 UK</option><option value="+61">+61 AUS</option>
+            <option value="+971">+971 UAE</option><option value="+974">+974 QAT</option>
+            <option value="+966">+966 KSA</option><option value="+968">+968 OMN</option>
+            <option value="+973">+973 BHR</option><option value="+965">+965 KWT</option>
+            <option value="+60">+60 MYS</option><option value="+65">+65 SGP</option>
+            <option value="+92">+92 PAK</option><option value="+880">+880 BGD</option>
+          </select>
+          <input type="tel" id="mobile" placeholder="Mobile number" inputmode="tel" maxlength="15" style="flex:1"/>
+        </div>
+      </div>
+      <div class="error-msg" id="err-mobile">Enter a valid mobile number.</div>
+    </div>
+    <div class="field">
+      <label class="field-label">Email Address <span class="req">*</span></label>
+      <div class="input-wrap" id="wrap-email">
+        <input type="email" id="email" placeholder="you@example.com"/>
+        <span class="status-icon"></span>
+      </div>
+      <div class="error-msg" id="err-email">Enter a valid email address.</div>
+    </div>
+    <div class="field">
+      <label class="field-label">Date of Birth <span class="req">*</span></label>
+      <div class="input-wrap" id="wrap-dob">
+        <input type="text" id="dob" placeholder="DD-MM-YYYY" maxlength="10" inputmode="numeric"/>
+        <span class="status-icon"></span>
+      </div>
+      <span class="hint-msg">Format: DD-MM-YYYY e.g. 15-08-1990</span>
+      <div class="error-msg" id="err-dob">Enter a valid date in DD-MM-YYYY format.</div>
+    </div>
+    <div class="field">
+      <label class="field-label">Qualification</label>
+      <select id="qualification">
+        <option value="">-- Highest qualification --</option>
+        <option>Below 10th</option><option>10th Pass</option><option>12th Pass</option>
+        <option>Diploma</option><option>Graduate</option><option>Post-Graduate</option>
+        <option>Doctorate / PhD</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">Aadhaar Card Number <span class="opt">(Optional)</span></label>
+      <div class="input-wrap aadhaar-wrap" id="wrap-aadhaar">
+        <input type="text" id="aadhaar" placeholder="XXXX XXXX XXXX" maxlength="14" inputmode="numeric"/>
+        <span class="status-icon"></span>
+      </div>
+      <span class="hint-msg">Stored securely &amp; never shared.</span>
+      <div class="error-msg" id="err-aadhaar">Enter a valid 12-digit Aadhaar number.</div>
+    </div>
+    <div class="field" style="grid-column:1/-1">
+      <label class="field-label">Profile Photo <span class="opt">(Optional)</span></label>
+      <div class="photo-upload-section">
+        <div class="photo-upload-wrapper">
+          <div class="photo-preview-box" id="photoPreviewBox" onclick="document.getElementById('photoFileInput').click()">
+            <img id="photoPreviewImg" alt="Profile photo preview"/>
+            <div class="photo-placeholder" id="photoPlaceholder">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c5a98a" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              <span>Tap to<br/>upload</span>
+            </div>
+          </div>
+          <div class="photo-actions">
+            <button type="button" class="photo-btn capture-btn" id="openCameraBtn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              Take Photo
+            </button>
+            <label class="photo-btn" for="photoFileInput">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Upload Image
+            </label>
+            <input type="file" id="photoFileInput" accept="image/*" style="display:none"/>
+            <div class="photo-filename" id="photoFilename">
+              <span id="photoFilenameText"></span>
+              <button type="button" class="photo-remove" id="photoRemoveBtn">Remove</button>
+            </div>
+          </div>
+        </div>
+        <span class="hint-msg" style="margin-top:8px;display:block">JPG or PNG, max 2 MB. Clear face photo preferred. Stored securely.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Camera Modal -->
+  <div class="camera-modal" id="cameraModal">
+    <div class="camera-inner">
+      <h3>📷 Take Your Photo</h3>
+      <video id="cameraVideo" autoplay playsinline muted></video>
+      <canvas id="cameraCanvas"></canvas>
+      <div class="camera-btns">
+        <button type="button" class="cam-btn snap" id="snapBtn">Capture</button>
+        <button type="button" class="cam-btn use-photo" id="usePhotoBtn">Use This Photo</button>
+        <button type="button" class="cam-btn close-cam" id="closeCameraBtn">Cancel</button>
+      </div>
+      <div class="cam-retake" id="retakeBtn">Retake</div>
+    </div>
+  </div>
+
+  <div class="section-label gap">&#128188; Professional Details</div>
+  <div class="grid-2">
+    <div class="field">
+      <label class="field-label">Field of Work <span class="req">*</span></label>
+      <select id="profession">
+        <option value="">-- Select --</option>
+        <option>Doctors / Healthcare</option>
+        <option>Lawyers / Legal Expert</option>
+        <option>Entrepreneurs / Business</option>
+        <option>Tech / Engineers</option>
+        <option>Educators / Academics</option>
+        <option>CAs / Finance Experts</option>
+        <option>Journalists / Media</option>
+        <option>Farmers / Agriculture</option>
+        <option>Social Workers / NGOs</option>
+        <option>Real Estate / Architects</option>
+        <option>Leaders / Change-makers</option>
+        <option>Others</option>
+        <option>Student / Generation Shaper</option>
+        <option>Retired / Other</option>
+        <option>Government / Public Service</option>
+        <option>Skilled Trades / Local Services</option>
+      </select>
+      <div class="error-msg" id="err-profession">Please select your field of work.</div>
+    </div>
+    <div class="field" id="fld-designation">
+      <label class="field-label">Designation <span class="req">*</span></label>
+      <select id="designation">
+        <option value="">— Select —</option>
+        <option>CEO / Chief Executive Officer</option><option>MD / Managing Director</option><option>Chairman / Chairperson</option><option>President</option><option>Vice President</option><option>Director</option><option>Founder / Co-Founder</option><option>Partner</option><option>Senior Consultant</option><option>Consultant</option><option>Head of Department</option><option>Senior Executive</option><option>Executive</option><option>Manager</option><option>Assistant Manager</option><option>Team Lead</option><option>Associate</option><option>Owner / Proprietor</option><option>Independent Practitioner</option><option>Trustee</option><option>Secretary</option><option>Treasurer</option><option>CSR Head / Manager</option><option>Authorised Signatory</option><option>Other</option>
+      </select>
+      <div class="error-msg" id="err-designation">Please select your designation.</div>
+    </div>
+    <div class="field" id="fld-specialization" style="display:none">
+      <label class="field-label">Role / Specialization <span class="req">*</span></label>
+      <select id="specialization"><option value="">— Select field of work first —</option></select>
+      <div class="error-msg" id="err-specialization">Please select your role.</div>
+    </div>
+    <div class="field">
+      <label class="field-label">Organisation / Employer</label>
+      <input type="text" id="organisation" placeholder="Company / Institution name"/>
+    </div>
+    <div class="field">
+      <label class="field-label">Years of Experience</label>
+      <select id="experience">
+        <option value="">-- Select --</option>
+        <option>Less than 1 year</option><option>1-3 years</option><option>3-5 years</option>
+        <option>5-10 years</option><option>10-20 years</option><option>20+ years</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">LinkedIn / Website</label>
+      <input type="url" id="linkedin" placeholder="https://linkedin.com/in/..."/>
+    </div>
+  </div>
+
+  <div class="section-label gap">&#127963; Founding Council Role Interest</div>
+  <p style="font-size:.78rem;color:#a0826d;margin-bottom:12px">Select all that apply.</p>
+  <div class="role-grid">
+    <label class="role-card"><input type="checkbox" name="role" value="Patron Member"/><div class="check-box"></div><div class="role-text"><strong>Patron Member</strong><span>Visionary Tier - Moral authority &amp; credibility</span></div></label>
+    <label class="role-card"><input type="checkbox" name="role" value="Community Ambassador"/><div class="check-box"></div><div class="role-text"><strong>Community Ambassador</strong><span>Outreach &amp; Growth - Expand IMC's reach</span></div></label>
+    <label class="role-card"><input type="checkbox" name="role" value="Advisory Member"/><div class="check-box"></div><div class="role-text"><strong>Advisory Member</strong><span>Strategy &amp; Governance - Policy &amp; compliance</span></div></label>
+    <label class="role-card"><input type="checkbox" name="role" value="Cultural Voice"/><div class="check-box"></div><div class="role-text"><strong>Cultural Voice</strong><span>Narrative &amp; Identity - Media &amp; storytelling</span></div></label>
+    <label class="role-card"><input type="checkbox" name="role" value="Armed Forces Circle"/><div class="check-box"></div><div class="role-text"><strong>Armed Forces Circle</strong><span>Service &amp; Valour - Civil-military engagement</span></div></label>
+    <label class="role-card"><input type="checkbox" name="role" value="Women's Circle"/><div class="check-box"></div><div class="role-text"><strong>Women's Circle</strong><span>Empowerment &amp; Leadership - Women's representation</span></div></label>
+  </div>
+
+  <div class="section-label gap">&#127919; Sector You Can Contribute To</div>
+  <div class="field">
+    <select id="sector">
+      <option value="">-- Select primary sector --</option>
+      <option>Education</option><option>Healthcare</option><option>Employment</option>
+      <option>Legal Aid</option><option>Agriculture</option><option>Counselling</option>
+      <option>Skill Dev &amp; Entrepreneurship</option><option>Women &amp; Youth Empowerment</option>
+      <option>Housing &amp; Infrastructure</option><option>Financial Literacy &amp; Microfinance</option>
+      <option>Disaster Relief</option><option>Mental Health &amp; Senior Care</option>
+      <option>Digital &amp; Tech Literacy</option><option>Media &amp; Journalism</option>
+      <option>Multiple / General</option>
+    </select>
+  </div>
+
+  <div class="section-label gap">&#129309; Referral Details</div>
+  <div class="grid-2">
+    <div class="field">
+      <label class="field-label">Referrer's IMC Member ID <span class="req">*</span></label>
+      <div class="input-wrap" id="wrap-referredId">
+        <input type="text" id="referredId" placeholder="e.g. IMC-FC-2026-MH-00001" maxlength="25" style="letter-spacing:.06em;font-weight:600;text-transform:uppercase"/>
+        <span class="status-icon"></span>
+      </div>
+      <div class="referral-lookup-note" id="referralNote">&nbsp;</div>
+    </div>
+    <div class="field">
+      <label class="field-label">Referrer's Name</label>
+      <input type="text" id="referredBy" placeholder="Auto-filled when ID is entered" readonly style="background:#f0faf4;color:#1a7a4a;font-weight:600;cursor:default"/>
+    </div>
+  </div>
+
+  <div class="section-label gap">&#9997; What makes you the right fit?</div>
+  <div class="field">
+    <textarea id="motivation" rows="4" placeholder="Briefly describe what you hope to contribute to the IMC Founding Council..."></textarea>
+  </div>
+
+  <div class="gap">
+    <label class="consent-row">
+      <input type="checkbox" id="consent"/>
+      <p>I confirm the information is accurate and consent to IMC storing this data per the <a href="#">Privacy Policy</a> and India's DPDP Act 2023. Aadhaar data (if provided) is stored encrypted and never shared.</p>
+    </label>
+    <div class="error-msg" id="err-consent">Please tick the box to confirm and continue.</div>
+  </div>
+
+  <div class="btn-wrap">
+    <button type="submit" class="btn-submit" id="submitBtn">Submit Form</button>
+  </div>
+  <div class="alert-box" id="alertBox"></div>
+  <div class="tagline-footer">Count Us. Count On Us.</div>
+</form>
+
+<div class="success-screen" id="successScreen">
+  <div class="success-icon">&#10003;</div>
+  <h2>Founding Council Form Received</h2>
+  <span class="member-id-label">Your IMC Founding Council ID</span>
+  <div class="member-id-box" id="memberIdDisplay">--</div>
+  <p>Please save your Member ID above.<br/>Your Founding Council application has been received — <strong style="color:var(--primary)">set up your portal access below to get started right away</strong>.<br/><br/><em style="color:#c5a98a;font-size:.8rem">Count Us. Count On Us.</em></p>
+
+  <div id="createPasswordCard" style="margin-top:26px;padding:22px 20px;background:#fdf6ef;border:1px solid #e8dcc8;border-radius:10px;text-align:left;max-width:380px;margin-left:auto;margin-right:auto;">
+    <p style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--teal);margin-bottom:4px;text-align:center;">Set Up Portal Access</p>
+    <p style="font-size:0.82rem;color:#888;line-height:1.6;margin-bottom:16px;text-align:center;">Create a password now so you can log in to the Member Portal anytime and check your application status — using your Member ID, mobile, or email.</p>
+    <label style="display:block;font-size:0.7rem;color:#999;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">Password</label>
+    <input type="password" id="cpPassword" placeholder="At least 8 characters" style="width:100%;padding:10px 12px;border:1.5px solid #e8dcc8;border-radius:6px;font-size:0.88rem;font-family:inherit;margin-bottom:12px;box-sizing:border-box;">
+    <label style="display:block;font-size:0.7rem;color:#999;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">Confirm Password</label>
+    <input type="password" id="cpConfirm" placeholder="Re-enter password" style="width:100%;padding:10px 12px;border:1.5px solid #e8dcc8;border-radius:6px;font-size:0.88rem;font-family:inherit;margin-bottom:14px;box-sizing:border-box;">
+    <button onclick="submitInitialPassword()" id="cpSubmitBtn" style="width:100%;background:var(--teal);color:#fff;border:none;padding:12px;border-radius:6px;font-size:0.88rem;font-weight:600;cursor:pointer;">Create Password</button>
+    <div id="cpMsg" style="font-size:0.8rem;margin-top:10px;text-align:center;display:none;"></div>
+    <div id="cpNavButtons" style="display:none;gap:10px;margin-top:16px;">
+      <a href="https://www.imcbharat.com" target="_top" style="flex:1;text-align:center;padding:11px;border:1.5px solid var(--teal);border-radius:6px;color:var(--teal);font-size:0.85rem;font-weight:600;text-decoration:none;">Home</a>
+      <a href="https://www.imcbharat.com/imc-member-portal" target="_top" style="flex:1;text-align:center;padding:11px;background:var(--teal);border-radius:6px;color:#fff;font-size:0.85rem;font-weight:600;text-decoration:none;">Go to Member Portal &rarr;</a>
+    </div>
+    <p style="font-size:0.72rem;color:#aaa;text-align:center;margin-top:12px;">You can also do this later from the Member Portal login screen.</p>
+  </div>
+</div>
+</div>
+</div>
+
+<script>
+var BASE = 'https://www.imcbharat.com/_functions';
+var aadhaarRaw = '';
+
+function v(id){ return document.getElementById(id); }
+
+const SPECIALIZATIONS = {
+  'Doctors / Healthcare': ['MBBS','MD','MS','BDS (Dental)','BAMS (Ayurveda)','BHMS (Homeopathy)','BUMS (Unani)','BPT (Physiotherapy)','Nursing','Pharmacy','Other'],
+  'Lawyers / Legal Expert': ['Criminal Law','Civil Law','Family Law','Corporate Law','Property / Real Estate Law','Tax Law','Labour Law','Constitutional Law','Intellectual Property Law','Other'],
+  'Entrepreneurs / Business': ['Retail / Trading','Manufacturing','Import / Export','Hospitality','Consulting','E-Commerce','Startups','Other'],
+  'Tech / Engineers': ['Software Developer','Data Science / AI-ML','Cybersecurity','Cloud / DevOps','UI/UX Design','Product Management','Mechanical Engineer','Electrical Engineer','Civil Engineer','Other'],
+  'Educators / Academics': ['School Teacher','College / University Professor','Coaching / Tuition','Research Scholar','Academic Administrator','Special Education','Other'],
+  'CAs / Finance Experts': ['Chartered Accountant','Company Secretary','Cost Accountant (CMA)','Financial Advisor','Investment Banker','Auditor','Tax Consultant','Other'],
+  'Journalists / Media': ['Print Journalist','TV / Broadcast Journalist','Digital / Online Media','Photojournalist','Content Creator','Editor','Public Relations','Film Maker','Director','Producer','Music Composer','Actor','Pre-production','Production','Post Production','Cinematographer','Writer','Storyteller','Other'],
+  'Farmers / Agriculture': ['Crop Farming','Horticulture','Dairy / Animal Husbandry','Agri-Business','Agricultural Research','Organic Farming','Other'],
+  'Social Workers / NGOs': ['Community Development','Child Welfare','Women Empowerment','Disaster Relief','Healthcare Outreach','Education Outreach','Policy / Advocacy','Other'],
+  'Real Estate / Architects': ['Architect','Interior Designer','Urban Planner','Real Estate Broker / Agent','Property Developer','Structural Engineer','Other'],
+  'Leaders / Change-makers': ['Political Leadership','Community Leadership','Social Activism','NGO Leadership','Other'],
+  'Government / Public Service': ['Civil Services (IAS/IPS/etc.)','State Government Service','Public Sector Undertaking','Judiciary','Defence / Armed Forces','Police Service','Municipal / Local Body','Other'],
+  'Skilled Trades / Local Services': ['Electrician','Plumber','Carpenter','Mechanic','Tailor','Barber / Salon','Mason','Painter','Welder','Driver','Cook / Caterer','Other'],
+};
+
+var lastSpecializationOccupation = null;
+function updateSpecializationOptions(){
+  var occ = v('profession').value;
+  var specSel = v('specialization');
+  var fld = v('fld-specialization');
+  var list = SPECIALIZATIONS[occ];
+  if(list){
+    if(lastSpecializationOccupation !== occ){
+      specSel.innerHTML = '<option value="">— Select —</option>' + list.map(function(s){return '<option>'+s+'</option>';}).join('');
+      lastSpecializationOccupation = occ;
+    }
+    fld.style.display = '';
+  } else {
+    specSel.innerHTML = '<option value="">— Not applicable —</option>';
+    specSel.value = '';
+    fld.style.display = 'none';
+    lastSpecializationOccupation = null;
+  }
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var profEl = v('profession');
+  if(profEl) profEl.addEventListener('change', updateSpecializationOptions);
+});
+
+function setErr(id,show,msg){
+  var el=v('err-'+id),inp=v(id),wrap=v('wrap-'+id);
+  if(el){if(msg)el.lastChild.textContent=' '+msg;el.classList.toggle('show',show);}
+  if(inp){inp.classList.toggle('invalid',show);inp.classList.toggle('valid-field',!show&&inp.value.trim().length>0);}
+  if(wrap){wrap.classList.toggle('show-err',show);wrap.classList.toggle('show-ok',!show&&inp&&inp.value.trim().length>0);}
+}
+function clearF(id){
+  var el=v('err-'+id),inp=v(id),wrap=v('wrap-'+id);
+  if(el)el.classList.remove('show');
+  if(inp)inp.classList.remove('invalid','valid-field');
+  if(wrap)wrap.classList.remove('show-err','show-ok');
+}
+
+var notEmpty=function(s){return s.trim().length>0;};
+var isEmail=function(s){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.trim());};
+var isMobile=function(s){return /^[6-9]\d{9}$/.test(s.replace(/[\s\-\+]/g,''));};
+var isPin=function(s){return /^\d{6}$/.test(s.trim());};
+var isAadhaar=function(s){return !s||/^\d{12}$/.test(s);};
+var isDOB=function(s){
+  if(!s.trim()||!/^\d{2}-\d{2}-\d{4}$/.test(s.trim()))return false;
+  var p=s.split('-').map(Number),d=p[0],m=p[1],y=p[2];
+  if(m<1||m>12||d<1||d>31)return false;
+  var dt=new Date(y,m-1,d);
+  if(dt.getFullYear()!==y||dt.getMonth()!==m-1||dt.getDate()!==d)return false;
+  var age=(new Date()-dt)/(365.25*24*3600*1000);
+  return age>=18&&age<=100;
+};
+
+v('mobile').addEventListener('blur',function(){
+  if(!this.value.trim()){clearF('mobile');return;}
+  setErr('mobile',!isMobile(this.value),'Enter a valid 10-digit mobile number.');
+});
+v('email').addEventListener('blur',function(){
+  if(!this.value.trim()){clearF('email');return;}
+  setErr('email',!isEmail(this.value),'Enter a valid email address.');
+});
+v('dob').addEventListener('input',function(){
+  var s=this.value.replace(/\D/g,'');
+  if(s.length>2)s=s.slice(0,2)+'-'+s.slice(2);
+  if(s.length>5)s=s.slice(0,5)+'-'+s.slice(5);
+  this.value=s.slice(0,10);
+  if(isDOB(this.value))setErr('dob',false);
+});
+v('dob').addEventListener('blur',function(){
+  if(!this.value.trim()){clearF('dob');return;}
+  setErr('dob',!isDOB(this.value),'Enter a valid date in DD-MM-YYYY format.');
+});
+
+v('aadhaar').addEventListener('input',function(){
+  aadhaarRaw=this.value.replace(/\D/g,'').slice(0,12);
+  var s=aadhaarRaw;
+  if(s.length>4)s=s.slice(0,4)+' '+s.slice(4);
+  if(s.length>9)s=s.slice(0,9)+' '+s.slice(9);
+  this.value=s;
+  if(!aadhaarRaw){clearF('aadhaar');return;}
+  if(isAadhaar(aadhaarRaw))setErr('aadhaar',false);
+});
+v('aadhaar').addEventListener('focus',function(){
+  if(aadhaarRaw){
+    var s=aadhaarRaw;
+    if(s.length>4)s=s.slice(0,4)+' '+s.slice(4);
+    if(s.length>9)s=s.slice(0,9)+' '+s.slice(9);
+    this.value=s;
+  }
+});
+v('aadhaar').addEventListener('blur',function(){
+  if(!aadhaarRaw){clearF('aadhaar');this.value='';return;}
+  if(!isAadhaar(aadhaarRaw)){setErr('aadhaar',true,'Aadhaar must be exactly 12 digits.');return;}
+  setErr('aadhaar',false);
+  this.value='**** **** '+aadhaarRaw.slice(-4);
+  this.classList.remove('invalid');this.classList.add('valid-field');
+  var wrap=v('wrap-aadhaar');
+  if(wrap){wrap.classList.remove('show-err');wrap.classList.add('show-ok');}
+});
+
+// ── PIN LOOKUP: calls Wix backend -- no CORS issues ──
+v('pinCode').addEventListener('input',function(){
+  this.value=this.value.replace(/\D/g,'').slice(0,6);
+  var pin=this.value,note=v('pinNote');
+  if(pin.length===6){
+    note.style.color='#a0826d';note.textContent='Looking up location...';
+    fetch(BASE+'/pinLookup?pin='+pin)
+      .then(function(r){return r.json();})
+      .then(function(data){
+        if(data.success && data.state){
+          // Always clear city first, then fill if we have district
+          v('city').value = data.district || '';
+          // Auto-select state in dropdown
+          var sel=v('state'),sn=(data.state||'').trim();
+          for(var i=0;i<sel.options.length;i++){
+            if(sel.options[i].text===sn){sel.selectedIndex=i;break;}
+          }
+          // Show note
+          var distPart=data.district?data.district+', ':'';
+          note.style.color='#1a7a4a';
+          note.textContent='+ '+distPart+data.state;
+          if(!data.district) note.textContent+=' -- please fill City above';
+          clearF('city'); clearF('state');
+        } else {
+          note.style.color='#c0392b';
+          note.textContent=(data.error||'PIN not found')+' -- please fill manually.';
+        }
+      }).catch(function(){
+        note.style.color='#c0392b';
+        note.textContent='Could not auto-detect -- please fill manually.';
+      });
+  } else {note.innerHTML='&nbsp;';}
+});
+
+v('imcForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var valid=true;
+  var checks=[
+    {id:'pinCode',fn:isPin,msg:'Please enter a valid 6-digit PIN code.'},
+    {id:'city',fn:notEmpty,msg:'City / District is required.'},
+    {id:'state',fn:notEmpty,msg:'Please select your state.'},
+    {id:'fullName',fn:notEmpty,msg:'Full name is required.'},
+    {id:'gender',fn:notEmpty,msg:'Please select your gender.'},
+    {id:'mobile',fn:function(s){return s.trim().length>=6;},msg:'Enter a valid mobile number.'},
+    {id:'email',fn:isEmail,msg:'Enter a valid email address.'},
+    {id:'dob',fn:isDOB,msg:'Enter a valid date of birth in DD-MM-YYYY format.'},
+    {id:'referredId',fn:notEmpty,msg:"Referrer's IMC Member ID is required."},
+    {id:'profession',fn:notEmpty,msg:'Please select your field of work.'},
+    {id:'designation',fn:notEmpty,msg:'Please select your designation.'},
+  ];
+  checks.forEach(function(c){
+    var bad=!c.fn(v(c.id).value);
+    setErr(c.id,bad,c.msg);
+    if(bad)valid=false;
+  });
+  if(v('fld-specialization').style.display!=='none'){
+    var specBad=!notEmpty(v('specialization').value);
+    setErr('specialization',specBad,'Please select your role.');
+    if(specBad)valid=false;
+  }
+  if(aadhaarRaw&&!isAadhaar(aadhaarRaw)){setErr('aadhaar',true,'Aadhaar must be exactly 12 digits.');valid=false;}
+  else clearF('aadhaar');
+  var noConsent=!v('consent').checked;
+  v('err-consent').classList.toggle('show',noConsent);
+  if(noConsent)valid=false;
+  if(!valid){
+    var first=document.querySelector('.invalid,select.invalid');
+    if(first)first.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  var btn=v('submitBtn');
+  btn.textContent='Submitting...';btn.disabled=true;
+
+  var rolesArr = Array.from(document.querySelectorAll('input[name=role]:checked')).map(function(r){return r.value;}).join(', ');
+  var payload={
+    pinCode:        v('pinCode').value,
+    city:           v('city').value,
+    state:          v('state').value,
+    fullName:       v('fullName').value,
+    gender:         v('gender').value,
+    mobileCode:     v('mobileCode').value,
+    mobile:         v('mobile').value.replace(/\D/g,''),
+    email:          v('email').value,
+    dateOfBirth:    v('dob').value,
+    qualification:  v('qualification').value,
+    aadhaar:        aadhaarRaw || '',
+    occupation:     v('profession').value,
+    designation:    v('designation').value,
+    specialization: v('specialization').value,
+    organisation:   v('organisation').value,
+    experience:     v('experience').value,
+    linkedin:       v('linkedin').value,
+    roles:          rolesArr,
+    sector:         v('sector').value,
+    referredById:   v('referredId').value.trim().toUpperCase(),
+    referredByName: v('referredBy').value,
+    motivation:     v('motivation').value,
+    photoBase64:    window._photoBase64 || '',
+  };
+
+  fetch(BASE+'/saveApplication',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  })
+  .then(function(r){return r.json();})
+  .then(function(res){
+    if(res.success){
+      v('imcForm').style.display='none';
+      v('successScreen').style.display='block';
+      if(res.memberId){v('memberIdDisplay').textContent=res.memberId;window.GLOBAL_FC_MEMBER_ID=res.memberId;}
+      window.scrollTo({top:0,left:0,behavior:'instant'});
+      document.documentElement.scrollTop=0;
+      document.body.scrollTop=0;
+      // Tell the OUTER Wix page to scroll to top too — this page's own
+      // scroll reset above can only affect scrolling INSIDE the iframe.
+      // Sent repeatedly over ~2.5s (not just once) since the exact timing
+      // of when Wix's page code is ready to receive it can vary.
+      var scrollTopAttempts = 0;
+      var scrollTopTimer = setInterval(function(){
+        try { window.parent.postMessage({ type: 'imc-fc-form-scroll-top' }, '*'); } catch(e){}
+        scrollTopAttempts++;
+        if (scrollTopAttempts >= 4) clearInterval(scrollTopTimer);
+      }, 200);
+    } else {throw new Error(res.error||'Unknown error');}
+  })
+  .catch(function(err){
+    btn.textContent='Submit Form';btn.disabled=false;
+    var box=v('alertBox');
+    box.style.display='block';
+    box.textContent='Submission failed: '+err.message;
+  });
+});
+
+// ── Photo Upload & Camera ──────────────────────────────
+window._photoBase64 = '';
+
+function setPhotoPreview(dataUrl, filename) {
+  var img = v('photoPreviewImg');
+  var placeholder = v('photoPlaceholder');
+  var nameEl = v('photoFilename');
+  var nameText = v('photoFilenameText');
+  img.src = dataUrl;
+  img.style.display = 'block';
+  placeholder.style.display = 'none';
+  nameText.textContent = filename || 'Photo captured';
+  nameEl.classList.add('show');
+  window._photoBase64 = dataUrl;
+}
+
+function clearPhoto() {
+  var img = v('photoPreviewImg');
+  var placeholder = v('photoPlaceholder');
+  var nameEl = v('photoFilename');
+  img.src = '';
+  img.style.display = 'none';
+  placeholder.style.display = 'flex';
+  nameEl.classList.remove('show');
+  window._photoBase64 = '';
+  v('photoFileInput').value = '';
+}
+
+v('photoFileInput').addEventListener('change', function() {
+  var file = this.files[0];
+  if (!file) return;
+  if (file.size > 2 * 1024 * 1024) {
+    alert('Image is too large. Please choose a file under 2 MB.');
+    this.value = ''; return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e) { setPhotoPreview(e.target.result, file.name); };
+  reader.readAsDataURL(file);
+});
+
+v('photoRemoveBtn').addEventListener('click', function(e) {
+  e.stopPropagation();
+  clearPhoto();
+});
+
+// Camera
+var cameraStream = null;
+
+v('openCameraBtn').addEventListener('click', function() {
+  v('cameraModal').classList.add('open');
+  v('cameraVideo').style.display = 'block';
+  v('cameraCanvas').style.display = 'none';
+  v('snapBtn').style.display = 'inline-flex';
+  v('usePhotoBtn').style.display = 'none';
+  v('retakeBtn').style.display = 'none';
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false })
+    .then(function(stream) {
+      cameraStream = stream;
+      v('cameraVideo').srcObject = stream;
+    })
+    .catch(function(err) {
+      v('cameraModal').classList.remove('open');
+      alert('Could not access camera: ' + err.message + '\nPlease use the Upload Image option instead.');
+    });
+});
+
+function stopCamera() {
+  if (cameraStream) { cameraStream.getTracks().forEach(function(t){ t.stop(); }); cameraStream = null; }
+  v('cameraModal').classList.remove('open');
+}
+
+v('closeCameraBtn').addEventListener('click', stopCamera);
+
+v('snapBtn').addEventListener('click', function() {
+  var video = v('cameraVideo');
+  var canvas = v('cameraCanvas');
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  canvas.getContext('2d').drawImage(video, 0, 0);
+  canvas.style.display = 'block';
+  video.style.display = 'none';
+  v('snapBtn').style.display = 'none';
+  v('usePhotoBtn').style.display = 'inline-flex';
+  v('retakeBtn').style.display = 'block';
+});
+
+v('retakeBtn').addEventListener('click', function() {
+  v('cameraVideo').style.display = 'block';
+  v('cameraCanvas').style.display = 'none';
+  v('snapBtn').style.display = 'inline-flex';
+  v('usePhotoBtn').style.display = 'none';
+  v('retakeBtn').style.display = 'none';
+});
+
+v('usePhotoBtn').addEventListener('click', function() {
+  var dataUrl = v('cameraCanvas').toDataURL('image/jpeg', 0.85);
+  setPhotoPreview(dataUrl, 'Camera photo');
+  stopCamera();
+});
+
+v('referredId').addEventListener('input',function(){
+  this.value=this.value.toUpperCase();
+  var val=this.value.trim();
+  var note=v('referralNote');
+  var nameField=v('referredBy');
+  var wrap=v('wrap-referredId');
+  nameField.value='';
+  nameField.style.background='#fdf8f4';
+  nameField.style.color='#1a1a1a';
+  if(val.length<10){note.innerHTML='&nbsp;';return;}
+  if(!/^IMC-[A-Z]+-\d{4}-[A-Z]{2}-\d{5}$/.test(val)){
+    note.style.color='#c0392b';
+    note.textContent='Enter a valid IMC Member ID (e.g. IMC-FC-2026-MH-00001)';
+    return;
+  }
+  note.style.color='#a0826d';note.textContent='Looking up member...';
+  fetch(BASE+'/lookupMember?memberId='+encodeURIComponent(val))
+  .then(function(r){return r.json();})
+  .then(function(res){
+    if(res.found){
+      nameField.value=res.fullName;
+      nameField.style.background='#f0faf4';
+      nameField.style.color='#1a7a4a';
+      note.style.color='#1a7a4a';
+      note.textContent='+ Member verified: '+res.fullName;
+      wrap.classList.add('show-ok');wrap.classList.remove('show-err');
+    } else {
+      nameField.value='';
+      note.style.color='#c0392b';
+      note.textContent='Member ID not found. Please check and try again.';
+      wrap.classList.add('show-err');wrap.classList.remove('show-ok');
+    }
+  })
+  .catch(function(){
+    note.style.color='#c0392b';
+    note.textContent='Could not verify ID -- please try again.';
+  });
+});
+
+// ── CREATE PASSWORD (on success screen) ──
+async function submitInitialPassword(){
+  const pass=v('cpPassword').value;
+  const confirm=v('cpConfirm').value;
+  const msgEl=v('cpMsg');
+  const btn=v('cpSubmitBtn');
+  msgEl.style.display='none';
+
+  if(!pass||!confirm){msgEl.style.display='block';msgEl.style.color='#c0392b';msgEl.textContent='Please fill in both fields.';return;}
+  if(pass.length<8){msgEl.style.display='block';msgEl.style.color='#c0392b';msgEl.textContent='Password must be at least 8 characters.';return;}
+  if(pass!==confirm){msgEl.style.display='block';msgEl.style.color='#c0392b';msgEl.textContent='Passwords do not match.';return;}
+  if(!window.GLOBAL_FC_MEMBER_ID){msgEl.style.display='block';msgEl.style.color='#c0392b';msgEl.textContent='Member ID not available yet — please try from the Member Portal login screen instead.';return;}
+
+  btn.disabled=true;btn.textContent='Creating…';
+  try{
+    const res=await fetch(BASE+'/setInitialPassword',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({memberId:window.GLOBAL_FC_MEMBER_ID,password:pass})
+    });
+    const data=await res.json();
+    btn.disabled=false;
+    if(!data.success){
+      btn.textContent='Create Password';
+      msgEl.style.display='block';msgEl.style.color='#c0392b';msgEl.textContent=data.error||'Could not set password. Please try again.';
+      return;
+    }
+    btn.textContent='✓ Password Created';
+    v('cpPassword').style.display='none';
+    v('cpConfirm').style.display='none';
+    btn.style.display='none';
+    document.querySelectorAll('#createPasswordCard label').forEach(function(l){l.style.display='none';});
+    msgEl.style.display='block';msgEl.style.color='#1a7a4a';msgEl.textContent='Password created successfully.';
+    v('cpNavButtons').style.display='flex';
+  }catch(e){
+    btn.disabled=false;btn.textContent='Create Password';
+    msgEl.style.display='block';msgEl.style.color='#c0392b';msgEl.textContent='Could not reach the server. Please try again.';
+  }
+}
+
+// ── AUTO-FILL FROM INVITE LINK ──
+// Reads name/mobile/email/ref from the URL (set by the admin's FC Invite
+// tool) so the invitee has less to type. Placed at the very end so every
+// other field's event listener (in particular referredId's lookup/verify
+// listener above) is already registered before we trigger it.
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var nameParam = params.get('name');
+  var mobileParam = params.get('mobile');
+  var emailParam = params.get('email');
+  var genderParam = params.get('gender');
+  var refParam = params.get('ref');
+
+  if(nameParam) v('fullName').value = nameParam;
+  if(mobileParam) v('mobile').value = mobileParam.replace(/\D/g,'').slice(0,15);
+  if(emailParam) v('email').value = emailParam;
+  if(genderParam && ['Male','Female','Prefer not to say'].includes(genderParam)) v('gender').value = genderParam;
+  if(refParam){
+    var refField = v('referredId');
+    refField.value = refParam.trim().toUpperCase();
+    // Reuse the existing input listener rather than duplicating its lookup/
+    // verification logic — this makes a prefilled ID show "✓ Member
+    // verified" the same way a manually-typed one would.
+    refField.dispatchEvent(new Event('input'));
+  }
+})();
+</script>
+
+<script>
+(function(){
+  var lastHeight = 0;
+  function reportHeight(){
+    var h = Math.max(
+      document.documentElement.scrollHeight,
+      document.body ? document.body.scrollHeight : 0
+    );
+    if (h && h !== lastHeight) {
+      lastHeight = h;
+      try { window.parent.postMessage({ type: 'imc-fc-form-resize', height: h }, '*'); } catch(e){}
+    }
+  }
+  if ('ResizeObserver' in window) {
+    try {
+      var ro = new ResizeObserver(function(){ reportHeight(); });
+      ro.observe(document.documentElement);
+    } catch(e){}
+  }
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  setInterval(reportHeight, 1000);
+  reportHeight();
+})();
+</script>
+
+</body>
+</html>

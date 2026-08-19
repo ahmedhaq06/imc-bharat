@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>IMC Founding Council Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --teal:#052b27;
+    --teal-mid:#0a3d38;
+    --gold:#C9A84C;
+    --gold-light:#e5c97a;
+    --orange:#F07B30;
+    --cream:#f5f0e8;
+    --cream-dark:#ede5d4;
+    --text:#1a1a1a;
+    --text-light:#555;
+  }
+
+  body{
+    font-family:'DM Sans',sans-serif;
+    background:#e8e4dc;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+
+  .page{
+    width:210mm;
+    height:297mm;
+    background:#fff;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 20px 60px rgba(0,0,0,.18);
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* ── TOP BAND ── */
+  .top-band{
+    background:var(--teal);
+    padding:18px 40px 14px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .top-band::before{
+    content:'';
+    position:absolute;
+    top:-60px; right:-60px;
+    width:280px; height:280px;
+    border-radius:50%;
+    border:1px solid rgba(201,168,76,.12);
+  }
+  .top-band::after{
+    content:'';
+    position:absolute;
+    top:-20px; right:-20px;
+    width:180px; height:180px;
+    border-radius:50%;
+    border:1px solid rgba(201,168,76,.08);
+  }
+
+  .top-geo{
+    position:absolute;
+    bottom:-30px; left:40px;
+    width:200px; height:200px;
+    opacity:.04;
+  }
+
+  .brand-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:12px;
+  }
+
+  .brand-logo{
+    width:44px; height:44px;
+    background:var(--orange);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Playfair Display',serif;
+    font-weight:900;
+    font-size:16px;
+    color:#fff;
+    letter-spacing:-1px;
+    flex-shrink:0;
+  }
+
+  .brand-text{
+    color:#fff;
+    font-family:'DM Sans',sans-serif;
+    font-size:13px;
+    font-weight:500;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    line-height:1.3;
+  }
+
+  .brand-text span{
+    display:block;
+    color:var(--gold);
+    font-size:10px;
+    letter-spacing:3px;
+    font-weight:300;
+    margin-top:2px;
+  }
+
+  .top-headline{
+    font-family:'Cormorant Garamond',serif;
+    font-size:26px;
+    font-weight:600;
+    color:#fff;
+    line-height:1.15;
+    letter-spacing:.01em;
+    position:relative;
+    z-index:1;
+  }
+
+  .top-headline em{
+    color:var(--gold);
+    font-style:italic;
+  }
+
+  .top-sub{
+    font-size:12px;
+    color:rgba(255,255,255,.45);
+    margin-top:10px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    position:relative;
+    z-index:1;
+  }
+
+  /* ── GOLD DIVIDER ── */
+  .gold-rule{
+    height:3px;
+    background:linear-gradient(90deg, var(--gold), var(--orange), transparent);
+  }
+
+  /* ── BODY ── */
+  .body{
+    padding:14px 40px;
+    flex:1;
+  }
+
+  /* Vision block */
+  .vision-block{
+    background:var(--cream);
+    border-left:4px solid var(--gold);
+    border-radius:0 8px 8px 0;
+    padding:18px 22px;
+    margin-bottom:12px;
+  }
+
+  .vision-label{
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:8px;
+  }
+
+  .vision-text{
+    font-family:'Cormorant Garamond',serif;
+    font-size:16px;
+    font-weight:600;
+    color:var(--teal);
+    line-height:1.4;
+    font-style:italic;
+  }
+
+  /* Section headings */
+  .sec-head{
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--orange);
+    margin-bottom:8px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  .sec-head::after{
+    content:'';
+    flex:1;
+    height:1px;
+    background:var(--cream-dark);
+  }
+
+  /* Problem statement */
+  .problem-text{
+    font-size:11.5px;
+    color:var(--text-light);
+    line-height:1.6;
+    margin-bottom:12px;
+  }
+
+  .problem-text strong{
+    color:var(--text);
+    font-weight:600;
+  }
+
+  /* Three pillars */
+  .pillars{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:8px;
+    margin-bottom:12px;
+  }
+
+  .pillar{
+    background:var(--cream);
+    border-radius:8px;
+    padding:10px 10px;
+    text-align:center;
+    border-top:3px solid var(--teal);
+  }
+
+  .pillar-icon{
+    font-size:20px;
+    margin-bottom:4px;
+  }
+
+  .pillar-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:15px;
+    font-weight:700;
+    color:var(--teal);
+    margin-bottom:5px;
+  }
+
+  .pillar-desc{
+    font-size:10.5px;
+    color:var(--text-light);
+    line-height:1.55;
+  }
+
+  /* FC Role section */
+  .role-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+    margin-bottom:12px;
+  }
+
+  .role-item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:7px 10px;
+    background:#fafaf7;
+    border-radius:7px;
+    border:1px solid var(--cream-dark);
+  }
+
+  .role-dot{
+    width:7px; height:7px;
+    border-radius:50%;
+    background:var(--gold);
+    flex-shrink:0;
+    margin-top:4px;
+  }
+
+  .role-text{
+    font-size:10.5px;
+    color:var(--text);
+    line-height:1.5;
+  }
+
+  .role-text strong{
+    display:block;
+    font-weight:600;
+    color:var(--teal);
+    margin-bottom:2px;
+  }
+
+  /* Why you section */
+  .why-block{
+    background:var(--teal);
+    border-radius:10px;
+    padding:14px 18px;
+    margin-bottom:12px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .why-block::before{
+    content:'"';
+    position:absolute;
+    top:-10px; right:20px;
+    font-family:'Cormorant Garamond',serif;
+    font-size:120px;
+    color:rgba(201,168,76,.1);
+    line-height:1;
+  }
+
+  .why-block .sec-head{
+    color:var(--gold);
+  }
+
+  .why-block .sec-head::after{
+    background:rgba(201,168,76,.2);
+  }
+
+  .why-text{
+    font-family:'Cormorant Garamond',serif;
+    font-size:14px;
+    font-style:italic;
+    color:rgba(255,255,255,.88);
+    line-height:1.5;
+    position:relative;
+    z-index:1;
+  }
+
+  .why-text strong{
+    color:var(--gold-light);
+    font-style:normal;
+  }
+
+  /* Fee transparency */
+  .fee-block{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    background:#fffbf2;
+    border:1px solid rgba(201,168,76,.3);
+    border-radius:8px;
+    padding:10px 14px;
+    margin-bottom:0;
+  }
+
+  .fee-icon{
+    font-size:22px;
+    flex-shrink:0;
+    margin-top:2px;
+  }
+
+  .fee-content .fee-title{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:5px;
+  }
+
+  .fee-content p{
+    font-size:10.5px;
+    color:var(--text-light);
+    line-height:1.55;
+  }
+
+  /* Footer */
+  .footer{
+    background:var(--teal);
+    padding:16px 40px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+
+  .footer-contact{
+    font-size:10.5px;
+    color:rgba(255,255,255,.55);
+    line-height:1.8;
+    display:flex;
+    gap:28px;
+    flex-wrap:wrap;
+    align-items:center;
+  }
+
+  .footer-contact .fc-group{
+    display:flex;
+    flex-direction:column;
+  }
+
+  .footer-contact .fc-label{
+    font-size:8px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:rgba(201,168,76,.55);
+    margin-bottom:1px;
+  }
+
+  .footer-contact .fc-val{
+    font-size:10.5px;
+    color:rgba(255,255,255,.6);
+    line-height:1.6;
+  }
+
+  .footer-website{
+    font-size:11px;
+    color:var(--gold);
+    font-weight:600;
+    letter-spacing:.05em;
+  }
+
+  /* CTA line */
+  .cta-line{
+    background:rgba(201,168,76,.08);
+    border-top:1px solid rgba(201,168,76,.15);
+    padding:10px 40px;
+    text-align:center;
+    font-family:'Cormorant Garamond',serif;
+    font-size:13px;
+    font-style:italic;
+    color:rgba(255,255,255,.5);
+  }
+
+  .cta-line strong{
+    color:var(--gold);
+    font-style:normal;
+    font-weight:600;
+  }
+
+  /* Print styles */
+  @media print{
+    body{background:none;padding:0;display:block;}
+    .page{box-shadow:none;width:210mm;height:297mm;overflow:hidden;}
+    @page{
+      size:A4;
+      margin:0;
+    }
+    *{
+      -webkit-print-color-adjust:exact !important;
+      print-color-adjust:exact !important;
+      color-adjust:exact !important;
+    }
+  }
+
+  @media(max-width:650px){
+    .page{width:100%;}
+    .pillars{grid-template-columns:1fr;}
+    .role-grid{grid-template-columns:1fr;}
+    .top-headline{font-size:26px;}
+    .body{padding:24px 20px;}
+    .top-band{padding:24px 20px;}
+    .footer{padding:16px 20px;flex-direction:column;gap:10px;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- TOP BAND -->
+  <div class="top-band">
+    <!-- Geometric SVG -->
+    <svg class="top-geo" viewBox="0 0 200 200" fill="none">
+      <g stroke="#C9A84C" stroke-width="0.5">
+        <polygon points="100,10 118,50 160,50 128,75 140,115 100,90 60,115 72,75 40,50 82,50" fill="none"/>
+        <polygon points="100,25 113,55 147,55 121,73 131,107 100,88 69,107 79,73 53,55 87,55" fill="none"/>
+        <circle cx="100" cy="100" r="45" fill="none"/>
+        <circle cx="100" cy="100" r="70" fill="none"/>
+        <line x1="100" y1="0" x2="100" y2="200"/>
+        <line x1="0" y1="100" x2="200" y2="100"/>
+      </g>
+    </svg>
+
+    <div class="brand-row">
+      <div class="brand-logo">imc</div>
+      <div class="brand-text">Indian Muslim Count <span>Count Us. Count On Us.</span></div>
+    </div>
+
+    <div class="top-headline">
+      An invitation to join the<br><span style="color:var(--gold);font-style:normal;">Founding Council</span>
+    </div>
+    <div class="top-sub">For those who have achieved — and choose to give back</div>
+  </div>
+
+  <div class="gold-rule"></div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- Vision -->
+    <div class="vision-block">
+      <div class="vision-label">Our Vision</div>
+      <div class="vision-text">"Every Indian Muslim — counted, connected, and supported — by their own community."</div>
+    </div>
+
+    <!-- The Problem -->
+    <div class="sec-head">Why IMC Exists</div>
+    <div class="problem-text">
+      India's Muslim community is the <strong>second largest in the world</strong> — yet remains one of the least organised. There is no verified directory of who we are, where we live, or what we can offer each other. No trusted platform to find help, offer a skill, or mobilise in a crisis.
+      <br><br>
+      <strong>IMC changes that.</strong> We are building a verified, PIN code–based member network — a living directory of Indian Muslims, connected by community, protected by trust.
+    </div>
+
+    <!-- Three Pillars -->
+    <div class="sec-head">What the Platform Does</div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-icon">👥</div>
+        <div class="pillar-title">Count</div>
+        <div class="pillar-desc">A verified member directory — organised by PIN code, city, and state.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🤝</div>
+        <div class="pillar-title">Connect</div>
+        <div class="pillar-desc">Community Exchange — members offer skills, seek help, give and take within their area.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🏛️</div>
+        <div class="pillar-title">Support</div>
+        <div class="pillar-desc">FC Notices — leadership reaches members directly in moments of need or crisis.</div>
+      </div>
+    </div>
+
+    <!-- FC Role -->
+    <div class="sec-head">Six Ways to Serve — Choose Your Role</div>
+    <div class="role-grid">
+      <div class="role-item">
+        <div class="role-dot"></div>
+        <div class="role-text"><strong>Patron Member <span style="font-size:9px;color:var(--gold);font-weight:600;letter-spacing:.08em;text-transform:uppercase;">Visionary Tier</span></strong>Lend moral authority and public credibility to India's most ambitious community movement.</div>
+      </div>
+      <div class="role-item">
+        <div class="role-dot"></div>
+        <div class="role-text"><strong>Sector Council Lead <span style="font-size:9px;color:var(--gold);font-weight:600;letter-spacing:.08em;text-transform:uppercase;">Domain Expert</span></strong>Head one of IMC's core sectors — health, legal, education, employment or agriculture.</div>
+      </div>
+      <div class="role-item">
+        <div class="role-dot"></div>
+        <div class="role-text"><strong>Community Ambassador <span style="font-size:9px;color:var(--gold);font-weight:600;letter-spacing:.08em;text-transform:uppercase;">Outreach & Growth</span></strong>Expand IMC's reach within your professional and social circles across India.</div>
+      </div>
+      <div class="role-item">
+        <div class="role-dot"></div>
+        <div class="role-text"><strong>Resource Partner <span style="font-size:9px;color:var(--gold);font-weight:600;letter-spacing:.08em;text-transform:uppercase;">Funding & Support</span></strong>Champion the financial sustainability of IMC by connecting it to aligned philanthropists and institutions.</div>
+      </div>
+      <div class="role-item">
+        <div class="role-dot"></div>
+        <div class="role-text"><strong>Advisory Member <span style="font-size:9px;color:var(--gold);font-weight:600;letter-spacing:.08em;text-transform:uppercase;">Strategy & Governance</span></strong>Provide specialist input on policy, law, compliance and governance to keep IMC accountable.</div>
+      </div>
+      <div class="role-item">
+        <div class="role-dot"></div>
+        <div class="role-text"><strong>Cultural Voice <span style="font-size:9px;color:var(--gold);font-weight:600;letter-spacing:.08em;text-transform:uppercase;">Narrative & Identity</span></strong>Shape IMC's public narrative, storytelling and media presence — rooted in Indian Muslim pride.</div>
+      </div>
+    </div>
+
+    <!-- Why You -->
+    <div class="why-block">
+      <div class="sec-head">Why Your Name Matters</div>
+      <div class="why-text">
+        "The Founding Council <strong>is</strong> the institution. You will not be joining something that already exists — you will be the reason it does. Years from now, this community will remember who stood up <strong>first.</strong>"
+      </div>
+    </div>
+
+    <!-- Fee Transparency -->
+    <div class="fee-block">
+      <div class="fee-icon">💡</div>
+      <div class="fee-content">
+        <div class="fee-title">On Membership Fees — Full Transparency</div>
+        <p>IMC is a community platform, not a charity. A modest membership fee covers server costs, data security, and platform operations — with no corporate sponsor, no political funding, and no hidden agenda. Every rupee stays within the community. FC members join at no charge.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-contact">
+      <div class="fc-group">
+        <span class="fc-label">Website</span>
+        <span class="fc-val" style="color:var(--gold);font-weight:600;">www.indianmuslimcount.com</span>
+      </div>
+      <div class="fc-group">
+        <span class="fc-label">Helpline</span>
+        <span class="fc-val">+91 96194 96194<br>+91 96195 96195</span>
+      </div>
+      <div class="fc-group">
+        <span class="fc-label">WhatsApp</span>
+        <span class="fc-val">+91 9999 786 683</span>
+      </div>
+      <div class="fc-group">
+        <span class="fc-label">Email</span>
+        <span class="fc-val">contact@nineangle.co.in</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>if(window.location.search.includes('print')){window.onload=function(){window.print();}}</script>
+</body>
+</html>
