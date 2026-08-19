@@ -126,7 +126,7 @@
     html {
       font-size: clamp(13px, 1.15vw, 16px);
       overflow-x: hidden;
-      background: var(--teal);
+      background: var(--off-white);
       min-height: 100%;
     }
 
@@ -136,20 +136,26 @@
       min-width: 0;
       margin: 0;
       padding: 0;
-      background: var(--teal);
+      background: var(--off-white);
     }
 
     body {
       font-family: var(--font-ui);
       color: var(--text-primary);
-      background: var(--teal);
+      background: var(--off-white);
       min-height: 100vh;
       min-height: 100dvh;
       overflow-x: hidden;
     }
 
     #portalApp {
-      background: var(--teal);
+      background: var(--off-white);
+    }
+
+    [data-theme="dark"] html,
+    [data-theme="dark"] body,
+    [data-theme="dark"] #portalApp {
+      background: var(--teal) !important;
     }
 
     /* ── LOGIN ── */
@@ -775,7 +781,12 @@
     .main {
       padding: 20px 20px 40px;
       overflow-x: auto;
-      min-width: 0
+      min-width: 0;
+      background: var(--off-white);
+    }
+
+    [data-theme="dark"] .main {
+      background: var(--teal);
     }
 
     .page-head {
@@ -4445,8 +4456,12 @@
       --mc-text: #f2efe7;
       --mc-text-2: rgba(242, 239, 231, .62);
       --mc-text-3: rgba(242, 239, 231, .36);
-      background: #041917;
+      background: var(--off-white);
       padding: 26px 28px 60px;
+    }
+
+    [data-theme="dark"] .main.member-canvas {
+      background: #041917;
     }
 
     @media(max-width:560px) {
@@ -15144,19 +15159,19 @@
    down here, once, as the final word.
    ══════════════════════════════════════════════════════════════ */
     /* Light mode card styling (white cards) */
-    .nh-band,
-    .member-canvas .nh-band,
-    .tc-card,
-    .ask-cta,
-    .stat-card,
-    .pcard,
-    .feed-card,
-    .profile-card,
-    .voice-summary-card,
-    .voice-form-card {
+    :root:not([data-theme="dark"]) .nh-band,
+    :root:not([data-theme="dark"]) .member-canvas .nh-band,
+    :root:not([data-theme="dark"]) .tc-card,
+    :root:not([data-theme="dark"]) .ask-cta,
+    :root:not([data-theme="dark"]) .stat-card,
+    :root:not([data-theme="dark"]) .pcard,
+    :root:not([data-theme="dark"]) .feed-card,
+    :root:not([data-theme="dark"]) .profile-card,
+    :root:not([data-theme="dark"]) .voice-summary-card,
+    :root:not([data-theme="dark"]) .voice-form-card {
       background: #FFFFFF !important;
       border: 1px solid var(--border) !important;
-      border-left: 5px solid var(--teal) !important;
+      border-left: 3px solid var(--teal-bright) !important;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
     }
 
