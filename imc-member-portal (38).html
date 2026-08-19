@@ -2192,25 +2192,15 @@
       }
 
       .tb-avatar-circle {
-        width: 28px;
-        height: 28px;
-        font-size: .6rem;
+        width: 32px;
+        height: 32px;
+        font-size: .7rem;
+        cursor: pointer;
       }
 
-      .tb-member-name {
-        font-size: 11px;
-        max-width: 130px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
+      .tb-member-name,
       .tb-member-tier {
-        font-size: 8px;
-      }
-
-      .tb-member-name span {
-        display: none;
+        display: none !important;
       }
 
       .tb-btn.logout {
@@ -9070,6 +9060,10 @@
     // ═══════════════════════════════════════════════════
     function toggleUserMenu(e) {
       e.stopPropagation();
+      if (window.innerWidth <= 560) {
+        switchView('myprofile', document.getElementById('nvProfile'));
+        return;
+      }
       const menu = document.getElementById('tbUserMenu');
       menu.style.display = menu.style.display === 'none' ? '' : 'none';
     }
