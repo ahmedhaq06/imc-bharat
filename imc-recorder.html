@@ -234,12 +234,12 @@ const isAndroid=()=>/Android/.test(navigator.userAgent);
 const isIOS=()=>/iPhone|iPad|iPod/.test(navigator.userAgent);
 
 // ── CHROME BANNER ────────────────────────────────────────────────────────────
+// ── CHROME BANNER ────────────────────────────────────────────────────────────
 function checkBrowser(){
   const ua=navigator.userAgent;
-  const android=/Android/.test(ua);
-  const chrome=/Chrome\//.test(ua)&&!/Chromium/.test(ua);
-  const bad=/SamsungBrowser|WhatsApp|FBAN|FBAV|FB_IAB|Instagram/.test(ua);
-  if(android&&(!chrome||bad)){
+  const inApp=/WhatsApp|FBAN|FBAV|FB_IAB|Instagram/.test(ua);
+  const hasMediaDevices=!!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+  if(!hasMediaDevices || (inApp && !hasMediaDevices)){
     document.getElementById('chromeBanner').classList.add('show');
     return true;
   }
@@ -283,11 +283,12 @@ async function startCamera(){
 }
 
 async function getStream(f){
-  // Try exact first (forces correct camera), then ideal, then bare
+  // Preferred constraints for mobile compatibility
   const constraints=[
-    {video:{facingMode:{exact:f}},audio:true},
+    {video:{facingMode:f},audio:true},
     {video:{facingMode:{ideal:f}},audio:true},
-    {video:true,audio:true}
+    {video:true,audio:true},
+    {video:true,audio:false}
   ];
   let lastErr;
   for(const c of constraints){
@@ -300,8 +301,11 @@ async function getStream(f){
 function attachStream(s,f){
   const v=document.getElementById('vid');
   v.srcObject=s;
+  v.muted=true;
+  v.playsInline=true;
+  v.setAttribute('playsinline','');
+  v.setAttribute('muted','');
   v.style.transform=f==='user'?'scaleX(-1)':'none';
-  // Use event-driven play — most reliable across Android versions
   v.onloadedmetadata=()=>v.play().catch(()=>{});
   v.oncanplay=()=>v.play().catch(()=>{});
   v.play().catch(()=>{});
@@ -315,7 +319,6 @@ document.getElementById('flipBtn').addEventListener('click',async()=>{
     stream=await getStream(facing);
     attachStream(stream,facing);
   }catch(e){
-    // flip failed — revert
     facing=facing==='user'?'environment':'user';
   }
 });
@@ -330,9 +333,16 @@ document.getElementById('cancelBtn').addEventListener('click',()=>{
 });
 
 function getMime(){
-  const mp4=['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4;codecs=avc1','video/mp4'];
-  const webm=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
-  for(const t of[...mp4,...webm]) if(MediaRecorder.isTypeSupported(t)) return t;
+  const types=[
+    'video/webm;codecs=vp8,opus',
+    'video/webm;codecs=vp9,opus',
+    'video/webm',
+    'video/mp4;codecs=avc1',
+    'video/mp4'
+  ];
+  for(const t of types){
+    if(window.MediaRecorder && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(t)) return t;
+  }
   return '';
 }
 
@@ -340,14 +350,21 @@ function startRec(){
   chunks=[];seconds=0;
   document.getElementById('timerVal').textContent='00:00';
   const mime=getMime();
-  try{ recorder=new MediaRecorder(stream,mime?{mimeType:mime,videoBitsPerSecond:4000000}:{}); }
-  catch(e){ recorder=new MediaRecorder(stream); }
+  try{
+    recorder=new MediaRecorder(stream,mime?{mimeType:mime}:{});
+  }catch(e){
+    try {
+      recorder=new MediaRecorder(stream,{mimeType:'video/webm'});
+    } catch(e2) {
+      recorder=new MediaRecorder(stream);
+    }
+  }
   recorder.ondataavailable=e=>{if(e.data&&e.data.size>0)chunks.push(e.data);};
   recorder.onstop=()=>{
     blob=new Blob(chunks,{type:recorder.mimeType||'video/webm'});
     onRecordingDone();
   };
-  recorder.start(200);
+  recorder.start(1000);
   document.getElementById('recBtn').classList.add('rec');
   document.getElementById('recBadge').classList.add('on');
   document.getElementById('cancelBtn').style.display='flex';

@@ -12030,9 +12030,9 @@
 
       /* ─────────────────────────────────────────────
          4. IDLE AUTO-LOGOUT
-         2 min idle → 30s countdown → logout
+         5 min idle → 30s countdown → logout
       ───────────────────────────────────────────── */
-      const IDLE_TIMEOUT = 2 * 60 * 1000;
+      const IDLE_TIMEOUT = 5 * 60 * 1000;
       let idleTimer = null, countdownTimer = null;
       let countdownVal = 30, warningActive = false;
 
