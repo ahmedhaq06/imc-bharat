@@ -6058,6 +6058,7 @@
       document.body.scrollTop = 0;
       await loadAllMembers();
       currentMember = ALL_MEMBERS.find(m => m.memberId === currentMember.memberId) || currentMember;
+      saveCurrentMember(currentMember);
       await loadFCBroadcasts();
       initPortal();
     }
@@ -6065,7 +6066,10 @@
       let saved = 'light';
       try { saved = localStorage.getItem('imc_theme') || 'light'; } catch (e) { }
       document.documentElement.setAttribute('data-theme', saved);
-      document.addEventListener('DOMContentLoaded', function () { applyTheme(saved); });
+      document.addEventListener('DOMContentLoaded', function () {
+        applyTheme(saved);
+        restoreSession();
+      });
     })();
 
     // ═══════════════════════════════════════════════════
@@ -6121,6 +6125,42 @@
     const MASTER_MEMBER_ID = 'IMC-FC-2026-MH-00001';
     const ADMIN_SECRET = 'IMCAdmin@2026';
     let ALL_MEMBERS = [];
+    let currentMember = null;
+
+    function saveCurrentMember(m) {
+      currentMember = m;
+      try {
+        if (m) {
+          localStorage.setItem('imc_member', JSON.stringify(m));
+        } else {
+          localStorage.removeItem('imc_member');
+        }
+      } catch (e) { }
+    }
+
+    function restoreSession() {
+      try {
+        const saved = localStorage.getItem('imc_member');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed && parsed.memberId) {
+            currentMember = parsed;
+            const ls = document.getElementById('loginScreen');
+            if (ls) ls.style.display = 'none';
+            enterPortalFromWelcome();
+            return true;
+          }
+        }
+      } catch (e) {
+        console.error('Session restore error:', e);
+      }
+      return false;
+    }
+
+    // Attempt instant session restore if loginScreen is in DOM
+    if (document.getElementById('loginScreen')) {
+      restoreSession();
+    }
 
     // COMMUNITY EXCHANGE — stored locally (in production: Wix collection IMCExchange)
     // Schema: { memberId, type:'offer'|'seek', mainCat, subCat, description, status:'pending'|'active'|'closed', submittedAt, approvedAt, approvedBy }
@@ -6852,6 +6892,7 @@
           const data = await res.json();
           if (!data.success) throw new Error(data.error || 'Photo update failed');
           currentMember.profilePhoto = data.profilePhoto;
+          saveCurrentMember(currentMember);
           pendingPhotoBase64 = null;
           const photoEl = document.getElementById('pfPhotoImg');
           if (photoEl) photoEl.outerHTML = buildMyProfilePhotoHtml(currentMember);
@@ -6871,6 +6912,7 @@
           const data = await res.json();
           if (!data.success) throw new Error(data.error || 'Update failed');
           currentMember[f.key] = newValue;
+          saveCurrentMember(currentMember);
         } catch (e) { failedLabels.push(f.label); }
       }
 
@@ -6918,6 +6960,7 @@
           const data = await res.json();
           if (!data.success) throw new Error(data.error || 'Update failed');
           currentMember[key] = newValue;
+          saveCurrentMember(currentMember);
           showToast('Updated successfully.', 'success');
         } else {
           const res = await fetch(WIX_BASE + '/requestProfileChange', {
@@ -6970,6 +7013,7 @@
           const data = await res.json();
           if (!data.success) throw new Error(data.error || 'Photo update failed');
           currentMember.profilePhoto = data.profilePhoto;
+          saveCurrentMember(currentMember);
           pendingPhotoBase64 = null;
           const photoEl2 = document.getElementById('pfPhotoImg');
           if (photoEl2) photoEl2.outerHTML = buildMyProfilePhotoHtml(currentMember);
@@ -8427,7 +8471,7 @@
     // ═══════════════════════════════════════════════════
     //  STATE
     // ═══════════════════════════════════════════════════
-    let currentMember = null, MEMBERS = [], filtered = [];
+    let MEMBERS = [], filtered = [];
     // Expose to window so protection layer + exit system can access it
     Object.defineProperty(window, 'currentMember', { get: () => currentMember, set: (v) => { currentMember = v; } });
     let currentPage = 1, currentTFilter = '', currentCXFilter = '';
@@ -8459,7 +8503,7 @@
           shakeWrap();
           return;
         }
-        currentMember = data.member;
+        saveCurrentMember(data.member);
         document.getElementById('loginScreen').classList.add('unlocking');
         setTimeout(() => {
           document.getElementById('loginScreen').style.display = 'none';
@@ -8583,7 +8627,7 @@
       clearInterval(APPROVAL_POLL); APPROVAL_POLL = null; LAST_APPROVALS = 0; APPROVALS_PRIMED = false;
       // IMC Protection Layer cleanup
       if (window.IMCProtect) IMCProtect.deactivate();
-      currentMember = null; MEMBERS = []; filtered = []; ALL_MEMBERS = [];
+      saveCurrentMember(null); MEMBERS = []; filtered = []; ALL_MEMBERS = [];
       document.getElementById('portalApp').style.display = 'none';
       const ls = document.getElementById('loginScreen');
       ls.style.display = 'flex'; ls.classList.remove('unlocking');

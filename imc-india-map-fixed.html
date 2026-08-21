@@ -203,7 +203,7 @@ header{flex-shrink:0;background:var(--teal);border-bottom:1px solid rgba(201,168
 <body>
 <header>
   <div class="hdr">
-    <a class="brand" href="https://www.imcbharat.com/">
+    <a class="brand" href="index.html">
       <img src="imc-logo.png" alt="IMC" class="blogo">
       <div class="bname"><span>Community Map</span></div>
     </a>
@@ -363,7 +363,7 @@ header{flex-shrink:0;background:var(--teal);border-bottom:1px solid rgba(201,168
     <div class="sbs">
       <div class="cta">
         <div class="ctaq"><strong>&#x201C;Every Member Counts.<br>Every PIN Code Matters.&#x201D;</strong><br>Building India&#x2019;s Largest Connected Community.</div>
-        <button class="ctab" onclick="window.open('https://www.imcbharat.com/membership-architecture','_blank')">Join IMC &#x2192;</button>
+        <button class="ctab" onclick="window.location.href='imc-unified-form.html'">Join IMC &#x2192;</button>
       </div>
     </div>
   </aside>
@@ -646,7 +646,7 @@ function renderPins(dn){
     document.getElementById('drillContent').innerHTML='<div class="empty-note">No PIN code data available yet for '+dn+'.</div>';
     return;
   }
-  document.getElementById('drillContent').innerHTML=ps.map((p,i)=>'<div class="pr anim" style="animation-delay:'+i*50+'ms" onclick="window.open(\'https://www.imcbharat.com/imc-pin-page?pin='+p.c+'\',\'_blank\')" title="View full page for PIN '+p.c+'"><div class="pd" style="background:'+(p.m>=50?'#052b27':p.m>=30?'#0E8C74':'#a8dbd3')+'">'+(p.m>40?'&#x25CF;':'&#xB7;')+'</div><div><div class="pc">'+p.c+'</div><div class="pa">'+p.a+'</div></div><div class="pn">'+p.m+'</div></div>').join('');
+  document.getElementById('drillContent').innerHTML=ps.map((p,i)=>'<div class="pr anim" style="animation-delay:'+i*50+'ms" onclick="window.location.href=\'imc-pin-page.html?pin='+p.c+'\'" title="View full page for PIN '+p.c+'"><div class="pd" style="background:'+(p.m>=50?'#052b27':p.m>=30?'#0E8C74':'#a8dbd3')+'">'+(p.m>40?'&#x25CF;':'&#xB7;')+'</div><div><div class="pc">'+p.c+'</div><div class="pa">'+p.a+'</div></div><div class="pn">'+p.m+'</div></div>').join('');
 }
 function renderCats(cats){
   const el=document.getElementById('catBars');
@@ -670,7 +670,7 @@ function renderLeaderboard(){
     pnEl.innerHTML='<div class="empty-note">No data yet \u2014 be the first PIN code on the board.</div>';
   }else{
     const mx=TOP_PINS[0].m;
-    pnEl.innerHTML=TOP_PINS.map((p,i)=>'<div class="lb-row"><div class="lb-rank '+lbRankClass(i)+'">'+lbRankLabel(i)+'</div><div class="lb-body"><div class="lb-name" onclick="window.open(\'https://www.imcbharat.com/imc-pin-page?pin='+p.c+'\',\'_blank\')">'+p.c+'<span style="font-weight:400;color:var(--t3)"> \u00B7 '+(p.city||p.state||'')+'</span></div><div class="lb-bar-bg"><div class="lb-bar" style="width:'+Math.round(p.m/mx*100)+'%"></div></div></div><div class="lb-count">'+p.m.toLocaleString('en-IN')+'</div></div>').join('');
+    pnEl.innerHTML=TOP_PINS.map((p,i)=>'<div class="lb-row"><div class="lb-rank '+lbRankClass(i)+'">'+lbRankLabel(i)+'</div><div class="lb-body"><div class="lb-name" onclick="window.location.href=\'imc-pin-page.html?pin='+p.c+'\'">'+p.c+'<span style="font-weight:400;color:var(--t3)"> \u00B7 '+(p.city||p.state||'')+'</span></div><div class="lb-bar-bg"><div class="lb-bar" style="width:'+Math.round(p.m/mx*100)+'%"></div></div></div><div class="lb-count">'+p.m.toLocaleString('en-IN')+'</div></div>').join('');
   }
 }
 function renderChart(){

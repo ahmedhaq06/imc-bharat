@@ -107,7 +107,7 @@ body{min-height:100vh;}
       <input class="adm-input" type="password" id="admPassword" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')verifyAdmin()"/>
       <button class="adm-login-btn" onclick="verifyAdmin()">Enter Panel →</button>
       <div class="adm-login-err" id="admLoginErr"></div>
-      <a href="https://www.imcbharat.com" class="adm-back">
+      <a href="index.html" class="adm-back">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         Back to IMC Home
       </a>
@@ -1219,12 +1219,24 @@ const ADM_PASS = 'IMCAdmin@2026';
 const WIX_BASE_ADM = 'https://www.imcbharat.com/_functions';
 const ADM_SECRET = 'IMCAdmin@2026';
 
-// Auto-focus password on load
-window.addEventListener('load', ()=>{ document.getElementById('admPassword').focus(); });
+// Auto-focus password on load or restore session
+window.addEventListener('load', ()=>{
+  try {
+    if (sessionStorage.getItem('imc_admin_auth') === 'true') {
+      document.getElementById('admLoginPage').classList.add('hidden');
+      document.getElementById('admPanel').classList.add('visible');
+      document.getElementById('cert-date').value=new Date().toISOString().slice(0,10);
+      document.getElementById('cert-number').value='';
+      return;
+    }
+  } catch(e) {}
+  document.getElementById('admPassword').focus();
+});
 
 function verifyAdmin(){
   const pw=document.getElementById('admPassword').value;
   if(pw===ADM_PASS){
+    try { sessionStorage.setItem('imc_admin_auth', 'true'); } catch(e) {}
     document.getElementById('admLoginPage').classList.add('hidden');
     document.getElementById('admPanel').classList.add('visible');
     document.getElementById('cert-date').value=new Date().toISOString().slice(0,10);
@@ -1237,6 +1249,7 @@ function verifyAdmin(){
 }
 
 function lockOut(){
+  try { sessionStorage.removeItem('imc_admin_auth'); } catch(e) {}
   document.getElementById('admPanel').classList.remove('visible');
   document.getElementById('admLoginPage').classList.remove('hidden');
   document.getElementById('admPassword').value='';

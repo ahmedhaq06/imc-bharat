@@ -1032,8 +1032,8 @@ html,body{width:100%;min-width:0}
     <button onclick="submitInitialPassword()" id="cpSubmitBtn" style="width:100%;background:var(--teal);color:#fff;border:none;padding:12px;border-radius:6px;font-size:0.88rem;font-weight:600;cursor:pointer;">Create Password</button>
     <div id="cpMsg" style="font-size:0.8rem;margin-top:10px;text-align:center;display:none;"></div>
     <div id="cpNavButtons" style="display:none;gap:10px;margin-top:16px;">
-      <a href="https://www.imcbharat.com" target="_top" style="flex:1;text-align:center;padding:11px;border:1.5px solid var(--teal);border-radius:6px;color:var(--teal);font-size:0.85rem;font-weight:600;text-decoration:none;">Home</a>
-      <a href="https://www.imcbharat.com/imc-member-portal" target="_top" style="flex:1;text-align:center;padding:11px;background:var(--teal);border-radius:6px;color:#fff;font-size:0.85rem;font-weight:600;text-decoration:none;">Go to Member Portal →</a>
+      <a href="index.html" target="_top" style="flex:1;text-align:center;padding:11px;border:1.5px solid var(--teal);border-radius:6px;color:var(--teal);font-size:0.85rem;font-weight:600;text-decoration:none;">Home</a>
+      <a href="imc-member-portal.html" target="_top" style="flex:1;text-align:center;padding:11px;background:var(--teal);border-radius:6px;color:#fff;font-size:0.85rem;font-weight:600;text-decoration:none;">Go to Member Portal →</a>
     </div>
     <p style="font-size:0.72rem;color:#aaa;text-align:center;margin-top:12px;">You can also do this later from the Member Portal login screen.</p>
   </div>
@@ -1236,7 +1236,7 @@ function countProWords(el){
 
 // ── Tier selection ──
 function handleTierContinue(){
-  if(selectedTier==='fc'){window.location.href='https://www.imcbharat.com/imc-home-page#membership';return;}
+  if(selectedTier==='fc'){window.location.href='imc-fc-form.html';return;}
   goTo(1);
 }
 function selectTier(card){
