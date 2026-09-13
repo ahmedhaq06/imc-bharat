@@ -51,7 +51,8 @@
   /* orange glow */
 
   /* ── Typography ────────────────────────── */
-  --f-display: 'Söhne Breit', 'Söhne', 'Sohne', -apple-system, BlinkMacSystemFont, 'Outfit', 'Inter', sans-serif;
+  --f-serif: 'Instrument Serif', Georgia, serif;
+  --f-display: 'Instrument Serif', 'Söhne Breit', 'Söhne', 'Sohne', -apple-system, BlinkMacSystemFont, 'Outfit', 'Inter', serif;
   --f-body: 'Söhne', 'Sohne', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
 
   /* ── Motion ────────────────────────────── */
