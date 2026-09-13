@@ -51,14 +51,55 @@
   /* orange glow */
 
   /* ── Typography ────────────────────────── */
-  --f-display: 'Outfit', sans-serif;
-  --f-body: 'Inter', sans-serif;
+  --f-display: 'Söhne Breit', 'Söhne', 'Sohne', -apple-system, BlinkMacSystemFont, 'Outfit', 'Inter', sans-serif;
+  --f-body: 'Söhne', 'Sohne', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
 
   /* ── Motion ────────────────────────────── */
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-io: cubic-bezier(0.4, 0, 0.2, 1);
 
   --nav-h: 68px;
+}
+
+/* ── Söhne / Sohne Font Declarations ────────────────────── */
+@font-face {
+  font-family: 'Söhne';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: local('Söhne Buch'), local('Söhne Regular'), local('Sohne-Buch'), local('Sohne-Regular'), local('Sohne');
+}
+
+@font-face {
+  font-family: 'Söhne';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: local('Söhne Kräftig'), local('Söhne Medium'), local('Sohne-Kraftig'), local('Sohne-Medium');
+}
+
+@font-face {
+  font-family: 'Söhne';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: local('Söhne Halbfett'), local('Söhne Bold'), local('Sohne-Halbfett'), local('Sohne-Bold');
+}
+
+@font-face {
+  font-family: 'Söhne';
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: local('Söhne Dreiviertelfett'), local('Söhne ExtraBold'), local('Sohne-Dreiviertelfett');
+}
+
+@font-face {
+  font-family: 'Söhne Breit';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: local('Söhne Breit Halbfett'), local('Sohne Breit Halbfett'), local('SohneBreit-Bold');
 }
 
 html {
