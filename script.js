@@ -10,16 +10,16 @@
 'use strict';
 
 const lerp = (a, b, t) => a + (b - a) * t;
-const rand = (lo, hi)   => lo + Math.random() * (hi - lo);
-const $    = id          => document.getElementById(id);
+const rand = (lo, hi) => lo + Math.random() * (hi - lo);
+const $ = id => document.getElementById(id);
 
 // ════════════════════════════════════════════
 //  NAVBAR (no canvas, always cheap)
 // ════════════════════════════════════════════
 
 const navWrapper = $('navbar-wrapper');
-const navbar     = $('navbar');
-const hamburger  = $('hamburger');
+const navbar = $('navbar');
+const hamburger = $('hamburger');
 const mobileMenu = $('mobile-menu');
 
 setTimeout(() => navWrapper.classList.add('visible'), 80);
@@ -50,8 +50,8 @@ document.querySelectorAll('.mob-link, .mob-cta').forEach(el => {
 
 [
   { id: 'hero-eyebrow', d: 180 }, { id: 'hero-headline', d: 300 },
-  { id: 'hero-sub',     d: 420 }, { id: 'hero-ctas',     d: 540 },
-  { id: 'hero-stats',   d: 660 }, { id: 'map-wrap',      d: 260 },
+  { id: 'hero-sub', d: 420 }, { id: 'hero-ctas', d: 540 },
+  { id: 'hero-stats', d: 660 }, { id: 'map-wrap', d: 260 },
 ].forEach(({ id, d }) => {
   const el = $(id);
   if (el) setTimeout(() => el.classList.add('in'), d);
@@ -62,32 +62,32 @@ document.querySelectorAll('.mob-link, .mob-cta').forEach(el => {
 // ════════════════════════════════════════════
 
 const CITIES = [
-  { name: 'Mumbai',    state: 'Maharashtra',   lng: 72.88, lat: 19.07, sz: 'lg', members: '12.4K', orgs: '340' },
-  { name: 'Delhi',     state: 'Delhi NCR',      lng: 77.10, lat: 28.70, sz: 'lg', members: '9.8K',  orgs: '285' },
-  { name: 'Hyderabad', state: 'Telangana',      lng: 78.48, lat: 17.38, sz: 'lg', members: '7.2K',  orgs: '198' },
-  { name: 'Bengaluru', state: 'Karnataka',      lng: 77.59, lat: 12.97, sz: 'md', members: '5.6K',  orgs: '164' },
-  { name: 'Chennai',   state: 'Tamil Nadu',     lng: 80.27, lat: 13.08, sz: 'md', members: '4.1K',  orgs: '120' },
-  { name: 'Kolkata',   state: 'West Bengal',    lng: 88.36, lat: 22.57, sz: 'md', members: '5.9K',  orgs: '172' },
-  { name: 'Lucknow',   state: 'Uttar Pradesh',  lng: 80.95, lat: 26.85, sz: 'md', members: '4.8K',  orgs: '138' },
-  { name: 'Ahmedabad', state: 'Gujarat',        lng: 72.58, lat: 23.02, sz: 'sm', members: '2.9K',  orgs: '84'  },
-  { name: 'Bhopal',    state: 'Madhya Pradesh', lng: 77.40, lat: 23.26, sz: 'sm', members: '2.1K',  orgs: '62'  },
-  { name: 'Patna',     state: 'Bihar',          lng: 85.14, lat: 25.60, sz: 'sm', members: '3.2K',  orgs: '88'  },
-  { name: 'Jaipur',    state: 'Rajasthan',      lng: 75.79, lat: 26.91, sz: 'sm', members: '1.8K',  orgs: '54'  },
-  { name: 'Srinagar',  state: 'J&K',            lng: 74.80, lat: 34.08, sz: 'sm', members: '1.4K',  orgs: '42'  },
-  { name: 'Guwahati',  state: 'Assam',          lng: 91.74, lat: 26.18, sz: 'sm', members: '1.2K',  orgs: '38'  },
-  { name: 'Kochi',     state: 'Kerala',         lng: 76.26, lat:  9.93, sz: 'sm', members: '2.6K',  orgs: '72'  },
-  { name: 'Pune',      state: 'Maharashtra',    lng: 73.86, lat: 18.52, sz: 'sm', members: '3.4K',  orgs: '95'  },
-  { name: 'Nagpur',    state: 'Maharashtra',    lng: 79.09, lat: 21.14, sz: 'sm', members: '1.5K',  orgs: '45'  },
-  { name: 'Surat',     state: 'Gujarat',        lng: 72.83, lat: 21.17, sz: 'sm', members: '1.9K',  orgs: '55'  },
+  { name: 'Mumbai', state: 'Maharashtra', lng: 72.88, lat: 19.07, sz: 'lg', members: '12.4K', orgs: '340' },
+  { name: 'Delhi', state: 'Delhi NCR', lng: 77.10, lat: 28.70, sz: 'lg', members: '9.8K', orgs: '285' },
+  { name: 'Hyderabad', state: 'Telangana', lng: 78.48, lat: 17.38, sz: 'lg', members: '7.2K', orgs: '198' },
+  { name: 'Bengaluru', state: 'Karnataka', lng: 77.59, lat: 12.97, sz: 'md', members: '5.6K', orgs: '164' },
+  { name: 'Chennai', state: 'Tamil Nadu', lng: 80.27, lat: 13.08, sz: 'md', members: '4.1K', orgs: '120' },
+  { name: 'Kolkata', state: 'West Bengal', lng: 88.36, lat: 22.57, sz: 'md', members: '5.9K', orgs: '172' },
+  { name: 'Lucknow', state: 'Uttar Pradesh', lng: 80.95, lat: 26.85, sz: 'md', members: '4.8K', orgs: '138' },
+  { name: 'Ahmedabad', state: 'Gujarat', lng: 72.58, lat: 23.02, sz: 'sm', members: '2.9K', orgs: '84' },
+  { name: 'Bhopal', state: 'Madhya Pradesh', lng: 77.40, lat: 23.26, sz: 'sm', members: '2.1K', orgs: '62' },
+  { name: 'Patna', state: 'Bihar', lng: 85.14, lat: 25.60, sz: 'sm', members: '3.2K', orgs: '88' },
+  { name: 'Jaipur', state: 'Rajasthan', lng: 75.79, lat: 26.91, sz: 'sm', members: '1.8K', orgs: '54' },
+  { name: 'Srinagar', state: 'J&K', lng: 74.80, lat: 34.08, sz: 'sm', members: '1.4K', orgs: '42' },
+  { name: 'Guwahati', state: 'Assam', lng: 91.74, lat: 26.18, sz: 'sm', members: '1.2K', orgs: '38' },
+  { name: 'Kochi', state: 'Kerala', lng: 76.26, lat: 9.93, sz: 'sm', members: '2.6K', orgs: '72' },
+  { name: 'Pune', state: 'Maharashtra', lng: 73.86, lat: 18.52, sz: 'sm', members: '3.4K', orgs: '95' },
+  { name: 'Nagpur', state: 'Maharashtra', lng: 79.09, lat: 21.14, sz: 'sm', members: '1.5K', orgs: '45' },
+  { name: 'Surat', state: 'Gujarat', lng: 72.83, lat: 21.17, sz: 'sm', members: '1.9K', orgs: '55' },
 ];
 
 const CONNECTIONS = [
-  [0,1],[0,2],[0,7],[0,14],[0,15],[0,16],
-  [1,10],[1,6],[1,11],[1,8],
-  [2,3],[2,4],[2,8],
-  [3,13],[3,4],
-  [4,5],[5,9],[5,12],
-  [6,9],[7,16],
+  [0, 1], [0, 2], [0, 7], [0, 14], [0, 15], [0, 16],
+  [1, 10], [1, 6], [1, 11], [1, 8],
+  [2, 3], [2, 4], [2, 8],
+  [3, 13], [3, 4],
+  [4, 5], [5, 9], [5, 12],
+  [6, 9], [7, 16],
 ];
 
 // India geographic bounds
@@ -97,14 +97,14 @@ const LNG0 = 67.5, LNG1 = 97.5, LAT0 = 7.0, LAT1 = 37.5;
 //  CANVAS SETUP
 // ════════════════════════════════════════════
 
-const canvas  = $('map-canvas');
-const ctx     = canvas.getContext('2d', { alpha: true });
+const canvas = $('map-canvas');
+const ctx = canvas.getContext('2d', { alpha: true });
 const tooltip = $('map-tooltip');
 
 let W, H, DPR;
 
 // Offscreen canvas — India map pre-rendered here ONCE per resize
-let offscreen    = null;
+let offscreen = null;
 let offscreenCtx = null;
 let offscreenDirty = true; // rebuild when resize happens
 
@@ -113,7 +113,7 @@ let proj = null; // { offX, offY, scaleX, scaleY }
 
 // GeoJSON paths and city positions
 let indiaPaths = [];
-let cityPts    = [];
+let cityPts = [];
 
 // ════════════════════════════════════════════
 //  PROJECTION
@@ -123,10 +123,10 @@ function buildProj() {
   const PAD = 0.06;
   const drawW = W * (1 - PAD * 2), drawH = H * (1 - PAD * 2);
   const lngSpan = LNG1 - LNG0, latSpan = LAT1 - LAT0;
-  const aspect  = lngSpan / latSpan;
+  const aspect = lngSpan / latSpan;
   let sW, sH;
   if (drawW / drawH > aspect) { sH = drawH; sW = sH * aspect; }
-  else                        { sW = drawW; sH = sW / aspect; }
+  else { sW = drawW; sH = sW / aspect; }
   proj = {
     offX: (W - sW) / 2, offY: (H - sH) / 2,
     scaleX: sW / lngSpan, scaleY: sH / latSpan,
@@ -147,10 +147,10 @@ function project(lng, lat) {
 function buildOffscreen(features) {
   // Create / resize offscreen canvas
   if (!offscreen) {
-    offscreen    = document.createElement('canvas');
+    offscreen = document.createElement('canvas');
     offscreenCtx = offscreen.getContext('2d', { alpha: true });
   }
-  offscreen.width  = Math.round(W * DPR);
+  offscreen.width = Math.round(W * DPR);
   offscreen.height = Math.round(H * DPR);
   offscreenCtx.setTransform(1, 0, 0, 1, 0, 0); // reset
   offscreenCtx.scale(DPR, DPR);
@@ -180,16 +180,16 @@ function buildOffscreen(features) {
   // Draw all paths into the offscreen canvas — done ONCE
   // Dark-tinted India silhouette on the dark hero background
   const grad = offscreenCtx.createLinearGradient(0, 0, W, H);
-  grad.addColorStop(0,   'rgba(255,255,255,0.04)');
+  grad.addColorStop(0, 'rgba(255,255,255,0.04)');
   grad.addColorStop(0.5, 'rgba(255,255,255,0.06)');
-  grad.addColorStop(1,   'rgba(255,255,255,0.03)');
+  grad.addColorStop(1, 'rgba(255,255,255,0.03)');
 
   indiaPaths.forEach(p => {
     offscreenCtx.fillStyle = grad;
     offscreenCtx.fill(p);
     offscreenCtx.strokeStyle = 'rgba(255,255,255,0.12)';
-    offscreenCtx.lineWidth   = 0.7;
-    offscreenCtx.lineJoin    = 'round';
+    offscreenCtx.lineWidth = 0.7;
+    offscreenCtx.lineJoin = 'round';
     offscreenCtx.stroke(p);
   });
 
@@ -241,7 +241,7 @@ let connState = CONNECTIONS.map(() => ({
 }));
 
 function scheduleAppear() {
-  CITIES.forEach((_, i)     => setTimeout(() => { nodeState[i].target = 1; dirty = true; }, 900 + i * 80));
+  CITIES.forEach((_, i) => setTimeout(() => { nodeState[i].target = 1; dirty = true; }, 900 + i * 80));
   CONNECTIONS.forEach((_, i) => setTimeout(() => { connState[i].target = 1; dirty = true; }, 1300 + i * 60));
 }
 
@@ -249,9 +249,9 @@ function scheduleAppear() {
 //  DIRTY FLAG + FRAME THROTTLE
 // ════════════════════════════════════════════
 
-let dirty       = true;  // redraw requested
-let animating   = false; // true while nodes are appearing/pulsing
-let lastTs      = 0;
+let dirty = true;  // redraw requested
+let animating = false; // true while nodes are appearing/pulsing
+let lastTs = 0;
 
 // During active animation/hover: 60fps. Idle: 20fps (just for pulse)
 function getFrameMs() { return animating || hoveredIdx >= 0 ? 16.7 : 50; }
@@ -265,7 +265,7 @@ let hoveredIdx = -1;
 const mousePos = { x: 0.5, y: 0.5, tx: 0.5, ty: 0.5 };
 
 canvas.addEventListener('mousemove', e => {
-  const r  = canvas.getBoundingClientRect();
+  const r = canvas.getBoundingClientRect();
   const mx = e.clientX - r.left;
   const my = e.clientY - r.top;
   mousePos.tx = e.clientX / window.innerWidth;
@@ -305,10 +305,10 @@ canvas.addEventListener('mouseleave', () => {
 
 function showTooltip(i, mx, my, r) {
   const c = CITIES[i];
-  $('tt-city').textContent    = c.name;
-  $('tt-state').textContent   = c.state;
+  $('tt-city').textContent = c.name;
+  $('tt-state').textContent = c.state;
   $('tt-members').textContent = c.members;
-  $('tt-orgs').textContent    = c.orgs;
+  $('tt-orgs').textContent = c.orgs;
   tooltip.setAttribute('aria-hidden', 'false');
   posTooltip(mx, my, r);
   requestAnimationFrame(() => tooltip.classList.add('show'));
@@ -320,11 +320,11 @@ function hideTooltip() {
 function posTooltip(mx, my, r) {
   const tw = tooltip.offsetWidth || 160, th = tooltip.offsetHeight || 108;
   let tx = mx + 16, ty = my - th / 2;
-  if (tx + tw > r.width  - 8) tx = mx - tw - 12;
+  if (tx + tw > r.width - 8) tx = mx - tw - 12;
   if (ty < 8) ty = 8;
   if (ty + th > r.height - 8) ty = r.height - th - 8;
   tooltip.style.left = tx + 'px';
-  tooltip.style.top  = ty + 'px';
+  tooltip.style.top = ty + 'px';
 }
 
 // ════════════════════════════════════════════
@@ -349,7 +349,7 @@ function render(ts) {
   mousePos.x = lerp(mousePos.x, mousePos.tx, 0.06);
   mousePos.y = lerp(mousePos.y, mousePos.ty, 0.06);
   const mouseMoved = Math.abs(mousePos.x - prevMx) > 0.0001 ||
-                     Math.abs(mousePos.y - prevMy) > 0.0001;
+    Math.abs(mousePos.y - prevMy) > 0.0001;
   if (mouseMoved) dirty = true;
 
   const px = (mousePos.x - 0.5) * 9;
@@ -360,7 +360,7 @@ function render(ts) {
   nodeState.forEach((ns, i) => {
     const prev = ns.appear;
     ns.appear = lerp(ns.appear, ns.target, 0.06);
-    ns.pulse  += 0.032;
+    ns.pulse += 0.032;
     ns.floatT += 0.009;
     if (Math.abs(ns.appear - ns.target) > 0.002) { animating = true; dirty = true; }
     // Pulse always causes minor redraw when visible
@@ -400,9 +400,9 @@ function render(ts) {
 
     const hov = hoveredIdx === conn[0] || hoveredIdx === conn[1];
 
-    ctx.globalAlpha   = cs.appear * (hov ? 0.55 : 0.18);
-    ctx.strokeStyle   = hov ? '#E8632A' : 'rgba(232,99,42,0.75)';
-    ctx.lineWidth     = hov ? 1.3 : 0.7;
+    ctx.globalAlpha = cs.appear * (hov ? 0.55 : 0.18);
+    ctx.strokeStyle = hov ? '#E8632A' : 'rgba(232,99,42,0.75)';
+    ctx.lineWidth = hov ? 1.3 : 0.7;
     ctx.setLineDash([5, 9]);
     ctx.lineDashOffset = -cs.dash;
 
@@ -418,13 +418,13 @@ function render(ts) {
     if (hov) {
       ctx.setLineDash([]);
       const p2 = (Math.sin(t * 1.6 + ci) * 0.5 + 0.5);
-      const u  = 1 - p2;
+      const u = 1 - p2;
       ctx.globalAlpha = cs.appear * 0.9;
-      ctx.fillStyle   = '#E8632A';
+      ctx.fillStyle = '#E8632A';
       ctx.beginPath();
       ctx.arc(
-        u*u*a.x + 2*u*p2*cx2 + p2*p2*b.x,
-        u*u*a.y + 2*u*p2*cy2 + p2*p2*b.y,
+        u * u * a.x + 2 * u * p2 * cx2 + p2 * p2 * b.x,
+        u * u * a.y + 2 * u * p2 * cy2 + p2 * p2 * b.y,
         2, 0, Math.PI * 2
       );
       ctx.fill();
@@ -441,11 +441,11 @@ function render(ts) {
     if (ns.appear < 0.02) return;
 
     const baseR = getNodeR(cp);
-    const pv    = (Math.sin(ns.pulse) * 0.5 + 0.5);
-    const hov   = ns.hovered;
-    const r     = baseR * (hov ? 1.38 : 1 + pv * 0.07) * ns.appear;
-    const fx    = cp.baseX + Math.sin(ns.floatT) * 1.2;
-    const fy    = cp.baseY + Math.cos(ns.floatT * 0.7) * 1.0;
+    const pv = (Math.sin(ns.pulse) * 0.5 + 0.5);
+    const hov = ns.hovered;
+    const r = baseR * (hov ? 1.38 : 1 + pv * 0.07) * ns.appear;
+    const fx = cp.baseX + Math.sin(ns.floatT) * 1.2;
+    const fy = cp.baseY + Math.cos(ns.floatT * 0.7) * 1.0;
 
     // Update canvas position for tooltip
     if (hov) { cp.x = fx; cp.y = fy; }
@@ -473,7 +473,7 @@ function render(ts) {
 
     // Inner specular
     ctx.globalAlpha = ns.appear * 0.5;
-    ctx.fillStyle   = 'rgba(255,255,255,0.45)';
+    ctx.fillStyle = 'rgba(255,255,255,0.45)';
     ctx.beginPath();
     ctx.arc(fx - r * .28, fy - r * .28, r * 0.36, 0, Math.PI * 2);
     ctx.fill();
@@ -481,11 +481,11 @@ function render(ts) {
     // Label
     if (cp.sz === 'lg' || (cp.sz === 'md' && W > 600) || hov) {
       ctx.globalAlpha = ns.appear * (hov ? 1 : 0.75);
-      const fs  = hov ? 11.5 : 10.5;
-      ctx.font  = `${hov ? 600 : 500} ${fs}px Inter, sans-serif`;
+      const fs = hov ? 11.5 : 10.5;
+      ctx.font = `${hov ? 600 : 500} ${fs}px Inter, sans-serif`;
       const lbl = cp.name;
-      const tw  = ctx.measureText(lbl).width;
-      const lx  = fx - (tw + 10) / 2, ly = fy + r + 5;
+      const tw = ctx.measureText(lbl).width;
+      const lx = fx - (tw + 10) / 2, ly = fy + r + 5;
 
       ctx.fillStyle = 'rgba(13,35,24,0.85)';
       ctx.beginPath();
@@ -493,8 +493,8 @@ function render(ts) {
       else ctx.rect(lx, ly, tw + 10, 15);
       ctx.fill();
 
-      ctx.fillStyle    = hov ? '#FFFFFF' : 'rgba(255,255,255,0.70)';
-      ctx.textAlign    = 'center';
+      ctx.fillStyle = hov ? '#FFFFFF' : 'rgba(255,255,255,0.70)';
+      ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
       ctx.fillText(lbl, fx, ly + 2.5);
     }
@@ -512,9 +512,9 @@ function resize() {
   DPR = Math.min(window.devicePixelRatio || 1, 2); // cap at 2× — 3× is overkill
   const rect = canvas.parentElement.getBoundingClientRect();
   W = rect.width; H = rect.height;
-  canvas.width  = Math.round(W * DPR);
+  canvas.width = Math.round(W * DPR);
   canvas.height = Math.round(H * DPR);
-  canvas.style.width  = W + 'px';
+  canvas.style.width = W + 'px';
   canvas.style.height = H + 'px';
   canvas.style.maxHeight = 'min(calc(100svh - 120px), 650px)';
   canvas.style.maxWidth = '640px';
@@ -538,26 +538,28 @@ window.addEventListener('resize', () => {
 
 function getEmbeddedFallback() {
   const c = [
-    [74.0,36.0],[76.2,35.5],[77.8,35.4],[78.8,35.2],[79.5,34.8],[80.2,34.0],
-    [81.0,33.5],[80.6,32.8],[81.5,32.2],[82.3,31.5],[83.5,31.0],[85.0,30.2],
-    [88.0,28.5],[89.0,27.8],[90.5,26.9],[92.0,26.3],[93.5,26.0],[94.8,26.2],
-    [96.5,27.2],[97.2,28.0],[97.5,28.5],[97.0,29.0],[96.5,29.5],[95.8,29.8],
-    [95.0,29.5],[94.0,29.2],[93.5,28.8],[92.8,28.2],[92.0,27.8],[91.5,27.4],
-    [90.5,22.5],[89.8,21.5],[88.2,21.7],[87.5,21.0],[86.5,20.0],[85.5,19.8],
-    [84.5,18.8],[83.5,18.0],[82.5,17.0],[81.5,16.0],[80.5,15.0],[80.2,14.0],
-    [80.0,13.2],[79.8,12.0],[79.5,10.5],[79.3,9.5],[78.5,8.5],[77.5,8.1],
-    [76.5,8.3],[76.0,8.1],[77.0,8.0],[77.5,8.3],
-    [77.0,9.0],[76.5,9.8],[76.2,10.5],[75.8,11.5],[75.3,12.5],[74.8,13.5],
-    [74.2,14.5],[73.8,15.5],[73.4,16.5],[73.2,17.5],[72.9,18.5],[72.8,19.5],
-    [72.6,20.5],[72.5,21.5],[72.3,22.5],[72.0,23.0],[68.7,23.5],[68.5,22.8],
-    [68.0,23.0],[67.5,23.5],[67.8,24.5],[68.5,25.0],[69.5,25.5],[70.0,26.0],
-    [70.5,27.0],[71.0,27.5],[71.5,28.5],[72.0,29.5],[72.3,30.5],[73.0,31.5],
-    [73.5,32.0],[74.0,32.5],[74.5,33.5],[74.0,34.5],[74.0,36.0],
+    [74.0, 36.0], [76.2, 35.5], [77.8, 35.4], [78.8, 35.2], [79.5, 34.8], [80.2, 34.0],
+    [81.0, 33.5], [80.6, 32.8], [81.5, 32.2], [82.3, 31.5], [83.5, 31.0], [85.0, 30.2],
+    [88.0, 28.5], [89.0, 27.8], [90.5, 26.9], [92.0, 26.3], [93.5, 26.0], [94.8, 26.2],
+    [96.5, 27.2], [97.2, 28.0], [97.5, 28.5], [97.0, 29.0], [96.5, 29.5], [95.8, 29.8],
+    [95.0, 29.5], [94.0, 29.2], [93.5, 28.8], [92.8, 28.2], [92.0, 27.8], [91.5, 27.4],
+    [90.5, 22.5], [89.8, 21.5], [88.2, 21.7], [87.5, 21.0], [86.5, 20.0], [85.5, 19.8],
+    [84.5, 18.8], [83.5, 18.0], [82.5, 17.0], [81.5, 16.0], [80.5, 15.0], [80.2, 14.0],
+    [80.0, 13.2], [79.8, 12.0], [79.5, 10.5], [79.3, 9.5], [78.5, 8.5], [77.5, 8.1],
+    [76.5, 8.3], [76.0, 8.1], [77.0, 8.0], [77.5, 8.3],
+    [77.0, 9.0], [76.5, 9.8], [76.2, 10.5], [75.8, 11.5], [75.3, 12.5], [74.8, 13.5],
+    [74.2, 14.5], [73.8, 15.5], [73.4, 16.5], [73.2, 17.5], [72.9, 18.5], [72.8, 19.5],
+    [72.6, 20.5], [72.5, 21.5], [72.3, 22.5], [72.0, 23.0], [68.7, 23.5], [68.5, 22.8],
+    [68.0, 23.0], [67.5, 23.5], [67.8, 24.5], [68.5, 25.0], [69.5, 25.5], [70.0, 26.0],
+    [70.5, 27.0], [71.0, 27.5], [71.5, 28.5], [72.0, 29.5], [72.3, 30.5], [73.0, 31.5],
+    [73.5, 32.0], [74.0, 32.5], [74.5, 33.5], [74.0, 34.5], [74.0, 36.0],
   ];
-  return { type: 'FeatureCollection', features: [{
-    type: 'Feature', properties: { name: 'India' },
-    geometry: { type: 'Polygon', coordinates: [c] },
-  }]};
+  return {
+    type: 'FeatureCollection', features: [{
+      type: 'Feature', properties: { name: 'India' },
+      geometry: { type: 'Polygon', coordinates: [c] },
+    }]
+  };
 }
 
 async function loadMap() {
@@ -571,8 +573,8 @@ async function loadMap() {
   }
 
   geoFeatures = data.type === 'FeatureCollection' ? data.features
-              : data.type === 'Feature'            ? [data]
-              : getEmbeddedFallback().features;
+    : data.type === 'Feature' ? [data]
+      : getEmbeddedFallback().features;
 
   resize();          // build offscreen map with real data
   scheduleAppear();
@@ -591,9 +593,9 @@ async function loadMap() {
 const scrollScene = $('scroll-scene');
 const sceneSticky = $('scene-sticky');
 const heroContent = $('hero-content');
-const mapWrap     = $('map-wrap');
+const mapWrap = $('map-wrap');
 const discoveryUI = $('discovery-ui');
-const discHud     = $('disc-hud');
+const discHud = $('disc-hud');
 
 const easeOut = t => 1 - Math.pow(1 - t, 3);
 const clamp01 = t => Math.max(0, Math.min(1, t));
@@ -611,47 +613,61 @@ function getScrollProgress() {
 
 // ── PIN / City database ───────────────────────
 const PIN_DB = [
-  { pin: '400001', city: 'Mumbai',    state: 'Maharashtra',    lng: 72.88, lat: 19.07 },
-  { pin: '110001', city: 'Delhi',     state: 'Delhi NCR',      lng: 77.10, lat: 28.70 },
-  { pin: '560001', city: 'Bengaluru', state: 'Karnataka',      lng: 77.59, lat: 12.97 },
-  { pin: '500001', city: 'Hyderabad', state: 'Telangana',      lng: 78.48, lat: 17.38 },
-  { pin: '226001', city: 'Lucknow',   state: 'Uttar Pradesh',  lng: 80.95, lat: 26.85 },
-  { pin: '700001', city: 'Kolkata',   state: 'West Bengal',    lng: 88.36, lat: 22.57 },
-  { pin: '600001', city: 'Chennai',   state: 'Tamil Nadu',     lng: 80.27, lat: 13.08 },
-  { pin: '380001', city: 'Ahmedabad', state: 'Gujarat',        lng: 72.58, lat: 23.02 },
-  { pin: '462001', city: 'Bhopal',    state: 'Madhya Pradesh', lng: 77.40, lat: 23.26 },
-  { pin: '800001', city: 'Patna',     state: 'Bihar',          lng: 85.14, lat: 25.60 },
-  { pin: '302001', city: 'Jaipur',    state: 'Rajasthan',      lng: 75.79, lat: 26.91 },
-  { pin: '190001', city: 'Srinagar',  state: 'J&K',            lng: 74.80, lat: 34.08 },
-  { pin: '781001', city: 'Guwahati',  state: 'Assam',          lng: 91.74, lat: 26.18 },
-  { pin: '682001', city: 'Kochi',     state: 'Kerala',         lng: 76.26, lat:  9.93 },
-  { pin: '411001', city: 'Pune',      state: 'Maharashtra',    lng: 73.86, lat: 18.52 },
+  { pin: '400001', city: 'Mumbai', state: 'Maharashtra', lng: 72.88, lat: 19.07 },
+  { pin: '110001', city: 'Delhi', state: 'Delhi NCR', lng: 77.10, lat: 28.70 },
+  { pin: '560001', city: 'Bengaluru', state: 'Karnataka', lng: 77.59, lat: 12.97 },
+  { pin: '500001', city: 'Hyderabad', state: 'Telangana', lng: 78.48, lat: 17.38 },
+  { pin: '226001', city: 'Lucknow', state: 'Uttar Pradesh', lng: 80.95, lat: 26.85 },
+  { pin: '700001', city: 'Kolkata', state: 'West Bengal', lng: 88.36, lat: 22.57 },
+  { pin: '600001', city: 'Chennai', state: 'Tamil Nadu', lng: 80.27, lat: 13.08 },
+  { pin: '380001', city: 'Ahmedabad', state: 'Gujarat', lng: 72.58, lat: 23.02 },
+  { pin: '462001', city: 'Bhopal', state: 'Madhya Pradesh', lng: 77.40, lat: 23.26 },
+  { pin: '800001', city: 'Patna', state: 'Bihar', lng: 85.14, lat: 25.60 },
+  { pin: '302001', city: 'Jaipur', state: 'Rajasthan', lng: 75.79, lat: 26.91 },
+  { pin: '190001', city: 'Srinagar', state: 'J&K', lng: 74.80, lat: 34.08 },
+  { pin: '781001', city: 'Guwahati', state: 'Assam', lng: 91.74, lat: 26.18 },
+  { pin: '682001', city: 'Kochi', state: 'Kerala', lng: 76.26, lat: 9.93 },
+  { pin: '411001', city: 'Pune', state: 'Maharashtra', lng: 73.86, lat: 18.52 },
 ];
 
 let discCam = {
   targetLng: 78.96, targetLat: 20.59,
-  curLng: 78.96,    curLat: 20.59,
+  curLng: 78.96, curLat: 20.59,
   targetZoom: 1.15, curZoom: 1.15,
   activeCity: 'Mumbai', activePin: '400001',
 };
 
 // ── Main scroll driver ───────────────────────
 function updateScrollScene() {
+  if (window.innerWidth <= 768) {
+    if (heroContent) {
+      heroContent.style.opacity = '';
+      heroContent.style.transform = '';
+    }
+    if (mapWrap) {
+      mapWrap.style.transform = '';
+    }
+    if (discoveryUI) {
+      discoveryUI.classList.add('visible');
+    }
+    return;
+  }
+
   const p = getScrollProgress();   // 0 = top of scene, 1 = bottom
 
   // 1. Hero text fades out (p: 0 → 0.4)
   if (heroContent) {
     const t = easeOut(band(p, 0, 0.40));
-    heroContent.style.opacity   = 1 - t;
+    heroContent.style.opacity = 1 - t;
     heroContent.style.transform = `translateX(${-t * 50}px)`;
   }
 
   // 2. Map scales up (p: 0 → 0.70) — from 1x to 1.5x
   //    transform-origin center so it grows symmetrically within the right panel
   if (mapWrap) {
-    const t     = easeOut(band(p, 0, 0.70));
+    const t = easeOut(band(p, 0, 0.70));
     const scale = 1 + t * 0.40;               // 1.0 → 1.40
-    mapWrap.style.transform       = `scale(${scale})`;
+    mapWrap.style.transform = `scale(${scale})`;
     mapWrap.style.transformOrigin = 'center center';
     // Also drive camera zoom to match visual scale
     discCam.targetZoom = 1.15 + t * 1.25;
@@ -687,11 +703,11 @@ function selectLocation(query) {
   if (!match) match = CITIES.find(c => c.name.toLowerCase().includes(clean));
   if (!match) return;
 
-  discCam.targetLng  = match.lng;
-  discCam.targetLat  = match.lat;
+  discCam.targetLng = match.lng;
+  discCam.targetLat = match.lat;
   discCam.targetZoom = 2.4;
   discCam.activeCity = match.city || match.name;
-  discCam.activePin  = match.pin  || '400001';
+  discCam.activePin = match.pin || '400001';
 
   const input = $('location-search-input');
   if (input) input.value = `${match.city || match.name}${match.pin ? ' (' + match.pin + ')' : ''}`;
@@ -707,16 +723,16 @@ function selectLocation(query) {
 }
 
 function setupDiscoveryControls() {
-  const search  = $('location-search-input');
+  const search = $('location-search-input');
   const explore = $('explore-community-btn');
-  const detect  = $('detect-location-btn');
+  const detect = $('detect-location-btn');
 
   if (search) {
     search.addEventListener('keydown', e => { if (e.key === 'Enter') selectLocation(search.value); });
-    search.addEventListener('input',   () => { if (search.value.length >= 3) selectLocation(search.value); });
+    search.addEventListener('input', () => { if (search.value.length >= 3) selectLocation(search.value); });
   }
   if (explore) explore.addEventListener('click', () => selectLocation(search?.value || 'Mumbai'));
-  if (detect)  detect.addEventListener('click',  () => {
+  if (detect) detect.addEventListener('click', () => {
     detect.style.transform = 'rotate(180deg)';
     setTimeout(() => { detect.style.transform = ''; selectLocation('Mumbai'); }, 350);
   });
@@ -742,11 +758,11 @@ setupDiscoveryControls();
 // ════════════════════════════════════════════
 
 (function initNetworkSection() {
-  const hub      = document.getElementById('net-hub');
-  const lines    = document.querySelectorAll('.net-line');
-  const endDots  = document.querySelectorAll('.net-end-dot');
-  const nodes    = document.querySelectorAll('.net-node');
-  const visual   = document.getElementById('net-visual');
+  const hub = document.getElementById('net-hub');
+  const lines = document.querySelectorAll('.net-line');
+  const endDots = document.querySelectorAll('.net-end-dot');
+  const nodes = document.querySelectorAll('.net-node');
+  const visual = document.getElementById('net-visual');
   if (!visual) return;
 
   let animated = false;
@@ -996,6 +1012,5 @@ setupDiscoveryControls();
 
   updateParallax();
 })();
-
 
 
