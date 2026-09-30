@@ -4536,12 +4536,10 @@ code.legal-placeholder {
   inset: -1px;
   border-radius: 21px;
   padding: 1px;
-  background: radial-gradient(
-    320px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(232, 99, 42, 0.7),
-    rgba(11, 143, 85, 0.3) 40%,
-    transparent 80%
-  );
+  background: radial-gradient(320px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(232, 99, 42, 0.7),
+      rgba(11, 143, 85, 0.3) 40%,
+      transparent 80%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -4559,11 +4557,9 @@ code.legal-placeholder {
   position: absolute;
   inset: 0;
   border-radius: 20px;
-  background: radial-gradient(
-    400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(232, 99, 42, 0.1),
-    transparent 75%
-  );
+  background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(232, 99, 42, 0.1),
+      transparent 75%);
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -4830,5 +4826,4 @@ code.legal-placeholder {
 .grat-date {
   font-size: 12px;
   color: var(--cream-text);
-}
 }
