@@ -1014,3 +1014,49 @@ setupDiscoveryControls();
 })();
 
 
+// ════════════════════════════════════════════
+//  SUPPORT CARDS — 3D Tilt & Corner Spotlight
+// ════════════════════════════════════════════
+
+(function init3DTiltAndSpotlight() {
+  const cards = document.querySelectorAll('.tilt-card');
+  if (!cards.length) return;
+
+  cards.forEach(card => {
+    let bounds = null;
+
+    function onMouseEnter() {
+      bounds = card.getBoundingClientRect();
+    }
+
+    function onMouseMove(e) {
+      if (!bounds) bounds = card.getBoundingClientRect();
+
+      const mouseX = e.clientX - bounds.left;
+      const mouseY = e.clientY - bounds.top;
+
+      // Update CSS variables for radial corner spotlight
+      card.style.setProperty('--mouse-x', `${mouseX}px`);
+      card.style.setProperty('--mouse-y', `${mouseY}px`);
+
+      // 3D tilt calculation
+      const centerX = bounds.width / 2;
+      const centerY = bounds.height / 2;
+      const rotateX = -((mouseY - centerY) / centerY) * 10; // max 10deg
+      const rotateY = ((mouseX - centerX) / centerX) * 10;  // max 10deg
+
+      card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+    }
+
+    function onMouseLeave() {
+      bounds = null;
+      card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+    }
+
+    card.addEventListener('mouseenter', onMouseEnter);
+    card.addEventListener('mousemove', onMouseMove);
+    card.addEventListener('mouseleave', onMouseLeave);
+  });
+})();
+
+
